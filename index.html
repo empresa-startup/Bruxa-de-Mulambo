@@ -64,7 +64,7 @@
             100% { transform: translateY(-100vh) translateX(12px) scale(0.4); opacity: 0; }
         }
 
-        /* ===== MENU — SEM A LINHA! ✅ */
+        /* ✅ MENU — LINHA REMOVIDA COM FORÇA TOTAL ✅ */
         .menu-topo {
             position: fixed;
             top: 10px;
@@ -78,23 +78,36 @@
             flex-direction: column;
             justify-content: space-between;
             cursor: pointer;
-            border: none;
             background: transparent;
-            /* ✅ REMOVENDO QUALQUER LINHA/BORDA/SOMBRA */
+            border: 0 !important;
+            border-top: none !important;
+            border-right: none !important;
             border-bottom: none !important;
+            border-left: none !important;
+            outline: none !important;
             box-shadow: none !important;
             text-decoration: none !important;
+            line-height: 0;
+            padding: 0;
+            margin: 0;
         }
         .botao-sanduiche span {
             width: 100%;
             height: 2px;
-            background: var(--vermelho);
-            box-shadow: none !important; /* ✅ SEM SOMBRA/LINHA EMBAIXO */
+            background-color: var(--vermelho);
+            border: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+            display: block;
+            margin: 0;
+            padding: 0;
             transition: all 0.3s ease;
         }
         .botao-sanduiche.aberto span:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
         .botao-sanduiche.aberto span:nth-child(2) { opacity: 0; }
         .botao-sanduiche.aberto span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+        
+        /* ✅ TIRANDO LINHA DO MENU SUSPENSO TAMBÉM ✅ */
         .menu-suspenso {
             position: fixed;
             top: 55px;
@@ -120,6 +133,9 @@
             font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            border: none !important;
+            border-bottom: none !important;
+            box-shadow: none !important;
         }
         .menu-suspenso a:hover {
             color: var(--vermelho);
@@ -396,9 +412,7 @@
         .carregando { color: #907070; font-style: italic; }
         .vazio { color: #705050; font-style: italic; }
 
-        /* ✅ ========================================== */
-        /* ✅ CELULAR — CAPA EM -60px + SEM LINHA! ✅ */
-        /* ✅ ========================================== */
+        /* ✅ CELULAR — CAPA EM -60px ✅ */
         @media (max-width: 768px) {
             .capa-container {
                 height: 60vh;
@@ -406,7 +420,7 @@
             }
             .capa-container img {
                 object-fit: contain;
-                transform: translateY(-60px); /* ← SUBIU MAIS UM POUQUINHO! ✅ */
+                transform: translateY(-60px);
             }
             .intro h1 { font-size: 1.7rem; }
             .rituais-grade { gap: 6px; }
@@ -425,9 +439,7 @@
             .botao-card { padding: 6px; font-size: 0.7rem; }
         }
 
-        /* ✅ ========================================== */
-        /* ✅ PC — NÃO MEXEU, CONTINUA PERFEITO! */
-        /* ✅ ========================================== */
+        /* ✅ PC — NÃO MEXEU ✅ */
         @media (min-width: 1024px) {
             .capa-container {
                 height: 85vh;
@@ -436,7 +448,7 @@
             .capa-container img {
                 object-fit: cover;
                 object-position: center top;
-                transform: none; /* ← NO PC CONTINUA IGUAL, NÃO MEXEU! ✅ */
+                transform: none;
             }
             .intro h1 {
                 font-size: 2.8rem;
@@ -468,9 +480,9 @@
     </div>
 
     <div class="menu-topo">
-        <div class="botao-sanduiche" id="botaoMenu">
+        <button class="botao-sanduiche" id="botaoMenu" type="button">
             <span></span><span></span><span></span>
-        </div>
+        </button>
     </div>
     <div class="menu-suspenso" id="menuSuspenso">
         <a href="#inicio">Início</a>
