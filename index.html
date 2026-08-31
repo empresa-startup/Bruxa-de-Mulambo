@@ -37,7 +37,7 @@
             position: relative;
         }
 
-        /* ✅ BRASAS SUBINDO */
+        /* ✅ BRASAS SUBINDO — INTACTO */
         .fogo-global {
             position: fixed;
             bottom: 0;
@@ -64,7 +64,7 @@
             100% { transform: translateY(-100vh) translateX(12px) scale(0.4); opacity: 0; }
         }
 
-        /* ===== MENU ===== */
+        /* ===== MENU — INTACTO ===== */
         .menu-topo {
             position: fixed;
             top: 10px;
@@ -126,7 +126,7 @@
             font-weight: 600;
         }
 
-        /* ✅ CAPA — NO PC MAIS BONITA, NO CELULAR PERFEITA */
+        /* ✅ CAPA — INTACTA, PERFEITA COMO ESTAVA */
         .capa-container {
             width: 100%;
             height: 70vh;
@@ -224,20 +224,19 @@
             text-shadow: 0 0 12px rgba(255, 40, 40, 0.3);
         }
 
-        /* ✅ ================================================== */
-        /* ✅ CARDS — EXATAMENTE DO JEITO QUE VOCÊ APROVOU! */
-        /* ✅ ================================================== */
-          /* ✅ CARDS COM MENOS ZOOM — TAMANHO AJUSTADO! */
+        /* ✅ ====================================================== */
+        /* ✅ CARDS — 3 LADO A LADO, MAIORES, FOTO SEM ZOOM! ✅ */
+        /* ✅ ====================================================== */
         .rituais-grade {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
             max-width: 1200px;
             margin: 0 auto;
         }
         .ritual-card {
-            width: 260px; /* ← um pouquinho menor */
+            width: 320px; /* ← CARD MAIOR */
             background: linear-gradient(180deg, rgba(25, 8, 8, 0.95), rgba(10, 2, 2, 0.98));
             border: 1px solid var(--borda);
             border-radius: 4px;
@@ -247,10 +246,10 @@
             box-shadow: inset 0 0 20px rgba(200, 40, 40, 0.05);
             display: flex;
             flex-direction: column;
-            transform: scale(0.95); /* ← DIMINUI O ZOOM GERAL DO CARD */
+            transform: scale(1); /* ← SEM ZOOM NO CARD */
         }
         .ritual-card:hover {
-            transform: translateY(-6px) scale(0.95);
+            transform: translateY(-6px); /* ← SÓ SOBE, NÃO AUMENTA */
             border-color: var(--vermelho);
             box-shadow: 0 8px 25px rgba(0,0,0,0.6), 0 0 20px rgba(255, 40, 40, 0.25);
         }
@@ -267,17 +266,19 @@
         }
         .foto-trabalho {
             width: 100%;
-            height: 160px; /* ← foto menor dentro do card */
-            object-fit: cover;
+            height: 190px; /* ← FOTO MAIOR TAMBÉM */
+            object-fit: contain; /* ← FOTO INTEIRA, SEM CORTAR = MENOS ZOOM! */
+            object-position: center;
             border-radius: 5px 5px 0 0;
             cursor: pointer;
             transition: opacity 0.25s ease;
+            background: rgba(10, 2, 2, 0.8);
         }
         .foto-trabalho:hover {
             opacity: 0.9;
         }
         .card-conteudo {
-            padding: 12px;
+            padding: 15px;
             position: relative;
             z-index: 3;
             display: flex;
@@ -288,64 +289,20 @@
         .ritual-card h3 {
             font-family: 'Cinzel Decorative', serif;
             color: #ff5050;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             margin-bottom: 4px;
             text-shadow: 0 0 8px rgba(255, 40, 40, 0.3);
         }
         .ritual-card p {
-            font-size: 0.82rem;
-            color: #907070;
-            line-height: 1.4;
-            margin-bottom: 8px;
-        }
-        .botao-card {
-            display: block;
-            width: 100%;
-            padding: 9px;
-            background: linear-gradient(135deg, var(--vermelho-escuro), var(--vermelho));
-            color: #fff;
-            font-family: 'Cinzel', serif;
             font-size: 0.85rem;
-            text-decoration: none;
-            text-align: center;
-            border-radius: 3px;
-            border: 1px solid rgba(255, 80, 80, 0.3);
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-        }
-        .botao-card:hover {
-            background: linear-gradient(135deg, var(--vermelho), #ff4444);
-        }
-            
-        .foto-trabalho:hover {
-            opacity: 0.9;
-        }
-        .card-conteudo {
-            padding: 12px;
-            position: relative;
-            z-index: 3;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            flex-grow: 1;
-        }
-        .ritual-card h3 {
-            font-family: 'Cinzel Decorative', serif;
-            color: #ff5050;
-            font-size: 1.05rem;
-            margin-bottom: 4px;
-            text-shadow: 0 0 8px rgba(255, 40, 40, 0.3);
-        }
-        .ritual-card p {
-            font-size: 0.82rem;
             color: #907070;
-            line-height: 1.4;
+            line-height: 1.5;
             margin-bottom: 8px;
         }
         .botao-card {
             display: block;
             width: 100%;
-            padding: 9px;
+            padding: 10px;
             background: linear-gradient(135deg, var(--vermelho-escuro), var(--vermelho));
             color: #fff;
             font-family: 'Cinzel', serif;
@@ -361,7 +318,7 @@
             background: linear-gradient(135deg, var(--vermelho), #ff4444);
         }
 
-        /* ✅ TELA CHEIA */
+        /* ✅ TELA CHEIA — INTACTA */
         .tela-cheia-fundo {
             position: fixed;
             top: 0;
@@ -438,7 +395,7 @@
         .vazio { color: #705050; font-style: italic; }
 
         /* ✅ ========================================== */
-        /* ✅ CELULAR — INTACTO, PERFEITO COMO ESTAVA! */
+        /* ✅ CELULAR — INTACTO, DO JEITO QUE ESTAVA! */
         /* ✅ ========================================== */
         @media (max-width: 768px) {
             .capa-container {
@@ -452,15 +409,18 @@
             .intro h1 { font-size: 1.7rem; }
             .rituais-grade { gap: 15px; }
             .ritual-card {
-                width: 45%;
+                width: 47%; /* ← 3 lado a lado no celular */
                 min-width: 140px;
-                transform: scale(0.92);
+                transform: scale(1);
             }
-            .foto-trabalho { height: 140px; }
+            .foto-trabalho { 
+                height: 150px;
+                object-fit: contain; /* ← foto inteira também no celular! */
+            }
         }
 
         /* ✅ ========================================== */
-        /* ✅ PC — MELHORADO, CARDS TAMANHO NORMAL! */
+        /* ✅ PC — 3 CARDS LADO A LADO E MAIORES! ✅ */
         /* ✅ ========================================== */
         @media (min-width: 1024px) {
             .capa-container {
@@ -475,17 +435,17 @@
                 font-size: 2.8rem;
             }
             .rituais-grade {
-                gap: 30px;
+                gap: 25px;
             }
             .ritual-card {
-                width: 270px;
+                width: 320px; /* ← 3 cards lado a lado no PC */
                 transform: scale(1);
             }
             .ritual-card:hover {
-                transform: translateY(-8px) scale(1);
+                transform: translateY(-8px);
             }
             .foto-trabalho {
-                height: 170px;
+                height: 190px;
             }
             section h2 {
                 font-size: 2.2rem;
