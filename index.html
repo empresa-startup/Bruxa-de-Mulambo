@@ -126,7 +126,7 @@
             font-weight: 600;
         }
 
-        /* ✅ CAPA — NO PC FICA MAIS BONITA, NO CELULAR CONTINUA PERFEITA */
+        /* ✅ CAPA — NO PC MAIS BONITA, NO CELULAR PERFEITA */
         .capa-container {
             width: 100%;
             height: 70vh;
@@ -224,7 +224,9 @@
             text-shadow: 0 0 12px rgba(255, 40, 40, 0.3);
         }
 
-        /* ✅ GRADE DOS CARDS */
+        /* ✅ ================================================== */
+        /* ✅ CARDS — EXATAMENTE DO JEITO QUE VOCÊ APROVOU! */
+        /* ✅ ================================================== */
         .rituais-grade {
             display: flex;
             flex-wrap: wrap;
@@ -390,9 +392,9 @@
         .carregando { color: #907070; font-style: italic; }
         .vazio { color: #705050; font-style: italic; }
 
-        /* ===================================================== */
-        /* ✅ CELULAR — EXATAMENTE COMO ESTAVA (NÃO MUDA NADA!) */
-        /* ===================================================== */
+        /* ✅ ========================================== */
+        /* ✅ CELULAR — INTACTO, PERFEITO COMO ESTAVA! */
+        /* ✅ ========================================== */
         @media (max-width: 768px) {
             .capa-container {
                 height: 60vh;
@@ -412,36 +414,36 @@
             .foto-trabalho { height: 140px; }
         }
 
-        /* ===================================================== */
-        /* ✅ PC — APENAS AQUI FICA MELHORADO! */
-        /* ===================================================== */
+        /* ✅ ========================================== */
+        /* ✅ PC — MELHORADO, CARDS TAMANHO NORMAL! */
+        /* ✅ ========================================== */
         @media (min-width: 1024px) {
             .capa-container {
-                height: 85vh; /* ← capa maior e mais bonita no PC */
+                height: 85vh;
                 max-height: 650px;
             }
             .capa-container img {
-                object-fit: cover; /* ← no PC a foto preenche bonito, sem cortar estranho */
+                object-fit: cover;
                 object-position: center top;
             }
             .intro h1 {
-                font-size: 2.8rem; /* ← título maior e imponente no PC */
+                font-size: 2.8rem;
             }
             .rituais-grade {
-                gap: 30px; /* ← mais espaçamento entre os cards no PC */
+                gap: 30px;
             }
             .ritual-card {
-                width: 270px; /* ← cards um pouquinho maiores no PC */
-                transform: scale(1); /* ← sem redução, tamanho normal no PC */
+                width: 270px;
+                transform: scale(1);
             }
             .ritual-card:hover {
-                transform: translateY(-8px) scale(1); /* ← efeito bonito sem bagunçar */
+                transform: translateY(-8px) scale(1);
             }
             .foto-trabalho {
-                height: 170px; /* ← foto um pouquinho maior no PC */
+                height: 170px;
             }
             section h2 {
-                font-size: 2.2rem; /* ← títulos maiores no PC */
+                font-size: 2.2rem;
             }
         }
     </style>
