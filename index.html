@@ -64,7 +64,7 @@
             100% { transform: translateY(-100vh) translateX(12px) scale(0.4); opacity: 0; }
         }
 
-        /* ✅ MENU — SEM LINHA EMBAIXO */
+        /* ✅ MENU — SEM LINK DO PAINEL */
         .menu-topo {
             position: fixed;
             top: 10px;
@@ -405,6 +405,93 @@
             background: linear-gradient(135deg, var(--vermelho), #ff4444);
         }
 
+        /* ✅ ================================================= */
+        /* ✅ SEÇÃO DE DEPOIMENTOS — ESTILO ALINHADO */
+        /* ✅ ================================================= */
+        .depoimentos-grade {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .depoimento-card {
+            width: 300px;
+            background: linear-gradient(180deg, rgba(25, 8, 8, 0.95), rgba(10, 2, 2, 0.98));
+            padding: 25px 20px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow:
+                inset 0 0 18px rgba(0, 0, 0, 0.9),
+                0 0 8px rgba(0, 0, 0, 0.9),
+                0 0 18px rgba(60, 40, 20, 0.15);
+            transition: all 0.35s ease;
+        }
+
+        /* ✅ Moldura ornamentada igual aos rituais */
+        .depoimento-card::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: 3px solid transparent;
+            border-image: linear-gradient(
+                45deg,
+                #1a1510,
+                #3a2d1f,
+                #2b2015,
+                #1a1510
+            ) 1;
+            border-radius: 6px;
+            box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8);
+        }
+        .depoimento-card::after {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border: 1px solid rgba(60, 45, 25, 0.6);
+            border-radius: 4px;
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .depoimento-conteudo {
+            position: relative;
+            z-index: 5;
+        }
+        .aspas {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 3rem;
+            color: rgba(90, 70, 35, 0.4);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        .depoimento-texto {
+            font-size: 0.9rem;
+            color: #d0b0b0;
+            line-height: 1.7;
+            margin-bottom: 18px;
+            font-style: italic;
+        }
+        .depoimento-nome {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 0.95rem;
+            color: #ff5050;
+            text-shadow: 0 0 6px rgba(255, 40, 40, 0.25);
+        }
+        .depoimento-card:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                inset 0 0 25px rgba(0, 0, 0, 0.95),
+                0 0 12px rgba(0, 0, 0, 0.95),
+                0 0 30px rgba(80, 60, 30, 0.25);
+        }
+
         /* ✅ TELA CHEIA */
         .tela-cheia-fundo {
             position: fixed;
@@ -481,7 +568,7 @@
         .carregando { color: #907070; font-style: italic; }
         .vazio { color: #705050; font-style: italic; }
 
-        /* ✅ CELULAR — CAPA EM -60px */
+        /* ✅ CELULAR */
         @media (max-width: 768px) {
             .capa-container {
                 height: 60vh;
@@ -506,9 +593,11 @@
             .ritual-card h3 { font-size: 0.85rem; }
             .ritual-card p { font-size: 0.7rem; line-height: 1.3; }
             .botao-card { padding: 6px; font-size: 0.7rem; }
+            .depoimentos-grade { gap: 15px; }
+            .depoimento-card { width: 100%; max-width: 300px; }
         }
 
-        /* ✅ PC — LAYOUT MANTIDO */
+        /* ✅ PC */
         @media (min-width: 1024px) {
             .capa-container {
                 height: 85vh;
@@ -556,10 +645,10 @@
     <div class="menu-suspenso" id="menuSuspenso">
         <a href="#inicio">Início</a>
         <a href="#rituais">Trabalhos Espirituais</a>
+        <a href="#depoimentos">Depoimentos</a>
         <a href="#sobre">Sobre</a>
         <a href="#contato">Contato</a>
         <a href="loja.html" class="loja-link">🛒 Loja</a>
-        <a href="painel.html">⚙️ Painel</a>
     </div>
 
     <div class="capa-container">
@@ -578,6 +667,34 @@
         <h2>NOSSOS RITUAIS</h2>
         <div class="rituais-grade" id="gradeRituais">
             <p class="carregando">Carregando trabalhos...</p>
+        </div>
+    </section>
+
+    <!-- ✅ SEÇÃO DE DEPOIMENTOS NOVA -->
+    <section id="depoimentos">
+        <h2>QUEM JÁ SENTIU ESTE PODER</h2>
+        <div class="depoimentos-grade">
+            <div class="depoimento-card">
+                <div class="depoimento-conteudo">
+                    <div class="aspas">"</div>
+                    <p class="depoimento-texto">Não acreditava que fosse possível, mas em poucos dias tudo começou a mudar. A força é real e o resultado veio como prometido. Gratidão!</p>
+                    <p class="depoimento-nome">— Cliente reservado</p>
+                </div>
+            </div>
+            <div class="depoimento-card">
+                <div class="depoimento-conteudo">
+                    <div class="aspas">"</div>
+                    <p class="depoimento-texto">Passei por muitos lugares, mas aqui senti a presença verdadeira. O trabalho foi feito com respeito, seriedade e muita força. Recomendo a todos.</p>
+                    <p class="depoimento-nome">— Maria, 42 anos</p>
+                </div>
+            </div>
+            <div class="depoimento-card">
+                <div class="depoimento-conteudo">
+                    <div class="aspas">"</div>
+                    <p class="depoimento-texto">O que parecia impossível se realizou. A confiança, a discrição e o poder espiritual fazem toda a diferença. Cheguei descrente e saí transformada.</p>
+                    <p class="depoimento-nome">— Cliente reservado</p>
+                </div>
+            </div>
         </div>
     </section>
 
