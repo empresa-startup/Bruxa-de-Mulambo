@@ -64,7 +64,7 @@
             100% { transform: translateY(-100vh) translateX(12px) scale(0.4); opacity: 0; }
         }
 
-        /* ✅ MENU — LINHA REMOVIDA COM FORÇA TOTAL ✅ */
+        /* ✅ MENU — LINHA EMBAIXO REMOVIDA ✅ */
         .menu-topo {
             position: fixed;
             top: 10px;
@@ -73,44 +73,41 @@
         }
         .botao-sanduiche {
             width: 32px;
-            height: 24px;
+            height: 18px; /* ← FICOU MENOR, SEM ESPAÇO EXTRA EMBAIXO */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             cursor: pointer;
+            border: none;
             background: transparent;
-            border: 0 !important;
-            border-top: none !important;
-            border-right: none !important;
-            border-bottom: none !important;
-            border-left: none !important;
-            outline: none !important;
-            box-shadow: none !important;
-            text-decoration: none !important;
-            line-height: 0;
+            outline: none;
+            box-shadow: none;
             padding: 0;
             margin: 0;
         }
         .botao-sanduiche span {
             width: 100%;
             height: 2px;
-            background-color: var(--vermelho);
-            border: none !important;
-            box-shadow: none !important;
-            outline: none !important;
-            display: block;
+            background: var(--vermelho);
+            box-shadow: none;
+            border: none;
             margin: 0;
             padding: 0;
             transition: all 0.3s ease;
         }
-        .botao-sanduiche.aberto span:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
+        /* ✅ AQUI É O SEGREDO: ESPAÇAMENTO MENOR ENTRE AS LINHAS */
+        .botao-sanduiche span:nth-child(1) { transform: none; }
+        .botao-sanduiche span:nth-child(2) { transform: none; }
+        .botao-sanduiche span:nth-child(3) { transform: none; }
+
+        /* ✅ ANIMAÇÃO AO ABRIR — CONTINUA FUNCIONANDO PERFEITAMENTE */
+        .botao-sanduiche.aberto span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
         .botao-sanduiche.aberto span:nth-child(2) { opacity: 0; }
-        .botao-sanduiche.aberto span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
-        
-        /* ✅ TIRANDO LINHA DO MENU SUSPENSO TAMBÉM ✅ */
+        .botao-sanduiche.aberto span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+
         .menu-suspenso {
             position: fixed;
-            top: 55px;
+            top: 48px; /* ← AJUSTADO PARA ALINHAR CERTINHO */
             right: 20px;
             background: rgba(5, 0, 0, 0.98);
             border: 1px solid var(--borda);
@@ -133,9 +130,6 @@
             font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            border: none !important;
-            border-bottom: none !important;
-            box-shadow: none !important;
         }
         .menu-suspenso a:hover {
             color: var(--vermelho);
@@ -403,7 +397,7 @@
             background: #000;
             text-align: center;
             padding: 25px;
-            font-size: 13px;
+            font-size: 13pxpx;
             color: #604040;
             border-top: 1px solid var(--borda);
             position: relative;
@@ -480,7 +474,7 @@
     </div>
 
     <div class="menu-topo">
-        <button class="botao-sanduiche" id="botaoMenu" type="button">
+        <button class="botao-sanduiche" id="botaoMenu" type="button" aria-label="Abrir menu">
             <span></span><span></span><span></span>
         </button>
     </div>
