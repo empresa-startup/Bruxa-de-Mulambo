@@ -100,7 +100,7 @@
         .botao-sanduiche.aberto span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
 
         .menu-suspenso {
-            position: fixed,
+            position: fixed;
             top: 48px;
             right: 20px;
             background: rgba(5, 0, 0, 0.98);
@@ -140,7 +140,7 @@
             height: 70vh;
             min-height: 400px;
             overflow: hidden;
-            position:
+            position: relative;
             z-index: 10;
         }
         .capa-container img {
@@ -176,7 +176,7 @@
         }
 
         .intro {
-            text-align: 0
+            text-align: center;
             padding: 40px 20px 60px;
             position: relative;
             z-index: 20;
@@ -219,7 +219,7 @@
         }
 
         section {
-            padding: 50px 20;
+            padding: 50px 20px;
             text-align: center;
             position: relative;
             z-index: 20;
@@ -233,9 +233,9 @@
         }
 
         /* ✅ ================================================= */
-        /* ✅ MOLDURA DE PORTAL RITUALÍSTICA NOS CARDS */
+        /* ✅ MOLDURA DE PORTAL RITUALÍSTICA — SEM LINHA VERMELHA */
         /* ✅ ================================================= */
-        .rituals-grade {
+        .rituais-grade {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -256,14 +256,13 @@
             transform: scale(1);
 
             box-shadow:
-                inset 0 0 0 1px rgba(255, 40, 40, 0.18),
                 inset 0 0 18px rgba(0, 0, 0, 0.9),
                 0 0 8px rgba(0, 0, 0, 0.9),
-                0 0 18px rgba(90, 10, 10, 0.35),
-                0 0 30px rgba(40, 5, 5, 0.25);
+                0 0 18px rgba(60, 40, 20, 0.15),
+                0 0 30px rgba(30, 20, 10, 0.1);
         }
 
-        /* ✅ Moldura externa ornamentada — escura e grossa */
+        /* ✅ Moldura externa ornamentada — madeira escura envelhecida */
         .ritual-card::before {
             content: '';
             position: absolute;
@@ -274,20 +273,20 @@
             border: 3px solid transparent;
             border-image: linear-gradient(
                 45deg,
-                #1a1a1a,
-                #3a2a1a,
-                #1a1a1a,
-                #2b1b1b
+                #1a1510,
+                #3a2d1f,
+                #2b2015,
+                #1a1510
             ) 1;
             pointer-events: none;
             z-index: 2;
             border-radius: 6px;
             box-shadow:
                 inset 0 0 12px rgba(0, 0, 0, 0.8),
-                0 0 8px rgba(0, 0, 0, 0.9);
+                0 0 8px rgba(40, 30, 15, 0.2);
         }
 
-        /* ✅ Moldura interna — brilho vermelho de sangue */
+        /* ✅ Moldura interna — ESCURA, SEM LINHA VERMELHA */
         .ritual-card::after {
             content: '';
             position: absolute;
@@ -295,58 +294,250 @@
             left: 12px;
             right: 12px;
             bottom: 12px;
-            border: 1px solid rgba(180, 20, 20, 0.75);
+            border: 1px solid rgba(60, 45, 25, 0.6);
             pointer-events: none;
             z-index: 3;
             border-radius: 4px;
-            filter: drop-shadow(0 0 8px rgba(255, 40, 40, 0.45));
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
         }
 
-        /* ✅ Cantos ornamentados como na moldura da referência */
-        .ritual-card .foto-trabalho::before,
-        .ritual-card .foto-trabalho::after,
-        .ritual-card .card-conteudo::before,
-        .ritual-card .card-conteudo::after {
-            content: '';
+        /* ✅ Cantos ornamentados — detalhes dourado-escuros */
+        .ritual-card .canto {
             position: absolute;
-            width: 22px;
-            height: 22px;
-            border: 2px solid rgba(80, 60, 20, 0.9);
+            width: 26px;
+            height: 26px;
+            border: 2px solid rgba(90, 70, 35, 0.75);
             pointer-events: none;
             z-index: 4;
-            opacity: 0.85;
+        }
+        .ritual-card .canto-sup-esq {
+            top: 8px; left: 8px;
+            border-right: none; border-bottom: none;
+        }
+        .ritual-card .canto-sup-dir {
+            top: 8px; right: 8px;
+            border-left: none; border-bottom: none;
+        }
+        .ritual-card .canto-inf-esq {
+            bottom: 8px; left: 8px;
+            border-right: none; border-top: none;
+        }
+        .ritual-card .canto-inf-dir {
+            bottom: 8px; right: 8px;
+            border-left: none; border-top: none;
         }
 
-        /* ✅ Canto superior esquerdo */
-        .ritual-card .foto-trabalho::before {
-            top: 8px;
-            left: 8px;
-            border-right: none;
-            border-bottom: none;
+        /* ✅ AO PASSAR O MOUSE — moldura brilha com tom dourado-escuro */
+        .ritual-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow:
+                inset 0 0 25px rgba(0, 0, 0, 0.95),
+                0 0 12px rgba(0, 0, 0, 0.95),
+                0 0 30px rgba(80, 60, 30, 0.25),
+                0 0 50px rgba(40, 30, 15, 0.15);
+        }
+        .ritual-card:hover::after {
+            border-color: rgba(80, 60, 30, 0.8);
+        }
+        .ritual-card:hover .canto {
+            border-color: rgba(110, 85, 40, 0.9);
         }
 
-        /* ✅ Canto superior direito */
-        .ritual-card .foto-trabalho::after {
-            top: 8px;
-            right: 8px;
-            border-left: none;
-            border-bottom: none;
+        .foto-trabalho {
+            width: 100%;
+            height: 190px;
+            object-fit: contain;
+            object-position: center;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            transition: opacity 0.25s ease;
+            background: rgba(10, 2, 2, 0.8);
+            position: relative;
+            z-index: 5;
+        }
+        .foto-trabalho:hover {
+            opacity: 0.9;
+        }
+        .card-conteudo {
+            padding: 10px;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+        .ritual-card h3 {
+            font-family: 'Cinzel Decorative', serif;
+            color: #ff5050;
+            font-size: 1rem;
+            margin-bottom: 2px;
+            text-shadow: 0 0 8px rgba(255, 40, 40, 0.3);
+            position: relative;
+            z-index: 5;
+        }
+        .ritual-card p {
+            font-size: 0.8rem;
+            color: #907070;
+            line-height: 1.4;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 5;
+        }
+        .botao-card {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            background: linear-gradient(135deg, var(--vermelho-escuro), var(--vermelho));
+            color: #fff;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 80, 80, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 5;
+        }
+        .botao-card:hover {
+            background: linear-gradient(135deg, var(--vermelho), #ff4444);
         }
 
-        /* ✅ Canto inferior esquerdo */
-        .ritual-card .card-conteudo::before {
-            bottom: 8px;
-            left: 8px;
-            border-right: none;
-            border-top: none;
+        /* ✅ TELA CHEIA */
+        .tela-cheia-fundo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .tela-cheia-fundo.aberto {
+            opacity: 1;
+            visibility: visible;
+        }
+        .tela-cheia-img {
+            max-width: 92%;
+            max-height: 92vh;
+            border-radius: 6px;
+            box-shadow: 0 0 40px rgba(255, 40, 40, 0.2);
         }
 
-        /* ✅ Canto inferior direito */
-        .ritual-card .card-conteudo::after {
-            bottom: 8px;
-            right: 8px;
-            border-left: none;
-            border-top: none;
+        .frase-final {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(1rem, 4vw, 1.25rem);
+            color: var(--vermelho);
+            padding: 30px 15px;
+            line-height: 1.6;
+            text-shadow: 0 0 10px rgba(255, 40, 40, 0.25);
+            position: relative;
+            z-index: 20;
+        }
+        .caixa-texto, .contato-bloco {
+            background: linear-gradient(180deg, rgba(25, 8, 8, 0.9), rgba(10, 2, 2, 0.95));
+            padding: 30px 20px;
+            border: 1px solid var(--borda);
+            border-radius: 10px;
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 20;
+        }
+        .caixa-texto p {
+            font-size: 0.9rem;
+            color: #d0b0b0;
+            line-height: 1.7;
+        }
+        .botao-whatsapp-grande {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+        footer {
+            background: #000;
+            text-align: center;
+            padding: 25px;
+            font-size: 13px;
+            color: #604040;
+            border-top: 1px solid var(--borda);
+            position: relative;
+            z-index: 20;
+        }
+        .carregando { color: #907070; font-style: italic; }
+        .vazio { color: #705050; font-style: italic; }
+
+        /* ✅ CELULAR — CAPA EM -60px */
+        @media (max-width: 768px) {
+            .capa-container {
+                height: 60vh;
+                min-height: 350px;
+            }
+            .capa-container img {
+                object-fit: contain;
+                transform: translateY(-60px);
+            }
+            .intro h1 { font-size: 1.7rem; }
+            .rituais-grade { gap: 6px; }
+            .ritual-card {
+                width: 31%;
+                min-width: 85px;
+                transform: scale(1);
+            }
+            .foto-trabalho { 
+                height: 110px;
+                object-fit: contain;
+            }
+            .card-conteudo { padding: 6px; gap: 4px; }
+            .ritual-card h3 { font-size: 0.85rem; }
+            .ritual-card p { font-size: 0.7rem; line-height: 1.3; }
+            .botao-card { padding: 6px; font-size: 0.7rem; }
+        }
+
+        /* ✅ PC — LAYOUT MANTIDO */
+        @media (min-width: 1024px) {
+            .capa-container {
+                height: 85vh;
+                max-height: 650px;
+            }
+            .capa-container img {
+                object-fit: cover;
+                object-position: center top;
+                transform: none;
+            }
+            .intro h1 {
+                font-size: 2.8rem;
+            }
+            .rituais-grade {
+                gap: 20px;
+            }
+            .ritual-card {
+                width: 320px;
+                transform: scale(1);
+            }
+            .ritual-card:hover {
+                transform: translateY(-8px);
+            }
+            .foto-trabalho {
+                height: 190px;
+            }
+            section h2 {
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
@@ -355,6 +546,168 @@
 
     <div class="tela-cheia-fundo" id="telaCheia" onclick="fecharImagem()">
         <img src="" alt="" class="tela-cheia-img" id="imgTelaCheia">
-    </point>
+    </div>
+
+    <div class="menu-topo">
+        <button class="botao-sanduiche" id="botaoMenu" type="button" aria-label="Abrir menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+    <div class="menu-suspenso" id="menuSuspenso">
+        <a href="#inicio">Início</a>
+        <a href="#rituais">Trabalhos Espirituais</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#contato">Contato</a>
+        <a href="loja.html" class="loja-link">🛒 Loja</a>
+        <a href="painel.html">⚙️ Painel</a>
+    </div>
+
+    <div class="capa-container">
+        <img src="IMAGEM-DE-FUNDO.png" alt="Bruxa de Mulambo — Poder e Magia na Quimbanda">
+        <div class="capa-sombra"></div>
+        <div class="brilho-capa"></div>
+    </div>
+
+    <section class="intro" id="inicio">
+        <h1>Poder e Magia<br>na Quimbanda</h1>
+        <p>Trabalhos espirituais com força e resultados reais</p>
+        <a href="https://wa.me/5531987276275?text=Olá!%20Quero%20agendar%20uma%20consulta!" target="_blank" class="btn">📅 Agendar Consulta</a>
+    </section>
+
+    <section id="rituais">
+        <h2>NOSSOS RITUAIS</h2>
+        <div class="rituais-grade" id="gradeRituais">
+            <p class="carregando">Carregando trabalhos...</p>
+        </div>
+    </section>
+
+    <section>
+        <p class="frase-final">
+            Nem todos estão preparados para acessar este poder…<br>
+            mas você não chegou aqui por acaso.
+        </p>
+    </section>
+
+    <section id="sobre">
+        <h2>Sobre o Portal</h2>
+        <div class="caixa-texto">
+            <p>Um canal de força ancestral, conectado às verdadeiras entidades que movem os destinos. Aqui não há ilusão — há poder, resultado e presença real.</p>
+            <br>
+            <p>Cada trabalho é feito com fé, conhecimento e respeito às forças que guiam este caminho.</p>
+        </div>
+    </section>
+
+    <section id="contato">
+        <h2>Contato</h2>
+        <div class="contato-bloco">
+            <p>📱 Pelo WhatsApp abaixo</p>
+            <br>
+            <p>Atendimento personalizado e reservado</p>
+            <br>
+            <a href="https://wa.me/5531987276275?text=Olá!%20Contato%20pelo%20site!" target="_blank" class="botao-whatsapp-grande">💬 Falar no WhatsApp</a>
+        </div>
+    </section>
+
+    <footer>
+        © 2025 Bruxa de Mulambo — Todos os direitos reservados
+    </footer>
+
+    <script>
+        const WHATSAPP = '5531987276275';
+
+        function criarBrasas() {
+            const container = document.getElementById('fogoGlobal');
+            for(let i = 0; i < 60; i++){
+                const b = document.createElement('div');
+                b.className = 'brasa';
+                const tam = Math.random() * 10 + 4;
+                b.style.width = b.style.height = tam + 'px';
+                b.style.left = Math.random() * 100 + '%';
+                b.style.animationDuration = (Math.random() * 4 + 5) + 's';
+                b.style.animationDelay = Math.random() * 4 + 's';
+                container.appendChild(b);
+            }
+        }
+
+        function abrirImagem(caminho, titulo) {
+            const fundo = document.getElementById('telaCheia');
+            const img = document.getElementById('imgTelaCheia');
+            img.src = caminho;
+            img.alt = titulo;
+            fundo.classList.add('aberto');
+            document.body.style.overflow = 'hidden';
+        }
+        function fecharImagem() {
+            document.getElementById('telaCheia').classList.remove('aberto');
+            document.body.style.overflow = '';
+        }
+
+        const botaoMenu = document.getElementById('botaoMenu');
+        const menuSuspenso = document.getElementById('menuSuspenso');
+        botaoMenu.onclick = () => {
+            botaoMenu.classList.toggle('aberto');
+            menuSuspenso.classList.toggle('aberto');
+        };
+        menuSuspenso.querySelectorAll('a').forEach(a => a.onclick = () => {
+            botaoMenu.classList.remove('aberto');
+            menuSuspenso.classList.remove('aberto');
+        });
+
+        function ajustarCaminhoImagem(caminho) {
+            if (caminho.startsWith('./')) return caminho;
+            if (caminho.startsWith('imagens/')) return './' + caminho;
+            return caminho;
+        }
+
+        async function carregarTrabalhos() {
+            try {
+                const resposta = await fetch('./dados/trabalhos.json');
+                if (!resposta.ok) throw new Error('Sem dados');
+                const trabalhos = await resposta.json();
+                renderizarTrabalhos(trabalhos);
+            } catch {
+                try {
+                    const resposta2 = await fetch('dados/trabalhos.json');
+                    if (!resposta2.ok) throw new Error('Sem dados');
+                    const trabalhos2 = await resposta2.json();
+                    renderizarTrabalhos(trabalhos2);
+                } catch {
+                    document.getElementById('gradeRituais').innerHTML = `
+                        <p class="vazio">Nenhum trabalho cadastrado ainda.<br>Use o Painel para cadastrar e publique o arquivo dados/trabalhos.json</p>`;
+                }
+            }
+        }
+
+        function renderizarTrabalhos(lista) {
+            const grade = document.getElementById('gradeRituais');
+            if (!lista.length) {
+                grade.innerHTML = '<p class="vazio">Nenhum trabalho disponível.</p>';
+                return;
+            }
+            grade.innerHTML = '';
+            lista.forEach(t => {
+                const caminhoFoto = ajustarCaminhoImagem(t.foto);
+                const card = document.createElement('div');
+                card.className = 'ritual-card';
+                card.innerHTML = `
+                    <div class="canto canto-sup-esq"></div>
+                    <div class="canto canto-sup-dir"></div>
+                    <img src="${caminhoFoto}" alt="${t.titulo}" class="foto-trabalho"
+                         onclick="abrirImagem('${caminhoFoto}', '${t.titulo}')"
+                         onerror="this.src='${caminhoFoto.replace('./', '')}'">
+                    <div class="card-conteudo">
+                        <div class="canto canto-inf-esq"></div>
+                        <div class="canto canto-inf-dir"></div>
+                        <h3>${t.titulo}</h3>
+                        <p>${t.descricao}</p>
+                        <a href="https://wa.me/${WHATSAPP}?text=Olá!%20Quero%20saber%20mais:%20${encodeURIComponent(t.titulo)}!" target="_blank" class="botao-card">SAIBA MAIS</a>
+                    </div>`;
+                grade.appendChild(card);
+            });
+        }
+
+        criarBrasas();
+        carregarTrabalhos();
+    </script>
 </body>
 </html>
