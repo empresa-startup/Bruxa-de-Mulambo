@@ -64,7 +64,7 @@
             100% { transform: translateY(-100vh) translateX(12px) scale(0.4); opacity: 0; }
         }
 
-        /* ✅ MENU — LINHA EMBAIXO REMOVIDA ✅ */
+        /* ✅ MENU — SEM LINHA EMBAIXO ✅ */
         .menu-topo {
             position: fixed;
             top: 10px;
@@ -73,7 +73,7 @@
         }
         .botao-sanduiche {
             width: 32px;
-            height: 18px; /* ← FICOU MENOR, SEM ESPAÇO EXTRA EMBAIXO */
+            height: 18px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -95,19 +95,13 @@
             padding: 0;
             transition: all 0.3s ease;
         }
-        /* ✅ AQUI É O SEGREDO: ESPAÇAMENTO MENOR ENTRE AS LINHAS */
-        .botao-sanduiche span:nth-child(1) { transform: none; }
-        .botao-sanduiche span:nth-child(2) { transform: none; }
-        .botao-sanduiche span:nth-child(3) { transform: none; }
-
-        /* ✅ ANIMAÇÃO AO ABRIR — CONTINUA FUNCIONANDO PERFEITAMENTE */
         .botao-sanduiche.aberto span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
         .botao-sanduiche.aberto span:nth-child(2) { opacity: 0; }
         .botao-sanduiche.aberto span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
 
         .menu-suspenso {
             position: fixed;
-            top: 48px; /* ← AJUSTADO PARA ALINHAR CERTINHO */
+            top: 48px;
             right: 20px;
             background: rgba(5, 0, 0, 0.98);
             border: 1px solid var(--borda);
@@ -238,7 +232,9 @@
             text-shadow: 0 0 12px rgba(255, 40, 40, 0.3);
         }
 
-        /* ✅ CARDS — 3 LADO A LADO, MAIORES, FOTO SEM ZOOM */
+        /* ✅ ================================================= */
+        /* ✅ MOLDURAS SINISTRAS NOS CARDS ✅ */
+        /* ✅ ================================================= */
         .rituais-grade {
             display: flex;
             flex-wrap: wrap;
@@ -250,32 +246,64 @@
         .ritual-card {
             width: 31%;
             background: linear-gradient(180deg, rgba(25, 8, 8, 0.95), rgba(10, 2, 2, 0.98));
-            border: 1px solid var(--borda);
+            /* ✅ MOLDURA SINISTRA — VÁRIAS CAMADAS DE SOMBRA */
+            box-shadow:
+                inset 0 0 0 1px rgba(180, 40, 40, 0.3),
+                inset 0 0 15px rgba(255, 40, 40, 0.08),
+                0 0 5px rgba(0, 0, 0, 0.8),
+                0 0 12px rgba(90, 20, 20, 0.2),
+                0 0 25px rgba(60, 10, 10, 0.1);
+            border: none;
             border-radius: 4px;
             overflow: hidden;
             position: relative;
             transition: all 0.35s ease;
-            box-shadow: inset 0 0 20px rgba(200, 40, 40, 0.05);
             display: flex;
             flex-direction: column;
             transform: scale(1);
         }
-        .ritual-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--vermelho);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.6), 0 0 20px rgba(255, 40, 40, 0.25);
-        }
+
+        /* ✅ DETALHE DA MOLDURA — QUATRO CANTOS COM LINHA VERMELHA */
         .ritual-card::before {
             content: '';
             position: absolute;
-            top: 6px;
-            left: 6px;
-            right: 6px;
-            bottom: 6px;
-            border: 1px solid rgba(200, 40, 40, 0.2);
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 1px solid rgba(180, 40, 40, 0.25);
             pointer-events: none;
             z-index: 2;
         }
+        .ritual-card::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: 1px solid rgba(255, 40, 40, 0.12);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ✅ AO PASSAR O MOUSE — MOLDURA BRILHA COM FORÇA! 🔥 */
+        .ritual-card:hover {
+            transform: translateY(-6px);
+            box-shadow:
+                inset 0 0 0 1px rgba(255, 60, 60, 0.5),
+                inset 0 0 20px rgba(255, 40, 40, 0.15),
+                0 0 10px rgba(255, 40, 40, 0.2),
+                0 0 25px rgba(255, 40, 40, 0.3),
+                0 0 40px rgba(150, 30, 30, 0.2);
+        }
+        .ritual-card:hover::before {
+            border-color: rgba(255, 60, 60, 0.45);
+        }
+        .ritual-card:hover::after {
+            border-color: rgba(255, 60, 60, 0.25);
+        }
+
         .foto-trabalho {
             width: 100%;
             height: 190px;
@@ -285,6 +313,8 @@
             cursor: pointer;
             transition: opacity 0.25s ease;
             background: rgba(10, 2, 2, 0.8);
+            position: relative;
+            z-index: 3;
         }
         .foto-trabalho:hover {
             opacity: 0.9;
@@ -325,6 +355,8 @@
             border: 1px solid rgba(255, 80, 80, 0.3);
             transition: all 0.3s ease;
             text-transform: uppercase;
+            position: relative;
+            z-index: 3;
         }
         .botao-card:hover {
             background: linear-gradient(135deg, var(--vermelho), #ff4444);
@@ -397,7 +429,7 @@
             background: #000;
             text-align: center;
             padding: 25px;
-            font-size: 13pxpx;
+            font-size: 13px;
             color: #604040;
             border-top: 1px solid var(--borda);
             position: relative;
