@@ -169,7 +169,7 @@
             text-shadow: 0 0 15px rgba(255, 40, 40, 0.4);
         }
 
-        /* ✅ CARDS — IMAGEM GRANDE OCUPANDO TODO O ESPAÇO DE CIMA! ✅ */
+        /* ✅ CARDS — IMAGEM ENORME, TEXTO BEM EMBAIXO! ✅ */
         .rituais-grade {
             display: flex;
             flex-wrap: wrap;
@@ -179,7 +179,7 @@
             margin: 0 auto;
         }
         .ritual-card {
-            width: 280px; /* ✅ Card um pouco mais largo */
+            width: 280px;
             background: var(--fundo-card);
             border: 2px solid var(--borda-vermelha);
             border-radius: 4px;
@@ -195,7 +195,6 @@
             border-color: var(--vermelho-fogo);
             box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 25px rgba(255, 40, 40, 0.25);
         }
-        /* Borda interna brilhante */
         .ritual-card::before {
             content: '';
             position: absolute;
@@ -208,29 +207,29 @@
             z-index: 2;
         }
 
-        /* ✅ IMAGEM — OCUPA TODO O TOPO, GRANDE E BONITA! ✅ */
+        /* ✅ IMAGEM — BEM MAIOR, ESPAÇO TOTAL! ✅ */
         .foto-trabalho {
             width: 100%;
-            height: 260px; /* ✅ IMAGEM BEM MAIS ALTA — OCUPA MAIS ESPAÇO */
-            object-fit: cover; /* ✅ PREENCHE TODO O QUADRO SEM DEFORMAR */
-            object-position: center top; /* ✅ MOSTRA A PARTE DE CIMA DA IMAGEM */
+            height: 340px; /* 🔥 IMAGEM ENORME — OCUPA QUASE TODO O CARD! */
+            object-fit: cover;
+            object-position: center top;
             display: block;
             background: #000;
         }
 
+        /* ✅ TEXTO BEM SEPARADO, DESCE BEM! ✅ */
         .card-conteudo {
-            padding: 20px 15px;
+            padding: 25px 15px 20px; /* ✅ ESPAÇO GRANDE ACIMA DO TÍTULO */
             position: relative;
             z-index: 3;
-            flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px; /* ✅ ESPAÇO ENTRE TÍTULO E DESCRIÇÃO */
         }
         .ritual-card h3 {
             font-family: 'Cinzel Decorative', serif;
             color: var(--vermelho);
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             margin-bottom: 5px;
             text-shadow: 0 0 8px rgba(255, 40, 40, 0.3);
         }
@@ -238,7 +237,7 @@
             font-size: 0.9rem;
             color: var(--texto-claro);
             line-height: 1.5;
-            margin-bottom: 10px;
+            margin-bottom: 18px; /* ✅ ESPAÇO ANTES DO BOTÃO */
         }
         .botao-card {
             display: block;
@@ -253,7 +252,6 @@
             border-radius: 3px;
             border: 1px solid rgba(255, 80, 80, 0.3);
             transition: all 0.3s ease;
-            margin-top: auto;
         }
         .botao-card:hover {
             background: linear-gradient(135deg, var(--vermelho), var(--vermelho-fogo));
@@ -303,7 +301,7 @@
         @media (max-width: 768px) {
             .rituais-grade { gap: 20px; }
             .ritual-card { width: 90%; max-width: 300px; }
-            .foto-trabalho { height: 240px; }
+            .foto-trabalho { height: 300px; }
         }
     </style>
 </head>
