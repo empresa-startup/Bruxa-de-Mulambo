@@ -272,20 +272,17 @@
     <div class="sombra-etérea"></div>
     <div class="labareda-base"></div>
     <div class="fogo-container" id="containerFogo"></div>
-
     <nav class="menu-cabecalho">
         <button class="botao-sanduiche" id="botaoSanduiche">☰</button>
         <span class="logo-menu">DOMUS OBSCURA</span>
         <button class="botao-carrinho" id="botaoCarrinho">🛒 <span class="contador-carrinho" id="contadorCarrinho">0</span></button>
     </nav>
-
     <div class="menu-overlay" id="menuOverlay">
         <button class="fechar-menu" id="fecharMenu">✕</button>
         <a href="index.html">🏠 Início</a>
         <a href="loja.html" class="ativo">🕯️ Produtos</a>
         <a href="#" id="linkCarrinho">🛒 Meu Carrinho</a>
     </div>
-
     <div class="modal-carrinho" id="modalCarrinho">
         <div class="carrinho-conteudo">
             <button class="fechar-carrinho" id="fecharCarrinho">✕</button>
@@ -297,29 +294,26 @@
             <button class="botao-finalizar" id="botaoFinalizar" disabled>📦 Enviar Pedido</button>
         </div>
     </div>
-
     <header>
         <div class="simbolo">☽ ✧ ☾</div>
         <h1>DOMUS OBSCURA</h1>
         <p class="subtitulo">Onde o mistério encontra a essência</p>
     </header>
-
     <main class="conteudo">
         <div class="grade-produtos" id="gradeProdutos">
             <p class="carregando">Carregando produtos...</p>
         </div>
     </main>
-
     <script>
         const WHATSAPP = '5531987276275';
         const CHAVE_CARRINHO = 'carrinho_domus_obscura';
         let listaProdutos = [];
 
-        // ✅ FUNÇÃO QUE AJUSTA O CAMINHO — FUNCIONA COM OU SEM PONTO!
+        // ✅ FUNÇÃO MÁGICA — FUNCIONA COM OU SEM O PONTO! NÃO IMPORTA!
         function ajustarCaminhoImagem(caminho) {
             if (!caminho) return '';
-            if (caminho.startsWith('./')) return caminho;
-            if (caminho.startsWith('imagens/')) return './' + caminho;
+            if (caminho.startsWith('./')) return caminho;        // ✅ COM PONTO → FICA IGUAL
+            if (caminho.startsWith('imagens/')) return './' + caminho; // ✅ SEM PONTO → ADICIONA!
             return caminho;
         }
 
@@ -375,7 +369,7 @@
             }
             grade.innerHTML = '';
             listaProdutos.forEach(prod => {
-                const caminhoFoto = ajustarCaminhoImagem(prod.foto);
+                const caminhoFoto = ajustarCaminhoImagem(prod.foto); // ✅ AJUSTA SOZINHO!
                 const card = document.createElement('div');
                 card.className = 'produto-card';
                 card.innerHTML = `
@@ -427,7 +421,7 @@
             }
             lista.innerHTML = '';
             carrinho.forEach(item => {
-                const caminhoItemImg = ajustarCaminhoImagem(item.foto);
+                const caminhoItemImg = ajustarCaminhoImagem(item.foto); // ✅ TAMBÉM NO CARRINHO!
                 const el = document.createElement('div');
                 el.className = 'item-carrinho';
                 el.innerHTML = `<img src="${caminhoItemImg}" class="item-img" onerror="this.src='${caminhoItemImg.replace('./', '')}'"><div class="item-info"><h4 class="item-nome">${item.titulo}</h4><p class="item-preco">R$ ${item.preco.toFixed(2).replace('.', ',')}</p><div class="item-qtd"><button onclick="alterarQtd(${item.id}, -1)">−</button><span>${item.qtd}</span><button onclick="alterarQtd(${item.id}, 1)">+</button></div></div><button class="remover-item" onclick="removerDoCarrinho(${item.id})">🗑️</button>`;
@@ -441,7 +435,6 @@
         function fecharCarrinhoFn(){ document.getElementById('modalCarrinho').classList.remove('aberto'); }
         document.getElementById('botaoCarrinho').onclick = abrirCarrinho;
         document.getElementById('fecharCarrinho').onclick = fecharCarrinhoFn;
-
         document.getElementById('botaoFinalizar').onclick = () => {
             const carrinho = pegarCarrinho();
             if (!carrinho.length) return;
