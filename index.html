@@ -382,9 +382,16 @@
     <footer>
         © 2025 Bruxa de Mulambo — Todos os direitos reservados
     </footer>
-
     <script>
         const WHATSAPP = '5531987276275';
+
+        // ✅ FUNÇÃO MÁGICA — FUNCIONA COM OU SEM O PONTO! NÃO IMPORTA!
+        function ajustarCaminhoImagem(caminho) {
+            if (!caminho) return '';
+            if (caminho.startsWith('./')) return caminho;
+            if (caminho.startsWith('imagens/')) return './' + caminho;
+            return caminho;
+        }
 
         function criarBrasas() {
             const container = document.getElementById('fogoGlobal');
@@ -410,15 +417,6 @@
             botaoMenu.classList.remove('aberto');
             menuSuspenso.classList.remove('aberto');
         });
-
-        // ✅ FUNÇÃO QUE AJUSTA O CAMINHO — FUNCIONA COM OU SEM PONTO!
-        function ajustarCaminhoImagem(caminho) {
-            // Se já tem ./ na frente → deixa como está
-            if (caminho.startsWith('./')) return caminho;
-            // Se começa com imagens/ → adiciona o ponto
-            if (caminho.startsWith('imagens/')) return './' + caminho;
-            return caminho;
-        }
 
         async function carregarTrabalhos() {
             try {
@@ -447,7 +445,7 @@
             }
             grade.innerHTML = '';
             lista.forEach(t => {
-                const caminhoFoto = ajustarCaminhoImagem(t.foto);
+                const caminhoFoto = ajustarCaminhoImagem(t.foto); // ✅ AJUSTA SOZINHO!
                 const card = document.createElement('div');
                 card.className = 'ritual-card';
                 card.innerHTML = `
