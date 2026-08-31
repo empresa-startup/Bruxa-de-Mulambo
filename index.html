@@ -25,14 +25,19 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            border: 0 !important;
+            outline: 0 !important;
+            box-shadow: none !important;
         }
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Cinzel', serif;
             background: var(--fundo);
             color: var(--texto);
-            line-height: 1.75;
+            line-height: 1.6;
             position: relative;
+            margin: 0;
+            padding: 0;
         }
         .fogo-global {
             position: fixed;
@@ -49,7 +54,6 @@
             bottom: -10px;
             border-radius: 50%;
             background: radial-gradient(circle, #ff4444, #991a1a);
-            box-shadow: 0 0 8px #ff3333, 0 0 16px #991a1a, 0 0 25px rgba(150,20,20,0.4);
             opacity: 0;
             animation: subirBrasa linear infinite;
             filter: blur(1px);
@@ -60,15 +64,16 @@
             100% { transform: translateY(-100vh) translateX(12px) scale(0.4); opacity: 0; }
         }
 
-        /* ✅ MENU TOPO — SEM FUNDO, SEM LINHA PRETA! */
+        /* ✅ MENU — TOTALMENTE LIMPO, SEM NENHUMA LINHA */
         .menu-topo {
             position: fixed;
             top: 10px;
             right: 20px;
             z-index: 999;
-            background: transparent !important; /* ✅ TOTALMENTE TRANSPARENTE */
-            border: none !important; /* ✅ SEM BORDA/LINHA PRETA */
-            box-shadow: none !important; /* ✅ SEM SOMBRA */
+            background: transparent;
+            margin: 0;
+            padding: 0;
+            line-height: 0;
         }
         .botao-sanduiche {
             width: 32px;
@@ -77,17 +82,18 @@
             flex-direction: column;
             justify-content: space-between;
             cursor: pointer;
-            background: transparent; /* ✅ FUNDO TRANSPARENTE DO BOTÃO */
-            border: none; /* ✅ SEM BORDA */
-            outline: none; /* ✅ SEM CONTORNO */
+            background: transparent;
+            margin: 0;
+            padding: 0;
         }
         .botao-sanduiche span {
             width: 100%;
             height: 2px;
             background: var(--vermelho);
-            box-shadow: 0 0 8px rgba(255, 40, 40, 0.4);
             transition: all 0.3s ease;
-            border: none; /* ✅ SEM LINHA PRETA NAS BARRAS */
+            display: block;
+            margin: 0;
+            padding: 0;
         }
         .botao-sanduiche.aberto span:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
         .botao-sanduiche.aberto span:nth-child(2) { opacity: 0; }
@@ -97,7 +103,6 @@
             top: 55px;
             right: 20px;
             background: rgba(5, 0, 0, 0.95);
-            border: 1px solid var(--borda);
             border-radius: 8px;
             padding: 0;
             max-height: 0;
@@ -127,7 +132,7 @@
             font-weight: 600;
         }
 
-        /* ✅ CAPA — PERFEITA NO CELULAR E COMPUTADOR */
+        /* ✅ CAPA — SEM ESPAÇO, SEM LINHA NO TOPO */
         .capa-container {
             width: 100%;
             height: 55vh;
@@ -135,8 +140,11 @@
             z-index: 10;
             background: #0c0404;
             overflow: hidden;
-            margin-top: 0; /* ✅ SEM ESPAÇO/LINHA NO TOPO */
-            border: none;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            display: block;
+            line-height: 0;
         }
         .capa-container img {
             width: 100%;
@@ -144,19 +152,18 @@
             object-fit: cover;
             object-position: center top;
             filter: brightness(1.15) contrast(1.05) saturate(1.35);
-            display: block; /* ✅ ELIMINA ESPAÇO EMBAIXO DA IMAGEM */
+            display: block;
+            margin: 0;
+            padding: 0;
+            border: none;
         }
         @media (max-width: 768px) {
             .capa-container {
                 height: auto;
-                min-height: auto;
             }
             .capa-container img {
-                width: 100%;
                 height: auto;
                 object-fit: contain;
-                object-position: center;
-                display: block;
             }
         }
 
@@ -196,7 +203,7 @@
             font-family: 'Cinzel Decorative', serif;
             font-size: clamp(1.9rem, 7vw, 3.5rem);
             color: var(--vermelho);
-            text-shadow: 0 0 20px rgba(255, 40, 40, 0.6), 0 0 40px rgba(255, 40, 40, 0.3);
+            text-shadow: 0 0 20px rgba(255, 40, 40, 0.6);
             margin-bottom: 15px;
             line-height: 1.2;
         }
@@ -218,15 +225,12 @@
             font-size: 0.9rem;
             text-decoration: none;
             letter-spacing: 1px;
-            border: 1px solid rgba(255, 60, 60, 0.4);
             border-radius: 3px;
             transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(255, 40, 40, 0.2);
         }
         .btn:hover {
             transform: translateY(-3px);
             background: linear-gradient(135deg, #b01818, #d82828);
-            box-shadow: 0 0 15px rgba(255, 40, 40, 0.35);
         }
         section {
             padding: 70px 20px;
@@ -239,81 +243,78 @@
             font-size: clamp(1.4rem, 5vw, 2.2rem);
             color: var(--vermelho);
             margin-bottom: 40px;
-            text-shadow: 0 0 12px rgba(255, 40, 40, 0.3);
         }
 
-        /* ✅ CARDS — AJUSTADOS PRA APARECER TUDO, SEM CORTAR! */
+        /* ✅ CARDS REFEITOS — NÃO CORTA NADA, TAMANHO FLEXÍVEL */
         .rituais-grade {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 25px;
+            gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
-            align-items: stretch; /* ✅ TODOS OS CARDS MESMA ALTURA */
+            align-items: stretch;
         }
         .ritual-card {
             background: linear-gradient(180deg, rgba(25, 8, 8, 0.95), rgba(10, 2, 2, 0.98));
-            border: 1px solid var(--borda);
-            padding: 12px; /* ✅ MAIS ESPAÇO INTERNO */
+            padding: 15px;
             width: 300px;
-            min-height: 380px; /* ✅ ALTURA MÍNIMA MAIOR — NÃO CORTA */
             display: flex;
             flex-direction: column;
+            border-radius: 12px;
             transition: all 0.35s ease;
-            border-radius: 10px; /* ✅ MAIS ARREDONDADO, MAIS BONITO */
             position: relative;
             z-index: 20;
-            overflow: visible; /* ✅ NÃO ESCONDE NADA */
+            height: auto !important;
+            min-height: auto !important;
         }
         .ritual-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--vermelho);
-            background: linear-gradient(180deg, rgba(30, 10, 10, 0.95), rgba(12, 3, 3, 0.98));
-            box-shadow: 0 10px 30px rgba(255, 40, 40, 0.15); /* ✅ SOMBRA BONITA AO PASSAR O MOUSE */
+            transform: translateY(-5px);
+            border-color: transparent;
         }
         .foto-trabalho {
             width: 100%;
             height: 180px;
             object-fit: cover;
-            border-radius: 6px;
-            margin-bottom: 12px; /* ✅ ESPAÇO ENTRE FOTO E TEXTO */
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: block;
         }
         .card-conteudo {
-            padding: 5px;
-            text-align: center;
-            flex-grow: 1; /* ✅ PREENCHE O ESPAÇO DISPONÍVEL */
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            gap: 10px; /* ✅ ESPAÇO ENTRE ELEMENTOS */
+            flex-grow: 1;
+            gap: 12px;
         }
         .ritual-card h3 {
             font-family: 'Cinzel Decorative', serif;
             color: #ff5050;
-            font-size: 1.05rem;
-            margin-bottom: 5px;
+            font-size: 1.1rem;
+            margin: 0;
+            line-height: 1.3;
         }
         .ritual-card p {
-            font-size: 0.85rem;
-            color: #907070;
-            margin-bottom: 8px;
-            line-height: 1.6; /* ✅ ESPAÇO ENTRE LINHAS — NÃO SOBREPÕE */
+            font-size: 0.9rem;
+            color: #b89898;
+            line-height: 1.6;
+            margin: 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         .botao-whatsapp {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            padding: 10px 18px; /* ✅ MAIS ESPAÇO NO BOTÃO */
+            gap: 8px;
+            padding: 12px 20px;
             background: linear-gradient(135deg, #25D366, #128C7E);
             color: #fff;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             text-decoration: none;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: all 0.3s ease;
             font-weight: 600;
-            margin-top: auto; /* ✅ BOTÃO SEMPRE EMBAIXO */
+            margin-top: auto;
         }
         .botao-whatsapp:hover {
             transform: translateY(-2px);
@@ -322,8 +323,7 @@
         .caixa-texto, .contato-bloco {
             background: linear-gradient(180deg, rgba(25, 8, 8, 0.9), rgba(10, 2, 2, 0.95));
             padding: 35px 25px;
-            border: 1px solid var(--borda);
-            border-radius: 10px;
+            border-radius: 12px;
             max-width: 700px;
             margin: 0 auto;
             position: relative;
@@ -340,7 +340,6 @@
             color: var(--vermelho);
             padding: 40px 15px;
             line-height: 1.7;
-            text-shadow: 0 0 10px rgba(255, 40, 40, 0.25);
             position: relative;
             z-index: 20;
         }
@@ -350,22 +349,17 @@
             padding: 28px;
             font-size: 14px;
             color: #604040;
-            border-top: 1px solid var(--borda);
             position: relative;
             z-index: 20;
         }
         .carregando { color: #907070; font-style: italic; }
         .vazio { color: #705050; font-style: italic; }
 
-        /* ✅ RESPONSIVIDADE — CELULAR PERFEITO */
+        /* ✅ CELULAR — CARDS SE AJUSTAM SOZINHOS */
         @media (max-width: 768px) {
             .intro h1 { font-size: 2rem; }
             .rituais-grade { gap: 20px; }
-            .ritual-card { 
-                width: 90%; 
-                min-height: auto; /* ✅ ALTURA NATURAL NO CELULAR */
-                height: auto;
-            }
+            .ritual-card { width: 92%; }
         }
     </style>
 </head>
