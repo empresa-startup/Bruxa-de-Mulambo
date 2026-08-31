@@ -126,10 +126,10 @@
             font-weight: 600;
         }
 
-        /* ✅ CAPA CORRIGIDA — NÃO CORTA OS LADOS NO CELULAR! */
+        /* ✅ CAPA — NO PC FICA MAIS BONITA, NO CELULAR CONTINUA PERFEITA */
         .capa-container {
             width: 100%;
-            height: 70vh; /* ← altura menor pra não cortar */
+            height: 70vh;
             min-height: 400px;
             overflow: hidden;
             position: relative;
@@ -138,10 +138,10 @@
         .capa-container img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* ← MOSTRA A FOTO INTEIRA, SEM CORTAR! */
+            object-fit: contain;
             object-position: center;
             filter: brightness(1.15) contrast(1.05) saturate(1.35);
-            transform: none; /* ← SEM ZOOM EXTRA! */
+            transform: none;
         }
         .capa-sombra {
             position: absolute;
@@ -224,7 +224,7 @@
             text-shadow: 0 0 12px rgba(255, 40, 40, 0.3);
         }
 
-        /* ✅ CARDS COM MENOS ZOOM — TAMANHO AJUSTADO! */
+        /* ✅ GRADE DOS CARDS */
         .rituais-grade {
             display: flex;
             flex-wrap: wrap;
@@ -234,7 +234,7 @@
             margin: 0 auto;
         }
         .ritual-card {
-            width: 260px; /* ← um pouquinho menor */
+            width: 260px;
             background: linear-gradient(180deg, rgba(25, 8, 8, 0.95), rgba(10, 2, 2, 0.98));
             border: 1px solid var(--borda);
             border-radius: 4px;
@@ -244,7 +244,7 @@
             box-shadow: inset 0 0 20px rgba(200, 40, 40, 0.05);
             display: flex;
             flex-direction: column;
-            transform: scale(0.95); /* ← DIMINUI O ZOOM GERAL DO CARD */
+            transform: scale(0.95);
         }
         .ritual-card:hover {
             transform: translateY(-6px) scale(0.95);
@@ -264,7 +264,7 @@
         }
         .foto-trabalho {
             width: 100%;
-            height: 160px; /* ← foto menor dentro do card */
+            height: 160px;
             object-fit: cover;
             border-radius: 5px 5px 0 0;
             cursor: pointer;
@@ -390,24 +390,59 @@
         .carregando { color: #907070; font-style: italic; }
         .vazio { color: #705050; font-style: italic; }
 
-        /* ✅ CELULAR — TUDO AJUSTADO SEM CORTAR E SEM ZOOM EXCESSIVO */
+        /* ===================================================== */
+        /* ✅ CELULAR — EXATAMENTE COMO ESTAVA (NÃO MUDA NADA!) */
+        /* ===================================================== */
         @media (max-width: 768px) {
             .capa-container {
-                height: 60vh; /* ← altura menor no celular */
+                height: 60vh;
                 min-height: 350px;
             }
             .capa-container img {
-                object-fit: contain; /* ← FOTO INTEIRA, SEM CORTAR OS LADOS! */
-                transform: none; /* ← SEM ZOOM! */
+                object-fit: contain;
+                transform: none;
             }
             .intro h1 { font-size: 1.7rem; }
             .rituais-grade { gap: 15px; }
             .ritual-card {
-                width: 45%; /* ← dois cards lado a lado */
+                width: 45%;
                 min-width: 140px;
-                transform: scale(0.92); /* ← MENOS ZOOM AINDA NO CELULAR */
+                transform: scale(0.92);
             }
             .foto-trabalho { height: 140px; }
+        }
+
+        /* ===================================================== */
+        /* ✅ PC — APENAS AQUI FICA MELHORADO! */
+        /* ===================================================== */
+        @media (min-width: 1024px) {
+            .capa-container {
+                height: 85vh; /* ← capa maior e mais bonita no PC */
+                max-height: 650px;
+            }
+            .capa-container img {
+                object-fit: cover; /* ← no PC a foto preenche bonito, sem cortar estranho */
+                object-position: center top;
+            }
+            .intro h1 {
+                font-size: 2.8rem; /* ← título maior e imponente no PC */
+            }
+            .rituais-grade {
+                gap: 30px; /* ← mais espaçamento entre os cards no PC */
+            }
+            .ritual-card {
+                width: 270px; /* ← cards um pouquinho maiores no PC */
+                transform: scale(1); /* ← sem redução, tamanho normal no PC */
+            }
+            .ritual-card:hover {
+                transform: translateY(-8px) scale(1); /* ← efeito bonito sem bagunçar */
+            }
+            .foto-trabalho {
+                height: 170px; /* ← foto um pouquinho maior no PC */
+            }
+            section h2 {
+                font-size: 2.2rem; /* ← títulos maiores no PC */
+            }
         }
     </style>
 </head>
