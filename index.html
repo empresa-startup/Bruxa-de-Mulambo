@@ -117,27 +117,39 @@
             color: var(--vermelho);
             font-weight: 600;
         }
-        /* ✅ CAPA AJUSTADA — MOSTRA TUDO SEM CORTAR! */
+
+        /* ✅ CAPA — PERFEITA NO CELULAR E COMPUTADOR! */
         .capa-container {
             width: 100%;
-            height: auto;           /* ✅ Altura se ajusta sozinha */
-            min-height: 50vh;       /* ✅ Não fica muito pequena */
-            max-height: 80vh;       /* ✅ Não passa do tamanho da tela */
-            overflow: hidden;
+            height: 55vh; /* Altura ideal no computador */
             position: relative;
             z-index: 10;
-            background: #0c0404;    /* ✅ Cor de fundo se sobrar espaço */
+            background: #0c0404;
+            overflow: hidden;
         }
         .capa-container img {
             width: 100%;
-            height: auto;           /* ✅ Mantém a proporção original */
-            max-height: 80vh;       /* ✅ Limita a altura na tela */
-            object-fit: contain;    /* ✅ MOSTRA TODA A IMAGEM — SEM CORTAR NADA! */
+            height: 100%;
+            object-fit: cover; /* No PC: preenche bonito */
             object-position: center top;
             filter: brightness(1.15) contrast(1.05) saturate(1.35);
-            display: block;
-            margin: 0 auto;         /* ✅ Centraliza perfeitamente */
         }
+
+        /* 📱 NO CELULAR — SEM ZOOM, MOSTRA TUDO! */
+        @media (max-width: 768px) {
+            .capa-container {
+                height: auto; /* Altura natural da imagem */
+                min-height: auto;
+            }
+            .capa-container img {
+                width: 100%;
+                height: auto; /* Respeita o tamanho real */
+                object-fit: contain; /* ✅ MOSTRA TUDO, SEM CORTAR! */
+                object-position: center;
+                display: block;
+            }
+        }
+
         .capa-sombra {
             position: absolute;
             top: 0;
@@ -328,7 +340,6 @@
             .intro h1 { font-size: 2rem; }
             .rituais-grade { gap: 20px; }
             .ritual-card { width: 90%; }
-            .capa-container img { max-height: 60vh; } /* ✅ Menor no celular */
         }
     </style>
 </head>
