@@ -8,28 +8,27 @@
     <meta http-equiv="Expires" content="0">
     
     <title>Poder e Magia na Quimbanda — Bruxa de Mulambo</title>
-    <meta name="description" content="Verdadeira Quimbanda — Trabalhos espirituais com força e resultados reais. Caminhos abertos, proteção, amor, prosperidade.">
+    <meta name="description" content="Verdadeira Quimbanda — Trabalhos espirituais com força e resultados reais.">
     <meta name="keywords" content="Quimbanda, Exu, Pombagira, rituais, magia, poder, trabalhos espirituais, Bruxa de Mulambo">
     <meta name="author" content="Bruxa de Mulambo">
-    <meta name="robots" content="index, follow">
     
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --vermelho: #ff3030;
-            --vermelho-escuro: #901010;
+            --vermelho: #ff2222;
+            --vermelho-escuro: #991111;
+            --vermelho-fogo: #ff4444;
             --fundo: #0c0404;
+            --fundo-card: rgba(15, 5, 5, 0.95);
             --texto: #e0c8c8;
-            --texto-claro: #b07070;
+            --texto-claro: #b08080;
+            --borda-vermelha: rgba(200, 40, 40, 0.6);
         }
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            border: none !important;
-            outline: none !important;
-            box-shadow: none !important;
         }
         html { scroll-behavior: smooth; }
         body {
@@ -39,41 +38,18 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-        }
-        .fogo-global {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 99;
-            overflow: hidden;
-        }
-        .brasa {
-            position: absolute;
-            bottom: -10px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #ff4444, #991a1a);
-            opacity: 0;
-            animation: subirBrasa linear infinite;
-            filter: blur(1px);
-        }
-        @keyframes subirBrasa {
-            0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
-            10% { opacity: 0.85; }
-            100% { transform: translateY(-100vh) translateX(12px) scale(0.4); opacity: 0; }
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(180, 30, 30, 0.12), transparent 60%),
+                radial-gradient(circle at 50% 100%, rgba(120, 20, 20, 0.15), transparent 60%);
+            background-attachment: fixed;
         }
 
-        /* ✅ MENU — SEM LINHA, SEM BORDA, TOTALMENTE LIMPO */
+        /* ===== MENU ===== */
         .menu-topo {
             position: fixed;
             top: 10px;
             right: 20px;
             z-index: 9999;
-            background: transparent !important;
-            margin: 0;
-            padding: 0;
         }
         .botao-sanduiche {
             width: 32px;
@@ -82,16 +58,12 @@
             flex-direction: column;
             justify-content: space-between;
             cursor: pointer;
-            background: transparent;
-            margin: 0;
-            padding: 0;
         }
         .botao-sanduiche span {
             width: 100%;
             height: 2px;
-            background-color: var(--vermelho);
-            display: block;
-            margin: 0;
+            background: var(--vermelho);
+            box-shadow: 0 0 8px var(--vermelho);
         }
         .botao-sanduiche.aberto span:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
         .botao-sanduiche.aberto span:nth-child(2) { opacity: 0; }
@@ -100,7 +72,8 @@
             position: fixed;
             top: 55px;
             right: 20px;
-            background: rgba(5, 0, 0, 0.95);
+            background: rgba(5, 0, 0, 0.98);
+            border: 1px solid var(--borda-vermelha);
             border-radius: 8px;
             padding: 0;
             max-height: 0;
@@ -123,29 +96,17 @@
         .menu-suspenso a:hover { color: var(--vermelho); background: rgba(150, 30, 30, 0.1); }
         .menu-suspenso .loja-link { color: var(--vermelho); font-weight: bold; }
 
-        /* ✅ CAPA */
+        /* ===== CAPA ===== */
         .capa-container {
             width: 100%;
-            height: 55vh;
+            height: 70vh;
             position: relative;
-            background: #0c0404;
             overflow: hidden;
-            margin: 0 !important;
-            padding: 0 !important;
-            line-height: 0;
-            display: block;
         }
         .capa-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center top;
-            display: block;
-            margin: 0;
-        }
-        @media (max-width: 768px) {
-            .capa-container { height: auto; }
-            .capa-container img { height: auto; object-fit: contain; }
         }
         .capa-sombra {
             position: absolute;
@@ -153,168 +114,188 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(10,2,2,0.2), rgba(10,2,2,0.6));
-            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(12,4,4,0.8) 80%);
         }
-        .brilho-capa {
+        .capa-texto {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 20%, rgba(255, 60, 60, 0.10), transparent 60%);
-            pointer-events: none;
-            animation: brilhoPulsar 4s ease-in-out infinite alternate;
-        }
-        @keyframes brilhoPulsar {
-            0% { opacity: 0.6; }
-            100% { opacity: 1; }
-        }
-
-        .intro {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
-            padding: 60px 20px;
+            z-index: 10;
+            width: 90%;
         }
-        .intro h1 {
+        .capa-texto h1 {
             font-family: 'Cinzel Decorative', serif;
-            font-size: clamp(1.8rem, 6vw, 3rem);
+            font-size: clamp(2rem, 8vw, 4rem);
             color: var(--vermelho);
+            text-shadow: 0 0 30px rgba(255, 40, 40, 0.6), 0 0 60px rgba(255, 40, 40, 0.3);
             margin-bottom: 15px;
-            line-height: 1.2;
         }
-        .intro p {
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
-            color: var(--texto-claro);
+        .capa-texto p {
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            color: var(--texto);
             margin-bottom: 30px;
+            letter-spacing: 1px;
         }
-        .btn {
+        .btn-principal {
             display: inline-block;
-            padding: 14px 35px;
-            background: linear-gradient(135deg, var(--vermelho-escuro), #b81818);
+            padding: 14px 40px;
+            background: linear-gradient(135deg, var(--vermelho-escuro), var(--vermelho));
             color: #fff;
             font-family: 'Cinzel', serif;
-            font-size: 0.95rem;
+            font-size: 1rem;
             text-decoration: none;
             border-radius: 4px;
+            border: 1px solid var(--borda-vermelha);
+            box-shadow: 0 0 15px rgba(255, 40, 40, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-principal:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 40, 40, 0.5);
         }
 
+        /* ===== SEÇÃO ===== */
         section {
             padding: 60px 20px;
             text-align: center;
         }
         section h2 {
             font-family: 'Cinzel Decorative', serif;
-            font-size: clamp(1.4rem, 4vw, 2rem);
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
             color: var(--vermelho);
-            margin-bottom: 35px;
+            margin-bottom: 50px;
+            text-shadow: 0 0 15px rgba(255, 40, 40, 0.4);
         }
 
-        /* ✅ CARDS — AGORA NÃO CORTAM NADA! ALTURA AUTOMÁTICA! */
+        /* ✅ CARDS — IGUAIS À IMAGEM QUE VOCÊ MOSTROU! ✅ */
         .rituais-grade {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 25px;
+            gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
-            align-items: flex-start; /* ✅ CADA CARD TEM SUA ALTURA NATURAL */
         }
         .ritual-card {
-            background: linear-gradient(180deg, rgba(25, 8, 8, 0.95), rgba(10, 2, 2, 0.98));
-            padding: 15px;
-            width: 300px;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
-            height: auto !important; /* ✅ ALTURA AUTOMÁTICA — CRESCE SOZINHO */
-            min-height: unset !important; /* ✅ SEM ALTURA MÍNIMA FORÇADA */
-            overflow: visible !important; /* ✅ NÃO ESCONDE NADA */
+            width: 240px;
+            background: var(--fundo-card);
+            border: 2px solid var(--borda-vermelha);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.35s ease;
+            box-shadow: inset 0 0 20px rgba(200, 40, 40, 0.05);
         }
-        .ritual-card:hover { transform: translateY(-5px); }
+        .ritual-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--vermelho-fogo);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 25px rgba(255, 40, 40, 0.25);
+        }
+        /* Borda brilhante interna */
+        .ritual-card::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+            border: 1px solid rgba(200, 40, 40, 0.2);
+            pointer-events: none;
+            z-index: 2;
+        }
         .foto-trabalho {
             width: 100%;
-            height: 180px;
+            height: 200px;
             object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
             display: block;
         }
         .card-conteudo {
-            display: flex;
-            flex-direction: column;
-            gap: 12px; /* ✅ ESPAÇO ENTRE TÍTULO, TEXTO E BOTÃO */
-            flex-grow: 0; /* ✅ NÃO FORÇA TAMANHO */
-            width: 100%;
-            overflow: visible !important; /* ✅ MOSTRA TUDO */
+            padding: 18px 15px;
+            position: relative;
+            z-index: 3;
         }
         .ritual-card h3 {
             font-family: 'Cinzel Decorative', serif;
-            color: #ff5050;
-            font-size: 1.1rem;
-            margin: 0;
-            line-height: 1.3;
-            word-wrap: break-word; /* ✅ QUEBRA TEXTO GRANDE SEM SAIR */
+            color: var(--vermelho);
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 8px rgba(255, 40, 40, 0.3);
         }
         .ritual-card p {
-            font-size: 0.9rem;
-            color: #c0a0a0;
-            line-height: 1.6; /* ✅ ESPAÇO ENTRE LINHAS — NÃO APERTA */
-            margin: 0;
-            word-wrap: break-word; /* ✅ QUEBRA TEXTO GRANDE */
-            overflow-wrap: break-word;
-            white-space: normal !important; /* ✅ TEXTO EM VÁRIAS LINHAS */
-            max-height: unset !important; /* ✅ SEM LIMITE DE ALTURA NO TEXTO */
+            font-size: 0.85rem;
+            color: var(--texto-claro);
+            line-height: 1.5;
+            margin-bottom: 18px;
+            min-height: 40px;
         }
-        .botao-whatsapp {
-            display: inline-block;
-            padding: 11px 20px;
-            background: linear-gradient(135deg, #25D366, #128C7E);
+        .botao-card {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, var(--vermelho-escuro), var(--vermelho));
             color: #fff;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            margin-top: 10px;
-            align-self: center;
+            text-align: center;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 80, 80, 0.3);
+            transition: all 0.3s ease;
+        }
+        .botao-card:hover {
+            background: linear-gradient(135deg, var(--vermelho), var(--vermelho-fogo));
         }
 
+        /* ===== FRASE FINAL ===== */
+        .frase-final {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            color: var(--vermelho);
+            padding: 40px 20px;
+            line-height: 1.8;
+            text-shadow: 0 0 12px rgba(255, 40, 40, 0.3);
+        }
+
+        /* ===== SOBRE E CONTATO ===== */
         .caixa-texto, .contato-bloco {
-            background: linear-gradient(180deg, rgba(25, 8, 8, 0.9), rgba(10, 2, 2, 0.95));
-            padding: 30px 20px;
-            border-radius: 12px;
+            background: var(--fundo-card);
+            border: 1px solid var(--borda-vermelha);
+            padding: 35px 25px;
             max-width: 650px;
             margin: 0 auto;
         }
-        .caixa-texto p {
-            font-size: 0.95rem;
-            color: #d0b0b0;
+        .caixa-texto p, .contato-bloco p {
+            color: var(--texto-claro);
             line-height: 1.8;
         }
-        .frase-final {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 1.1rem;
-            color: var(--vermelho);
-            padding: 20px;
-            line-height: 1.7;
+        .botao-whatsapp-grande {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
         }
-        footer {
-            background: #000;
-            text-align: center;
-            padding: 25px;
-            font-size: 14px;
-            color: #604040;
-        }
-        .carregando, .vazio { color: #907070; font-style: italic; }
 
-        /* ✅ CELULAR — PERFEITO TAMBÉM */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #503030;
+            font-size: 14px;
+            border-top: 1px solid var(--borda-vermelha);
+        }
+
+        /* ===== CELULAR ===== */
         @media (max-width: 768px) {
             .rituais-grade { gap: 20px; }
-            .ritual-card { width: 92%; }
+            .ritual-card { width: 85%; max-width: 280px; }
         }
     </style>
 </head>
 <body>
-    <div class="fogo-global" id="fogoGlobal"></div>
     <div class="menu-topo">
         <div class="botao-sanduiche" id="botaoMenu">
             <span></span><span></span><span></span>
@@ -328,49 +309,52 @@
         <a href="loja.html" class="loja-link">🛒 Loja</a>
         <a href="painel.html">⚙️ Painel</a>
     </div>
-    <div class="capa-container">
+
+    <!-- CAPA -->
+    <div class="capa-container" id="inicio">
         <img src="IMAGEM-DE-FUNDO.png" alt="Bruxa de Mulambo — Poder e Magia na Quimbanda">
         <div class="capa-sombra"></div>
-        <div class="brilho-capa"></div>
+        <div class="capa-texto">
+            <h1>Poder e Magia<br>na Quimbanda</h1>
+            <p>Trabalhos espirituais com força e resultados reais</p>
+            <a href="https://wa.me/5531987276275?text=Olá!%20Quero%20agendar%20uma%20consulta!" target="_blank" class="btn-principal">Agendar Consulta</a>
+        </div>
     </div>
-    <section class="intro" id="inicio">
-        <h1>Poder e Magia<br>na Quimbanda</h1>
-        <p>Trabalhos espirituais com força e resultados reais</p>
-        <a href="https://wa.me/5531987276275?text=Olá!%20Quero%20agendar%20uma%20consulta!" target="_blank" class="btn">📅 Agendar Consulta</a>
-    </section>
+
+    <!-- RITUAIS -->
     <section id="rituais">
-        <h2>Trabalhos Espirituais</h2>
+        <h2>Nossos Rituais</h2>
         <div class="rituais-grade" id="gradeRituais">
-            <p class="carregando">Carregando trabalhos...</p>
+            <p>Carregando trabalhos...</p>
         </div>
     </section>
-    <section>
-        <p class="frase-final">
-            Nem todos estão preparados para acessar este poder…<br>
-            mas você não chegou aqui por acaso.
-        </p>
-    </section>
+
+    <p class="frase-final">
+        Nem todos estão preparados para acessar este poder…<br>
+        mas você não chegou aqui por acaso.
+    </p>
+
+    <!-- SOBRE -->
     <section id="sobre">
-        <h2>Sobre o Portal</h2>
+        <h2>Sobre</h2>
         <div class="caixa-texto">
             <p>Um canal de força ancestral, conectado às verdadeiras entidades que movem os destinos. Aqui não há ilusão — há poder, resultado e presença real.</p>
-            <br>
-            <p>Cada trabalho é feito com fé, conhecimento e respeito às forças que guiam este caminho.</p>
         </div>
     </section>
+
+    <!-- CONTATO -->
     <section id="contato">
         <h2>Contato</h2>
         <div class="contato-bloco">
-            <p>📱 Pelo WhatsApp abaixo</p>
-            <br>
             <p>Atendimento personalizado e reservado</p>
-            <br>
-            <a href="https://wa.me/5531987276275?text=Olá!%20Contato%20pelo%20site!" target="_blank" class="botao-whatsapp">💬 Falar no WhatsApp</a>
+            <a href="https://wa.me/5531987276275?text=Olá!%20Contato%20pelo%20site!" target="_blank" class="botao-whatsapp-grande">💬 Falar no WhatsApp</a>
         </div>
     </section>
+
     <footer>
         © 2025 Bruxa de Mulambo — Todos os direitos reservados
     </footer>
+
     <script>
         const WHATSAPP = '5531987276275';
         function ajustarCaminhoImagem(caminho) {
@@ -378,19 +362,6 @@
             if (caminho.startsWith('./')) return caminho;
             if (caminho.startsWith('imagens/')) return './' + caminho;
             return caminho;
-        }
-        function criarBrasas() {
-            const container = document.getElementById('fogoGlobal');
-            for(let i = 0; i < 60; i++){
-                const b = document.createElement('div');
-                b.className = 'brasa';
-                const tam = Math.random() * 10 + 4;
-                b.style.width = b.style.height = tam + 'px';
-                b.style.left = Math.random() * 100 + '%';
-                b.style.animationDuration = (Math.random() * 4 + 5) + 's';
-                b.style.animationDelay = Math.random() * 4 + 's';
-                container.appendChild(b);
-            }
         }
         const botaoMenu = document.getElementById('botaoMenu');
         const menuSuspenso = document.getElementById('menuSuspenso');
@@ -404,45 +375,37 @@
         });
         async function carregarTrabalhos() {
             try {
-                const resposta = await fetch('./dados/trabalhos.json');
-                if (!resposta.ok) throw new Error('Sem dados');
-                const trabalhos = await resposta.json();
-                renderizarTrabalhos(trabalhos);
-            } catch (erro) {
+                const res = await fetch('./dados/trabalhos.json');
+                if (!res.ok) throw new Error();
+                renderizarTrabalhos(await res.json());
+            } catch {
                 try {
-                    const resposta2 = await fetch('dados/trabalhos.json');
-                    if (!resposta2.ok) throw new Error('Sem dados');
-                    const trabalhos2 = await resposta2.json();
-                    renderizarTrabalhos(trabalhos2);
-                } catch (erro2) {
-                    document.getElementById('gradeRituais').innerHTML = `
-                        <p class="vazio">Nenhum trabalho cadastrado ainda.<br>Use o Painel para cadastrar e publique o arquivo dados/trabalhos.json</p>`;
+                    const res2 = await fetch('dados/trabalhos.json');
+                    if (!res2.ok) throw new Error();
+                    renderizarTrabalhos(await res2.json());
+                } catch {
+                    document.getElementById('gradeRituais').innerHTML = '<p style="color:#806060">Nenhum trabalho cadastrado ainda.</p>';
                 }
             }
         }
         function renderizarTrabalhos(lista) {
             const grade = document.getElementById('gradeRituais');
-            if (!lista.length) {
-                grade.innerHTML = '<p class="vazio">Nenhum trabalho disponível.</p>';
-                return;
-            }
+            if (!lista.length) { grade.innerHTML = '<p style="color:#806060">Nenhum trabalho disponível.</p>'; return; }
             grade.innerHTML = '';
             lista.forEach(t => {
-                const caminhoFoto = ajustarCaminhoImagem(t.foto);
+                const foto = ajustarCaminhoImagem(t.foto);
                 const card = document.createElement('div');
                 card.className = 'ritual-card';
                 card.innerHTML = `
-                    <img src="${caminhoFoto}" alt="${t.titulo}" class="foto-trabalho"
-                         onerror="this.src='${caminhoFoto.replace('./', '')}'">
+                    <img src="${foto}" alt="${t.titulo}" class="foto-trabalho">
                     <div class="card-conteudo">
                         <h3>${t.titulo}</h3>
                         <p>${t.descricao}</p>
-                        <a href="https://wa.me/${WHATSAPP}?text=Olá!%20Quero%20saber%20mais%20sobre:%20${encodeURIComponent(t.titulo)}!" target="_blank" class="botao-whatsapp">💬 WhatsApp</a>
+                        <a href="https://wa.me/${WHATSAPP}?text=Olá!%20Quero%20saber%20mais:%20${encodeURIComponent(t.titulo)}!" target="_blank" class="botao-card">Saiba mais</a>
                     </div>`;
                 grade.appendChild(card);
             });
         }
-        criarBrasas();
         carregarTrabalhos();
     </script>
 </body>
