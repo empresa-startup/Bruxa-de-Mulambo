@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- 📌 PARA APARECER NO GOOGLE -->
     <title>Poder e Magia na Quimbanda — Bruxa de Mulambo</title>
     <meta name="description" content="Verdadeira Quimbanda — Trabalhos espirituais com força e resultados reais. Caminhos abertos, proteção, amor, prosperidade.">
     <meta name="keywords" content="Quimbanda, Exu, Pombagira, rituais, magia, poder, trabalhos espirituais, Bruxa de Mulambo">
@@ -35,8 +34,6 @@
             line-height: 1.75;
             position: relative;
         }
-
-        /* 🔥 BRASAS SUBINDO — POR CIMA DE TUDO */
         .fogo-global {
             position: fixed;
             bottom: 0;
@@ -62,8 +59,6 @@
             10% { opacity: 0.85; }
             100% { transform: translateY(-100vh) translateX(12px) scale(0.4); opacity: 0; }
         }
-
-        /* 🍔 MENU SANDUÍCHE */
         .menu-topo {
             position: fixed;
             top: 10px;
@@ -88,7 +83,6 @@
         .botao-sanduiche.aberto span:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
         .botao-sanduiche.aberto span:nth-child(2) { opacity: 0; }
         .botao-sanduiche.aberto span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
-
         .menu-suspenso {
             position: fixed;
             top: 55px;
@@ -123,8 +117,6 @@
             color: var(--vermelho);
             font-weight: 600;
         }
-
-        /* 🖼️ IMAGEM DE CAPA — MAIS ILUMINADA, COM BRILHO E VIDA */
         .capa-container {
             width: 100%;
             height: 80vh;
@@ -139,8 +131,6 @@
             object-position: center top;
             filter: brightness(1.15) contrast(1.05) saturate(1.35);
         }
-
-        /* ✨ SOMBRA MAIS LEVE + LUZ VERMELHA QUE DÁ VIDA */
         .capa-sombra {
             position: absolute;
             top: 0;
@@ -153,8 +143,6 @@
                 linear-gradient(to bottom, rgba(10, 2, 2, 0.35), rgba(10, 2, 2, 0.55));
             pointer-events: none;
         }
-
-        /* ✨ BRILHO ANIMADO NA CAPA */
         .brilho-capa {
             position: absolute;
             top: 0;
@@ -169,8 +157,6 @@
             0% { opacity: 0.6; }
             100% { opacity: 1; }
         }
-
-        /* 🏠 TEXTO ABAIXO DA IMAGEM */
         .intro {
             text-align: center;
             padding: 60px 20px 80px;
@@ -213,8 +199,6 @@
             background: linear-gradient(135deg, #b01818, #d82828);
             box-shadow: 0 0 15px rgba(255, 40, 40, 0.35);
         }
-
-        /* 📑 SEÇÕES */
         section {
             padding: 70px 20px;
             text-align: center;
@@ -228,8 +212,6 @@
             margin-bottom: 40px;
             text-shadow: 0 0 12px rgba(255, 40, 40, 0.3);
         }
-
-        /* 🎭 CARDS */
         .rituais-grade {
             display: flex;
             flex-wrap: wrap;
@@ -298,8 +280,6 @@
         .botao-whatsapp:hover {
             transform: translateY(-2px);
         }
-
-        /* 📌 CAIXAS DE TEXTO */
         .caixa-texto, .contato-bloco {
             background: linear-gradient(180deg, rgba(25, 8, 8, 0.9), rgba(10, 2, 2, 0.95));
             padding: 35px 25px;
@@ -337,8 +317,6 @@
         }
         .carregando { color: #907070; font-style: italic; }
         .vazio { color: #705050; font-style: italic; }
-
-        /* 📱 RESPONSIVO */
         @media (max-width: 768px) {
             .intro h1 { font-size: 2rem; }
             .rituais-grade { gap: 20px; }
@@ -347,11 +325,7 @@
     </style>
 </head>
 <body>
-
-    <!-- 🔥 BRASAS SUBINDO -->
     <div class="fogo-global" id="fogoGlobal"></div>
-
-    <!-- 🍔 MENU SANDUÍCHE -->
     <div class="menu-topo">
         <div class="botao-sanduiche" id="botaoMenu">
             <span></span><span></span><span></span>
@@ -365,38 +339,28 @@
         <a href="loja.html" class="loja-link">🛒 Loja</a>
         <a href="painel.html">⚙️ Painel</a>
     </div>
-
-    <!-- 🖼️ IMAGEM DE CAPA AGORA COM MAIS VIDA E BRILHO -->
     <div class="capa-container">
         <img src="IMAGEM-DE-FUNDO.png" alt="Bruxa de Mulambo — Poder e Magia na Quimbanda">
         <div class="capa-sombra"></div>
         <div class="brilho-capa"></div>
     </div>
-
-    <!-- 🏠 TEXTO ABAIXO DA IMAGEM -->
     <section class="intro" id="inicio">
         <h1>Poder e Magia<br>na Quimbanda</h1>
         <p>Trabalhos espirituais com força e resultados reais</p>
         <a href="https://wa.me/5531987276275?text=Olá!%20Quero%20agendar%20uma%20consulta!" target="_blank" class="btn">📅 Agendar Consulta</a>
     </section>
-
-    <!-- 🎭 TRABALHOS -->
     <section id="rituais">
         <h2>Trabalhos Espirituais</h2>
         <div class="rituais-grade" id="gradeRituais">
             <p class="carregando">Carregando trabalhos...</p>
         </div>
     </section>
-
-    <!-- ✨ FRASE -->
     <section>
         <p class="frase-final">
             Nem todos estão preparados para acessar este poder…<br>
             mas você não chegou aqui por acaso.
         </p>
     </section>
-
-    <!-- 📖 SOBRE -->
     <section id="sobre">
         <h2>Sobre o Portal</h2>
         <div class="caixa-texto">
@@ -405,8 +369,6 @@
             <p>Cada trabalho é feito com fé, conhecimento e respeito às forças que guiam este caminho.</p>
         </div>
     </section>
-
-    <!-- 📞 CONTATO -->
     <section id="contato">
         <h2>Contato</h2>
         <div class="contato-bloco">
@@ -417,17 +379,13 @@
             <a href="https://wa.me/5531987276275?text=Olá!%20Contato%20pelo%20site!" target="_blank" class="botao-whatsapp">💬 Falar no WhatsApp</a>
         </div>
     </section>
-
-    <!-- 🦶 RODAPÉ -->
     <footer>
         © 2025 Bruxa de Mulambo — Todos os direitos reservados
     </footer>
 
-    <!-- ⚡ SCRIPT -->
     <script>
         const WHATSAPP = '5531987276275';
 
-        /* 🔥 BRASAS SUBINDO */
         function criarBrasas() {
             const container = document.getElementById('fogoGlobal');
             for(let i = 0; i < 60; i++){
@@ -442,7 +400,6 @@
             }
         }
 
-        /* 🍔 MENU */
         const botaoMenu = document.getElementById('botaoMenu');
         const menuSuspenso = document.getElementById('menuSuspenso');
         botaoMenu.onclick = () => {
@@ -454,18 +411,34 @@
             menuSuspenso.classList.remove('aberto');
         });
 
-        /* 📦 CONEXÃO COM O PAINEL */
+        // ✅ FUNÇÃO QUE AJUSTA O CAMINHO — FUNCIONA COM OU SEM PONTO!
+        function ajustarCaminhoImagem(caminho) {
+            // Se já tem ./ na frente → deixa como está
+            if (caminho.startsWith('./')) return caminho;
+            // Se começa com imagens/ → adiciona o ponto
+            if (caminho.startsWith('imagens/')) return './' + caminho;
+            return caminho;
+        }
+
         async function carregarTrabalhos() {
             try {
-                const resposta = await fetch('dados/trabalhos.json');
+                const resposta = await fetch('./dados/trabalhos.json');
                 if (!resposta.ok) throw new Error('Sem dados');
                 const trabalhos = await resposta.json();
                 renderizarTrabalhos(trabalhos);
             } catch (erro) {
-                document.getElementById('gradeRituais').innerHTML = `
-                    <p class="vazio">Nenhum trabalho cadastrado ainda.<br>Use o Painel para cadastrar e publique o arquivo dados/trabalhos.json</p>`;
+                try {
+                    const resposta2 = await fetch('dados/trabalhos.json');
+                    if (!resposta2.ok) throw new Error('Sem dados');
+                    const trabalhos2 = await resposta2.json();
+                    renderizarTrabalhos(trabalhos2);
+                } catch (erro2) {
+                    document.getElementById('gradeRituais').innerHTML = `
+                        <p class="vazio">Nenhum trabalho cadastrado ainda.<br>Use o Painel para cadastrar e publique o arquivo dados/trabalhos.json</p>`;
+                }
             }
         }
+
         function renderizarTrabalhos(lista) {
             const grade = document.getElementById('gradeRituais');
             if (!lista.length) {
@@ -474,10 +447,12 @@
             }
             grade.innerHTML = '';
             lista.forEach(t => {
+                const caminhoFoto = ajustarCaminhoImagem(t.foto);
                 const card = document.createElement('div');
                 card.className = 'ritual-card';
                 card.innerHTML = `
-                    <img src="${t.foto}" alt="${t.titulo}" class="foto-trabalho">
+                    <img src="${caminhoFoto}" alt="${t.titulo}" class="foto-trabalho"
+                         onerror="this.src='${caminhoFoto.replace('./', '')}'">
                     <div class="card-conteudo">
                         <h3>${t.titulo}</h3>
                         <p>${t.descricao}</p>
@@ -487,7 +462,6 @@
             });
         }
 
-        /* 🔄 INICIAR TUDO */
         criarBrasas();
         carregarTrabalhos();
     </script>
