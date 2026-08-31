@@ -38,7 +38,7 @@
             position: relative;
         }
 
-        /* ✅ BRASAS SUBINDO POR CIMA DE TUDO — ANIMADAS! */
+        /* ✅ BRASAS SUBINDO POR CIMA DE TUDO */
         .fogo-global {
             position: fixed;
             bottom: 0;
@@ -127,7 +127,7 @@
             font-weight: 600;
         }
 
-        /* ✅ CAPA — EXATAMENTE COMO VOCÊ QUER! */
+        /* ✅ CAPA — ZOOM REDUZIDO APENAS NO CELULAR */
         .capa-container {
             width: 100%;
             height: 80vh;
@@ -141,6 +141,7 @@
             object-fit: cover;
             object-position: center top;
             filter: brightness(1.15) contrast(1.05) saturate(1.35);
+            transform-origin: center top;
         }
         .capa-sombra {
             position: absolute;
@@ -169,7 +170,6 @@
             100% { opacity: 1; }
         }
 
-        /* ✅ TEXTO SEPARADO EMBAIXO DA IMAGEM */
         .intro {
             text-align: center;
             padding: 60px 20px 80px;
@@ -213,7 +213,6 @@
             box-shadow: 0 0 15px rgba(255, 40, 40, 0.35);
         }
 
-        /* ===== SEÇÕES E CARDS ===== */
         section {
             padding: 70px 20px;
             text-align: center;
@@ -235,6 +234,8 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+
+        /* ✅ CARDS EXATAMENTE COMO ESTAVAM — NÃO MUDEI NADA! */
         .ritual-card {
             background: linear-gradient(180deg, rgba(25, 8, 8, 0.95), rgba(10, 2, 2, 0.98));
             border: 1px solid var(--borda);
@@ -258,11 +259,6 @@
             height: 180px;
             object-fit: cover;
             border-radius: 5px;
-            cursor: pointer;
-            transition: opacity 0.25s ease;
-        }
-        .foto-trabalho:hover {
-            opacity: 0.9;
         }
         .card-conteudo {
             padding: 12px;
@@ -299,34 +295,6 @@
         }
         .botao-whatsapp:hover {
             transform: translateY(-2px);
-        }
-
-        /* ✅ TELA CHEIA AO CLICAR NA IMAGEM DO CARD */
-        .tela-cheia-fundo {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.92);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        .tela-cheia-fundo.aberto {
-            opacity: 1;
-            visibility: visible;
-        }
-        .tela-cheia-img {
-            max-width: 92%;
-            max-height: 92vh;
-            border-radius: 6px;
-            box-shadow: 0 0 40px rgba(255, 40, 40, 0.2);
         }
 
         .caixa-texto, .contato-bloco {
@@ -367,8 +335,11 @@
         .carregando { color: #907070; font-style: italic; }
         .vazio { color: #705050; font-style: italic; }
 
-        /* ===== RESPONSIVO ===== */
+        /* ✅ ZOOM REDUZIDO APENAS NO CELULAR — PC CONTINUA IGUAL! */
         @media (max-width: 768px) {
+            .capa-container img {
+                transform: scale(0.85); /* ← DIMINUI O ZOOM SÓ NO CELULAR */
+            }
             .intro h1 { font-size: 2rem; }
             .rituais-grade { gap: 20px; }
             .ritual-card { width: 90%; }
@@ -376,13 +347,8 @@
     </style>
 </head>
 <body>
-    <!-- ✅ BRASAS SUBINDO ANIMADAS POR CIMA DE TUDO -->
+    <!-- ✅ BRASAS SUBINDO -->
     <div class="fogo-global" id="fogoGlobal"></div>
-
-    <!-- ✅ TELA CHEIA PRA IMAGENS DOS CARDS -->
-    <div class="tela-cheia-fundo" id="telaCheia" onclick="fecharImagem()">
-        <img src="" alt="" class="tela-cheia-img" id="imgTelaCheia">
-    </div>
 
     <!-- ===== MENU ===== -->
     <div class="menu-topo">
@@ -399,21 +365,21 @@
         <a href="painel.html">⚙️ Painel</a>
     </div>
 
-    <!-- ✅ CAPA — EXATAMENTE COMO VOCÊ QUERIA! -->
+    <!-- ✅ CAPA -->
     <div class="capa-container">
         <img src="IMAGEM-DE-FUNDO.png" alt="Bruxa de Mulambo — Poder e Magia na Quimbanda">
         <div class="capa-sombra"></div>
         <div class="brilho-capa"></div>
     </div>
 
-    <!-- ✅ TEXTO SEPARADO EMBAIXO DA FOTO -->
+    <!-- ✅ TEXTO EMBAIXO -->
     <section class="intro" id="inicio">
         <h1>Poder e Magia<br>na Quimbanda</h1>
         <p>Trabalhos espirituais com força e resultados reais</p>
         <a href="https://wa.me/5531987276275?text=Olá!%20Quero%20agendar%20uma%20consulta!" target="_blank" class="btn">📅 Agendar Consulta</a>
     </section>
 
-    <!-- RITUAIS -->
+    <!-- ✅ RITUAIS — CARDS EXATAMENTE COMO ESTAVAM -->
     <section id="rituais">
         <h2>Trabalhos Espirituais</h2>
         <div class="rituais-grade" id="gradeRituais">
@@ -428,7 +394,6 @@
         </p>
     </section>
 
-    <!-- SOBRE -->
     <section id="sobre">
         <h2>Sobre o Portal</h2>
         <div class="caixa-texto">
@@ -438,7 +403,6 @@
         </div>
     </section>
 
-    <!-- CONTATO -->
     <section id="contato">
         <h2>Contato</h2>
         <div class="contato-bloco">
@@ -457,7 +421,7 @@
     <script>
         const WHATSAPP = '5531987276275';
 
-        // ✅ GERAR AS BRASAS SUBINDO
+        // ✅ GERAR BRASAS
         function criarBrasas() {
             const container = document.getElementById('fogoGlobal');
             for(let i = 0; i < 60; i++){
@@ -470,20 +434,6 @@
                 b.style.animationDelay = Math.random() * 4 + 's';
                 container.appendChild(b);
             }
-        }
-
-        // ✅ ABRIR IMAGEM EM TELA CHEIA
-        function abrirImagem(caminho, titulo) {
-            const fundo = document.getElementById('telaCheia');
-            const img = document.getElementById('imgTelaCheia');
-            img.src = caminho;
-            img.alt = titulo;
-            fundo.classList.add('aberto');
-            document.body.style.overflow = 'hidden';
-        }
-        function fecharImagem() {
-            document.getElementById('telaCheia').classList.remove('aberto');
-            document.body.style.overflow = '';
         }
 
         const botaoMenu = document.getElementById('botaoMenu');
@@ -523,6 +473,7 @@
             }
         }
 
+        // ✅ CARDS EXATAMENTE COMO ESTAVAM — SEM TELA CHEIA, SEM ALTERAÇÃO NENHUMA!
         function renderizarTrabalhos(lista) {
             const grade = document.getElementById('gradeRituais');
             if (!lista.length) {
@@ -536,7 +487,6 @@
                 card.className = 'ritual-card';
                 card.innerHTML = `
                     <img src="${caminhoFoto}" alt="${t.titulo}" class="foto-trabalho"
-                         onclick="abrirImagem('${caminhoFoto}', '${t.titulo}')"
                          onerror="this.src='${caminhoFoto.replace('./', '')}'">
                     <div class="card-conteudo">
                         <h3>${t.titulo}</h3>
