@@ -4,5 +4,11 @@
     "titulo": "rr",
     "descricao": "rrc3",
     "preco": 85
+  },
+  {
+    "foto": "./imagens/FOTO (2).jpg",
+    "titulo": "HKK U",
+    "descricao": "YYY",
+    "preco": 52
   }
 ]
