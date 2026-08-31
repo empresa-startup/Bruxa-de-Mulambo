@@ -12,7 +12,6 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-
         body {
             font-family: 'Cinzel', serif;
             color: #b8a8a8;
@@ -21,8 +20,6 @@
             background: #020101;
             overflow-x: hidden;
         }
-
-        /* 🖼️ IMAGEM DE FUNDO */
         .fundo-imagem {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -30,8 +27,6 @@
             opacity: 0.06;
             z-index: -9;
         }
-
-        /* 🌑 FUNDO PRINCIPAL - PRETO PROFUNDO */
         .fundo {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: 
@@ -41,7 +36,6 @@
                 linear-gradient(180deg, #000 0%, #020101 50%, #000 100%);
             z-index: -8;
         }
-
         .sombra-etérea {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: 
@@ -49,8 +43,6 @@
                 radial-gradient(ellipse at 70% 80%, rgba(50,12,20,0.04), transparent 60%);
             z-index: -7; pointer-events: none;
         }
-
-        /* 🔥 BRASAS */
         .fogo-container {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: -5; overflow: hidden;
@@ -71,10 +63,7 @@
             background: linear-gradient(to top, rgba(80,10,10,0.15), transparent 100%);
             z-index: -5; pointer-events: none; filter: blur(10px);
         }
-
         .conteudo { max-width: 1280px; margin: 0 auto; padding: 0 18px; position: relative; z-index: 1; }
-
-        /* 🥪 MENU */
         .menu-cabecalho {
             position: fixed; top: 0; left: 0; width: 100%;
             background: linear-gradient(to bottom, rgba(5,0,1,.95), rgba(8,1,3,.9));
@@ -98,8 +87,6 @@
             color: #ff6666; 
             text-shadow: 0 0 12px #ff4444, 0 0 24px #ff2b2b;
         }
-
-        /* 📋 MENU ABERTO */
         .menu-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,.97); z-index: 150;
@@ -127,8 +114,6 @@
             font-size: 1.8rem; cursor: pointer; transition: all .3s ease;
         }
         .fechar-menu:hover { color: #ff4444; text-shadow: 0 0 10px #ff2b2b; }
-
-        /* 🛒 CARRINHO */
         .botao-carrinho {
             position: relative; background: none; border: none; color: #cc3333;
             font-size: 1.3rem; cursor: pointer; padding: 5px;
@@ -145,8 +130,6 @@
             border: 1px solid #ff3333;
             box-shadow: 0 0 8px #ff2b2b;
         }
-
-        /* 🛒 MODAL CARRINHO */
         .modal-carrinho {
             position: fixed; top: 0; right: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,.95); z-index: 200; display: none;
@@ -209,8 +192,6 @@
             color: #ffffff;
         }
         .botao-finalizar:disabled { background: #221111; cursor: not-allowed; opacity: .5; border-color: #331111; }
-
-        /* 🏠 CABEÇALHO */
         header {
             padding: 90px 15px 40px; text-align: center;
             border-bottom: 1px solid rgba(100,20,35,.2); margin-bottom: 40px;
@@ -229,14 +210,10 @@
             max-width: 500px; margin: 0 auto; line-height: 1.8;
             text-shadow: 0 0 6px rgba(200,60,60,0.2);
         }
-
-        /* 🛒 GRADE PRODUTOS */
         .grade-produtos {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
             gap: 28px; padding-bottom: 60px;
         }
-
-        /* 🎴 CARD PRODUTO */
         .produto-card {
             background: linear-gradient(180deg, rgba(15,4,7,.9), rgba(5,1,3,.95));
             border: 1px solid rgba(90,18,30,.2); padding: 10px;
@@ -252,14 +229,12 @@
             border: 1px solid rgba(60,10,20,.15); pointer-events: none; transition: border-color .4s ease;
         }
         .produto-card:hover::before { border-color: rgba(120,25,40,.25); }
-
         .produto-foto {
             width: 100%; height: 200px; object-fit: cover; object-position: center;
             border: 1px solid rgba(80,15,28,.2); margin-bottom: 15px; transition: transform .5s ease;
             filter: brightness(.9);
         }
         .produto-card:hover .produto-foto { transform: scale(1.02); filter: brightness(1); }
-
         .produto-corpo { padding: 0 8px; flex-grow: 1; display: flex; flex-direction: column; }
         .produto-nome { 
             font-family: 'Cinzel Decorative', serif; font-size: 1rem; color: #ff4444; margin-bottom: 8px; letter-spacing: 1px;
@@ -270,7 +245,6 @@
             font-size: 1.25rem; font-weight: 600; color: #ff8844; margin-bottom: 12px; letter-spacing: 1px;
             text-shadow: 0 0 6px rgba(255,136,68,0.3);
         }
-
         .botao-adicionar {
             width: 100%; padding: 10px;
             background: linear-gradient(135deg, #7a1528, #a81f30);
@@ -283,35 +257,28 @@
             box-shadow: 0 0 10px #ff2b2b, 0 0 20px rgba(255,43,43,0.3);
             color: #ffffff;
         }
-
-        /* 📭 VAZIO */
         .vazio { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #663333; font-style: italic; }
         .vazio .simbolo-grande { font-size: 2.5rem; color: #ff2b2b; margin-bottom: 15px;
             text-shadow: 0 0 10px #ff2b2b, 0 0 25px rgba(255,43,43,0.3);
         }
         .carregando { text-align: center; padding: 40px; color: #996666; font-style: italic; }
-
-        /* 📱 RESPONSIVO */
         @media(min-width:768px) { .grade-produtos{grid-template-columns:repeat(3,1fr);gap:30px} }
         @media(min-width:1024px) { .grade-produtos{grid-template-columns:repeat(4,1fr);gap:32px} }
     </style>
 </head>
 <body>
-
     <div class="fundo-imagem"></div>
     <div class="fundo"></div>
     <div class="sombra-etérea"></div>
     <div class="labareda-base"></div>
     <div class="fogo-container" id="containerFogo"></div>
 
-    <!-- 🥪 CABEÇALHO -->
     <nav class="menu-cabecalho">
         <button class="botao-sanduiche" id="botaoSanduiche">☰</button>
         <span class="logo-menu">DOMUS OBSCURA</span>
         <button class="botao-carrinho" id="botaoCarrinho">🛒 <span class="contador-carrinho" id="contadorCarrinho">0</span></button>
     </nav>
 
-    <!-- 📋 MENU -->
     <div class="menu-overlay" id="menuOverlay">
         <button class="fechar-menu" id="fecharMenu">✕</button>
         <a href="index.html">🏠 Início</a>
@@ -319,7 +286,6 @@
         <a href="#" id="linkCarrinho">🛒 Meu Carrinho</a>
     </div>
 
-    <!-- 🛒 CARRINHO -->
     <div class="modal-carrinho" id="modalCarrinho">
         <div class="carrinho-conteudo">
             <button class="fechar-carrinho" id="fecharCarrinho">✕</button>
@@ -332,27 +298,31 @@
         </div>
     </div>
 
-    <!-- 🏠 CABEÇALHO -->
     <header>
         <div class="simbolo">☽ ✧ ☾</div>
         <h1>DOMUS OBSCURA</h1>
         <p class="subtitulo">Onde o mistério encontra a essência</p>
     </header>
 
-    <!-- 🛒 PRODUTOS -->
     <main class="conteudo">
         <div class="grade-produtos" id="gradeProdutos">
             <p class="carregando">Carregando produtos...</p>
         </div>
     </main>
 
-    <!-- ⚡ SCRIPT -->
     <script>
         const WHATSAPP = '5531987276275';
         const CHAVE_CARRINHO = 'carrinho_domus_obscura';
-        let listaProdutos = []; // Armazena produtos carregados do JSON
+        let listaProdutos = [];
 
-        // 🔥 BRASAS
+        // ✅ FUNÇÃO QUE AJUSTA O CAMINHO — FUNCIONA COM OU SEM PONTO!
+        function ajustarCaminhoImagem(caminho) {
+            if (!caminho) return '';
+            if (caminho.startsWith('./')) return caminho;
+            if (caminho.startsWith('imagens/')) return './' + caminho;
+            return caminho;
+        }
+
         function criarBrasas() {
             const container = document.getElementById('containerFogo');
             for(let i = 0; i < 40; i++){
@@ -367,7 +337,6 @@
             }
         }
 
-        // 🥪 MENU
         const menuOverlay = document.getElementById('menuOverlay');
         function abrirMenu(){ menuOverlay.classList.add('aberto'); }
         function fecharMenuFn(){ menuOverlay.classList.remove('aberto'); }
@@ -375,20 +344,26 @@
         document.getElementById('fecharMenu').onclick = fecharMenuFn;
         document.getElementById('linkCarrinho').onclick = ()=>{ fecharMenuFn(); abrirCarrinho(); return false; };
 
-        // 📦 CARREGAR PRODUTOS DO JSON PÚBLICO
         async function carregarProdutos() {
             try {
-                const resposta = await fetch('dados/produtos.json');
+                const resposta = await fetch('./dados/produtos.json');
                 if (!resposta.ok) throw new Error('Arquivo não encontrado');
                 listaProdutos = await resposta.json();
                 renderizarProdutos();
             } catch (erro) {
-                document.getElementById('gradeProdutos').innerHTML = `
-                    <div class="vazio">
-                        <p class="simbolo-grande">🕯️</p>
-                        <p>Ainda não há produtos cadastrados.</p>
-                        <p style="margin-top:10px;font-size:.85rem;color:#775555;">Use o Painel para cadastrar e publique o arquivo dados/produtos.json</p>
-                    </div>`;
+                try {
+                    const resposta2 = await fetch('dados/produtos.json');
+                    if (!resposta2.ok) throw new Error('Arquivo não encontrado');
+                    listaProdutos = await resposta2.json();
+                    renderizarProdutos();
+                } catch (erro2) {
+                    document.getElementById('gradeProdutos').innerHTML = `
+                        <div class="vazio">
+                            <p class="simbolo-grande">🕯️</p>
+                            <p>Ainda não há produtos cadastrados.</p>
+                            <p style="margin-top:10px;font-size:.85rem;color:#775555;">Use o Painel para cadastrar e publique o arquivo dados/produtos.json</p>
+                        </div>`;
+                }
             }
         }
 
@@ -400,10 +375,12 @@
             }
             grade.innerHTML = '';
             listaProdutos.forEach(prod => {
+                const caminhoFoto = ajustarCaminhoImagem(prod.foto);
                 const card = document.createElement('div');
                 card.className = 'produto-card';
                 card.innerHTML = `
-                    <img src="${prod.foto}" alt="${prod.titulo}" class="produto-foto">
+                    <img src="${caminhoFoto}" alt="${prod.titulo}" class="produto-foto"
+                         onerror="this.src='${caminhoFoto.replace('./', '')}'">
                     <div class="produto-corpo">
                         <h3 class="produto-nome">${prod.titulo}</h3>
                         <p class="produto-desc">${prod.descricao}</p>
@@ -412,19 +389,16 @@
                     </div>`;
                 grade.appendChild(card);
             });
-            // Vincular botões de adicionar
             document.querySelectorAll('.botao-adicionar').forEach(btn => {
                 btn.onclick = () => {
-                    const prod = listaProdutos.find(p => p.id === btn.dataset.id);
+                    const prod = listaProdutos.find(p => p.id == btn.dataset.id);
                     if (prod) adicionarAoCarrinho(prod);
                 };
             });
         }
 
-        // 🛒 CARRINHO
         function pegarCarrinho(){ return JSON.parse(localStorage.getItem(CHAVE_CARRINHO) || '[]'); }
         function salvarCarrinho(carrinho){ localStorage.setItem(CHAVE_CARRINHO, JSON.stringify(carrinho)); }
-
         function adicionarAoCarrinho(produto){
             const carrinho = pegarCarrinho();
             const existe = carrinho.find(i => i.id === produto.id);
@@ -432,18 +406,15 @@
             salvarCarrinho(carrinho);
             atualizarCarrinho(); abrirCarrinho();
         }
-
         function alterarQtd(id, delta){
             const carrinho = pegarCarrinho();
-            const item = carrinho.find(i => i.id === id);
+            const item = carrinho.find(i => i.id == id);
             if(item){ item.qtd += delta; if(item.qtd <= 0) carrinho.splice(carrinho.indexOf(item), 1); }
             salvarCarrinho(carrinho); atualizarCarrinho();
         }
-
-        function removerDoCarrinho(id){ salvarCarrinho(pegarCarrinho().filter(i => i.id !== id)); atualizarCarrinho(); }
+        function removerDoCarrinho(id){ salvarCarrinho(pegarCarrinho().filter(i => i.id != id)); atualizarCarrinho(); }
         function calcularTotal(){ return pegarCarrinho().reduce((s, i) => s + i.preco * i.qtd, 0); }
         function atualizarContador(){ document.getElementById('contadorCarrinho').textContent = pegarCarrinho().reduce((s, i) => s + i.qtd, 0); }
-
         function atualizarCarrinho(){
             const carrinho = pegarCarrinho();
             const lista = document.getElementById('listaCarrinho');
@@ -456,22 +427,21 @@
             }
             lista.innerHTML = '';
             carrinho.forEach(item => {
+                const caminhoItemImg = ajustarCaminhoImagem(item.foto);
                 const el = document.createElement('div');
                 el.className = 'item-carrinho';
-                el.innerHTML = `<img src="${item.foto}" class="item-img"><div class="item-info><h4 class="item-nome">${item.titulo}</h4><p class="item-preco">R$ ${item.preco.toFixed(2).replace('.', ',')}</p><div class="item-qtd"><button onclick="alterarQtd('${item.id}', -1)">−</button><span>${item.qtd}</span><button onclick="alterarQtd('${item.id}', 1)">+</button></div></div><button class="remover-item" onclick="removerDoCarrinho('${item.id}')">🗑️</button>`;
+                el.innerHTML = `<img src="${caminhoItemImg}" class="item-img" onerror="this.src='${caminhoItemImg.replace('./', '')}'"><div class="item-info"><h4 class="item-nome">${item.titulo}</h4><p class="item-preco">R$ ${item.preco.toFixed(2).replace('.', ',')}</p><div class="item-qtd"><button onclick="alterarQtd(${item.id}, -1)">−</button><span>${item.qtd}</span><button onclick="alterarQtd(${item.id}, 1)">+</button></div></div><button class="remover-item" onclick="removerDoCarrinho(${item.id})">🗑️</button>`;
                 lista.appendChild(el);
             });
             document.getElementById('valorTotal').textContent = 'R$ ' + calcularTotal().toFixed(2).replace('.', ',');
             document.getElementById('areaTotal').style.display = 'block';
             document.getElementById('botaoFinalizar').disabled = false;
         }
-
         function abrirCarrinho(){ document.getElementById('modalCarrinho').classList.add('aberto'); }
         function fecharCarrinhoFn(){ document.getElementById('modalCarrinho').classList.remove('aberto'); }
         document.getElementById('botaoCarrinho').onclick = abrirCarrinho;
         document.getElementById('fecharCarrinho').onclick = fecharCarrinhoFn;
 
-        // 📦 FINALIZAR PEDIDO → WHATSAPP
         document.getElementById('botaoFinalizar').onclick = () => {
             const carrinho = pegarCarrinho();
             if (!carrinho.length) return;
@@ -481,11 +451,9 @@
             window.open(`https://wa.me/${WHATSAPP}?text=${mensagem}`, '_blank');
         };
 
-        // 🔄 INICIAR TUDO
         criarBrasas();
         atualizarCarrinho();
         carregarProdutos();
     </script>
-
 </body>
 </html>
