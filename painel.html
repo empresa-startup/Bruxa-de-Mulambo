@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚶ Bruxa de Mulambo — Painel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cinzel', serif; }
+        body { background: #0c0404; color: #e0c8c8; min-height: 100vh; padding: 100px 20px 40px; } /* ✅ Mais espaço em cima */
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* 🍔 CABEÇALHO + MENU SANDUÍCHE */
+        .cabecalho { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(180deg, #1a1010, #0c0404); padding: 20px; z-index: 100; box-shadow: 0 2px 15px rgba(255,40,40,.1); border-bottom: 1px solid rgba(150,30,30,.3); }
+        .cabecalho-conteudo { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Cinzel Decorative', serif; color: #ff4040; font-size: 1.4rem; text-shadow: 0 0 10px rgba(255,40,40,.3); letter-spacing: 1px; }
+        
+        .btn-sanduiche { background: none; border: none; color: #ff4040; font-size: 1.8rem; cursor: pointer; padding: 5px 10px; line-height: 1; }
+        .btn-sanduiche:hover { color: #fff; }
+
+        /* 🍔 MENU ABERTO */
+        .menu-fundo { position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 150; display: none; }
+        .menu-fundo.aberto { display: block; }
+        .menu-lateral { position: fixed; top: 0; left: 0; width: 280px; height: 100%; background: linear-gradient(180deg, #1a1010, #0c0404); border-right: 2px solid rgba(150,30,30,.4); padding: 60px 20px 20px; transform: translateX(-100%); transition: transform .3s ease; z-index: 160; }
+        .menu-lateral.aberto { transform: translateX(0); }
+        .menu-fechar { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #999; font-size: 1.5rem; cursor: pointer; }
+        .menu-fechar:hover { color: #ff4040; }
+        
+        .menu-item { display: block; width: 100%; padding: 15px; margin-bottom: 8px; background: linear-gradient(135deg, #2a1010, #1a0808); border: 1px solid rgba(150,30,30,.3); color: #b89090; border-radius: 6px; text-align: left; cursor: pointer; font-size: 1rem; transition: all .3s; }
+        .menu-item:hover, .menu-item.ativa { background: linear-gradient(135deg, #901010, #b81818); color: #fff; border-color: #ff4040; box-shadow: 0 0 12px rgba(255,40,40,.25); }
+        .menu-config { margin-top:  30px; border-top: 1px dashed rgba(150,30,30,.3); padding-top: 20px; }
+
+        /* 🔒 MODAL DE SENHA */
+        .modal-fundo { position: fixed; inset: 0; background: rgba(0,0,0,.85); display: none; align-items: center; justify-content: center; z-index: 999; }
+        .modal-fundo.aberto { display: flex; }
+        .modal { background: linear-gradient(180deg, #1a1010, #0c0404); border: 2px solid rgba(150,30,30,.4); border-radius: 8px; padding: 25px; max-width: 400px; width: 90%; box-shadow: 0 0 30px rgba(255,40,40,.15); }
+        .modal h3 { font-family: 'Cinzel Decorative', serif; color: #ff4040; text-align: center; margin-bottom: 20px; }
+        .fechar { margin-top: 15px; width: 100%; background: linear-gradient(135deg, #444, #333); }
+
+        /* ⚙️ CONFIGURAÇÕES */
+        .config-bloco { background: linear-gradient(180deg, rgba(20,12,8,.95), rgba(10,4,4,.98)); border: 2px solid rgba(60,255,120,.25); padding: 20px; border-radius: 8px; margin-bottom: 25px; display: none; }
+        .config-bloco.visivel { display: block; }
+        .config-bloco h4 { color: #50ff90; font-size: .95rem; margin-bottom: 15px; text-align: center; }
+        .config-linha { display: grid; gap: 12px; }
+
+        .grupo { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; color: #d0a0a0; font-size: .85rem; }
+        input, textarea { width: 100%; padding: 10px; background: rgba(5,0,0,.6); border: 1px solid rgba(150,30,30,.3); color: #fff; border-radius: 4px; font-size: .95rem; }
+        input:focus { outline: none; border-color: #ff4040; box-shadow: 0 0 8px rgba(255,40,40,.2); }
+
+        .img-preview { max-width: 150px; max-height: 150px; margin-top: 10px; border-radius: 4px; display: none; object-fit: cover; }
+        .img-preview.visivel { display: block; }
+
+        .conteudo-pagina { display: none; }
+        .conteudo-pagina.visivel { display: block; }
+
+        .form-bloco { background: linear-gradient(180deg, rgba(25,8,8,.95), rgba(10,2,2,.98)); padding: 25px; border: 1px solid rgba(150,30,30,.3); border-radius: 8px; margin-bottom: 30px; }
+        h2 { font-family: 'Cinzel Decorative', serif; color: #ff4040; margin-bottom: 25px; text-align: center; font-size: 1.5rem; }
+        h3 { font-family: 'Cinzel Decorative', serif; color: #ff4040; margin-bottom: 15px; text-align: center; font-size: 1.2rem; }
+        button { padding: 11px 22px; background: linear-gradient(135deg, #901010, #b81818); color: #fff; border: 1px solid rgba(255,60,60,.4); border-radius: 4px; cursor: pointer; font-weight: 600; transition: all .3s; font-size: .9rem; }
+        button:hover { transform: translateY(-2px); }
+        button.sucesso { background: linear-gradient(135deg, #109040, #18b858); border-color: rgba(60,255,120,.4); }
+        button.sucesso:hover { box-shadow: 0 0 15px rgba(60,255,120,.25); }
+        button.secundario { background: linear-gradient(135deg, #3a3a3a, #2a2a2a); }
+
+        .lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; margin-top: 20px; }
+        .item-card { background: linear-gradient(180deg, rgba(25,8,8,.95), rgba(10,2,2,.98)); border: 1px solid rgba(150,30,30,.3); border-radius: 6px; overflow: hidden; }
+        .item-imagem { width: 100%; height: 150px; object-fit: cover; background: #1a0808; }
+        .item-corpo { padding: 12px; }
+        .item-titulo { color: #ff5050; font-size: 1rem; margin-bottom: 5px; }
+        .item-desc { font-size: .8rem; color: #907070; margin-bottom: 8px; }
+        .item-preco { color: #50ff90; font-weight: bold; margin-bottom: 10px; }
+        .item-acoes { display: flex; gap: 6px; }
+        .item-acoes button { padding: 6px 10px; font-size: .8rem; }
+        .btn-excluir { background: linear-gradient(135deg, #901010, #c02020); }
+
+        .status { padding: 12px; border-radius: 4px; margin: 15px 0; display: none; text-align: center; }
+        .status.sucesso { background: rgba(16,144,64,.15); border: 1px solid rgba(60,255,120,.3); color: #80ffb0; display: block; }
+        .status.erro { background: rgba(144,16,16,.15); border: 1px solid rgba(255,60,60,.3); color: #ff8080; display: block; }
+        .status.aviso { background: rgba(144,96,16,.15); border: 1px solid rgba(255,180,60,.3); color: #ffd080; display: block; }
+
+        .linha-botoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; justify-content: center; }
+        .vazio { grid-column: 1/-1; text-align: center; padding: 40px; color: #705050; font-style: italic; }
+        .dica { font-size: .78rem; color: #775555; margin-top: 4px; display: block; }
+    </style>
+</head>
+<body>
+
+<!-- 🍔 CABEÇALHO -->
+<div class="cabecalho">
+    <div class="cabecalho-conteudo">
+        <button class="btn-sanduiche" onclick="abrirMenu()">☰</button>
+        <h1 class="logo">⚶ Bruxa de Mulambo</h1>
+        <div style="width:40px;"></div>
+    </div>
+</div>
+
+<!-- 🍔 MENU SANDUÍCHE -->
+<div class="menu-fundo" id="menuFundo" onclick="fecharMenu()"></div>
+<nav class="menu-lateral" id="menuLateral">
+    <button class="menu-fechar" onclick="fecharMenu()">✕</button>
+    
+    <button class="menu-item ativa" data-pagina="trabalhos" onclick="irParaPagina('trabalhos')">🎭 Trabalhos</button>
+    <!-- ✅ "Produtos" → "Loja" -->
+    <button class="menu-item" data-pagina="loja" onclick="irParaPagina('loja')">🛒 Loja</button>
+    <button class="menu-item" data-pagina="publicar" onclick="irParaPagina('publicar')">🚀 Publicar</button>
+    
+    <div class="menu-config">
+        <button class="menu-item" onclick="abrirModalSenha()">⚙️ Configurações</button>
+    </div>
+</nav>
+
+<!-- 🔒 MODAL DE SENHA -->
+<div class="modal-fundo" id="modalSenha">
+    <div class="modal">
+        <h3>🔒 Área Restrita</h3>
+        <div class="grupo">
+            <label>Digite a senha de acesso:</label>
+            <input type="password" id="inputSenha" placeholder="••••••">
+        </div>
+        <div class="linha-botoes" style="margin-top:15px;">
+            <button onclick="verificarSenha()">🔓 Entrar</button>
+            <button class="secundario" onclick="fecharModalSenha()">❌ Cancelar</button>
+        </div>
+        <p id="erroSenha" style="color:#ff6060;margin-top:10px;display:none;">Senha incorreta!</p>
+
+        <!-- ⚙️ CONFIGURAÇÕES -- SÓ APARECE COM SENHA CERTA -->
+        <div class="config-bloco" id="areaConfig">
+            <h4>🔌 Conexão com GitHub</h4>
+            <div class="config-linha">
+                <div class="grupo">
+                    <label>Usuário GitHub</label>
+                    <input type="text" id="gitUsuario" placeholder="seu-usuario">
+                </div>
+                <div class="grupo">
+                    <label>Repositório</label>
+                    <input type="text" id="gitRepo" value="bruxa-de-mulambo">
+                    <small class="dica">✅ Já preenchido: bruxa-de-mulambo</small>
+                </div>
+                <div class="grupo">
+                    <label>Token de Acesso</label>
+                    <input type="password" id="gitToken" placeholder="ghp_xxxxxxxxxxxx">
+                </div>
+                <div class="grupo">
+                    <label>Branch</label>
+                    <input type="text" id="gitBranch" value="gh-pages">
+                </div>
+            </div>
+            <div class="linha-botoes">
+                <button class="secundario" onclick="salvarConfig()">💾 Salvar</button>
+                <button class="secundario" onclick="fecharConfig()">✅ Fechar</button>
+            </div>
+            <div id="configSalva" class="dica" style="margin-top:8px;color:#50ff90;display:none;">✅ Salvo!</div>
+        </div>
+    </div>
+</div>
+
+<!-- 📢 STATUS -->
+<div class="container">
+    <div id="statusMsg" class="status"></div>
+
+    <!-- 📄 PÁGINA: TRABALHOS -->
+    <div class="conteudo-pagina visivel" id="pagina-trabalhos">
+        <h2>🎭 Trabalhos / Rituais</h2>
+        <div class="form-bloco">
+            <div class="grupo">
+                <label>📷 Escolher Imagem</label>
+                <input type="file" id="trabalhoArquivoImg" accept="image/*" onchange="previewImagem(this, 'previewTrabalho')">
+                <img id="previewTrabalho" class="img-preview" alt="Pré-visualização">
+            </div>
+            <div class="grupo">
+                <label>Título</label>
+                <input type="text" id="trabalhoTitulo" placeholder="Abertura de Caminhos">
+            </div>
+            <div class="grupo">
+                <label>Descrição</label>
+                <textarea id="trabalhoDesc" rows="2" placeholder="Remoção de obstáculos e abertura de estradas..."></textarea>
+            </div>
+            <button onclick="adicionarTrabalho()">➕ Criar Card</button>
+        </div>
+        <h3>Cards Cadastrados</h3>
+        <div class="lista" id="listaTrabalhos"><p class="vazio">Nenhum cadastrado.</p></div>
+    </div>
+
+    <!-- ✅ PÁGINA: LOJA (antes era Produtos) -->
+    <div class="conteudo-pagina" id="pagina-loja">
+        <h2>🛒 Loja</h2>
+        <div class="form-bloco">
+            <div class="grupo">
+                <label>📷 Escolher Imagem</label>
+                <input type="file" id="produtoArquivoImg" accept="image/*" onchange="previewImagem(this, 'previewProduto')">
+                <img id="previewProduto" class="img-preview" alt="Pré-visualização">
+            </div>
+            <div class="grupo">
+                <label>Título</label>
+                <input type="text" id="produtoTitulo" placeholder="Incenso de Exu — 7 Ervas">
+            </div>
+            <div class="grupo">
+                <label>Descrição</label>
+                <textarea id="produtoDesc" rows="2" placeholder="Limpeza energética e abertura de caminhos..."></textarea>
+            </div>
+            <div class="grupo">
+                <label>Preço R$</label>
+                <input type="number" step="0.01" id="produtoPreco" placeholder="39.90">
+            </div>
+            <button onclick="adicionarProduto()">➕ Criar Card</button>
+        </div>
+        <h3>Cards Cadastrados</h3>
+        <div class="lista" id="listaProdutos"><p class="vazio">Nenhum cadastrado.</p></div>
+    </div>
+
+    <!-- 📄 PÁGINA: PUBLICAR -->
+    <div class="conteudo-pagina" id="pagina-publicar">
+        <h2>🚀 Publicar</h2>
+        <div class="form-bloco" style="text-align:center;">
+            <p style="color:#907070;margin:15px 0;">Imagens → vão sozinhas para pasta "imagens/" ✅<br>Dados → atualizam JSON sozinhos ✅</p>
+            <div class="linha-botoes">
+                <button class="sucesso" onclick="publicarTudo()" style="font-size:1.1rem;padding:15px 30px;">🚀 PUBLICAR TUDO!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 🔒 SENHA
+    const SENHA_CONFIG = '968574';
+    let trabalhos = [], produtos = [], arquivosImagens = [];
+
+    // 🍔 MENU SANDUÍCHE
+    function abrirMenu() {
+        document.getElementById('menuFundo').classList.add('aberto');
+        document.getElementById('menuLateral').classList.add('aberto');
+    }
+    function fecharMenu() {
+        document.getElementById('menuFundo').classList.remove('aberto');
+        document.getElementById('menuLateral').classList.remove('aberto');
+    }
+    function irParaPagina(nome) {
+        fecharMenu();
+        // Ativa item do menu
+        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('ativa'));
+        document.querySelector(`.menu-item[data-pagina="${nome}"]`)?.classList.add('ativa');
+        // Mostra página
+        document.querySelectorAll('.conteudo-pagina').forEach(p => p.classList.remove('visivel'));
+        document.getElementById(`pagina-${nome}`).classList.add('visivel');
+    }
+
+    // 🔒 MODAL DE SENHA
+    function abrirModalSenha() {
+        fecharMenu();
+        document.getElementById('modalSenha').classList.add('aberto');
+        document.getElementById('inputSenha').value = '';
+        document.getElementById('erroSenha').style.display = 'none';
+        document.getElementById('areaConfig').classList.remove('visivel');
+    }
+    function fecharModalSenha() { document.getElementById('modalSenha').classList.remove('aberto'); }
+    function verificarSenha() {
+        if (document.getElementById('inputSenha').value === SENHA_CONFIG) {
+            document.getElementById('areaConfig').classList.add('visivel');
+        } else {
+            document.getElementById('erroSenha').style.display = 'block';
+        }
+    }
+    function fecharConfig() { document.getElementById('areaConfig').classList.remove('visivel'); }
+
+    // 🖼️ PRÉ-VISUALIZAÇÃO
+    function previewImagem(input, idImg) {
+        if (input.files && input.files[0]) {
+            const arq = input.files[0];
+            const leitor = new FileReader();
+            leitor.onload = e => {
+                document.getElementById(idImg).src = e.target.result;
+                document.getElementById(idImg).classList.add('visivel');
+            };
+            leitor.readAsDataURL(arq);
+            input.arquivo = arq;
+        }
+    }
+
+    // ⚙️ CONFIGURAÇÃO
+    function salvarConfig() {
+        const cfg = {
+            usuario: document.getElementById('gitUsuario').value.trim(),
+            repo: document.getElementById('gitRepo').value.trim(),
+            token: document.getElementById('gitToken').value.trim(),
+            branch: document.getElementById('gitBranch').value.trim() || 'gh-pages'
+        };
+        if (!cfg.usuario || !cfg.repo || !cfg.token) return mostrarStatus('Preencha tudo!', 'aviso');
+        localStorage.setItem('gitConfig', JSON.stringify(cfg));
+        document.getElementById('configSalva').style.display = 'block';
+        mostrarStatus('✅ Salvo!', 'sucesso');
+    }
+    function carregarConfig() {
+        const s = localStorage.getItem('gitConfig'); if (!s) return;
+        const c = JSON.parse(s);
+        document.getElementById('gitUsuario').value = c.usuario;
+        document.getElementById('gitRepo').value = c.repo;
+        document.getElementById('gitToken').value = c.token;
+        document.getElementById('gitBranch').value = c.branch || 'gh-pages';
+    }
+    function getConfig() { const s = localStorage.getItem('gitConfig'); return s ? JSON.parse(s) : null; }
+
+    // 📢 STATUS
+    function mostrarStatus(t, tipo='aviso') {
+        const el = document.getElementById('statusMsg');
+        el.textContent = t; el.className = 'status '+tipo;
+        setTimeout(() => el.style.display='none', 6000);
+    }
+
+    // 🎭 TRABALHOS
+    function adicionarTrabalho() {
+        const arqImg = document.getElementById('trabalhoArquivoImg').arquivo;
+        const titulo = document.getElementById('trabalhoTitulo').value.trim();
+        const desc = document.getElementById('trabalhoDesc').value.trim();
+        if (!arqImg || !titulo || !desc) return mostrarStatus('Imagem + título + descrição!', 'aviso');
+        const caminho = 'imagens/' + arqImg.name;
+        trabalhos.push({ id: Date.now(), foto: caminho, titulo, descricao: desc });
+        arquivosImagens.push({ caminho, arquivo: arqImg });
+        renderizarTrabalhos(); limparCamposTrab(); salvarLocal();
+        mostrarStatus('✅ Card criado!', 'sucesso');
+    }
+    function limparCamposTrab() {
+        document.getElementById('trabalhoArquivoImg').value = '';
+        document.getElementById('trabalhoTitulo').value = '';
+        document.getElementById('trabalhoDesc').value = '';
+        document.getElementById('previewTrabalho').classList.remove('visivel');
+    }
+    function renderizarTrabalhos() {
+        const el = document.getElementById('listaTrabalhos');
+        if (!trabalhos.length) { el.innerHTML='<p class="vazio">Nenhum cadastrado.</p>'; return; }
+        el.innerHTML = '';
+        trabalhos.forEach(t => el.innerHTML += `
+            <div class="item-card">
+                <img src="${t.foto}" class="item-imagem" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 150%22><rect fill=%22%232a1010%22 width=%22200%22 height=%22150%22/><text x=%22100%22 y=%2275%22 text-anchor=%22middle%22 fill=%22%23886666%22>Imagem</text></svg>'">
+                <div class="item-corpo">
+                    <h4 class="item-titulo">${t.titulo}</h4>
+                    <p class="item-desc">${t.descricao}</p>
+                    <div class="item-acoes"><button class="btn-excluir" onclick="excluirTrab(${t.id})">🗑️</button></div>
+                </div>
+            </div>`);
+    }
+    function excluirTrab(id) { trabalhos = trabalhos.filter(t=>t.id!==id); renderizarTrabalhos(); salvarLocal(); }
+
+    // 🛒 PRODUTOS / LOJA
+    function adicionarProduto() {
+        const arqImg = document.getElementById('produtoArquivoImg').arquivo;
+        const titulo = document.getElementById('produtoTitulo').value.trim();
+        const desc = document.getElementById('produtoDesc').value.trim();
+        const preco = parseFloat(document.getElementById('produtoPreco').value);
+        if (!arqImg || !titulo || !desc || isNaN(preco)) return mostrarStatus('Preencha tudo!', 'aviso');
+        const caminho = 'imagens/' + arqImg.name;
+        produtos.push({ id: Date.now(), foto: caminho, titulo, descricao: desc, preco });
+        arquivosImagens.push({ caminho, arquivo: arqImg });
+        renderizarProdutos(); limparCamposProd(); salvarLocal();
+        mostrarStatus('✅ Card criado!', 'sucesso');
+    }
+    function limparCamposProd() {
+        document.getElementById('produtoArquivoImg').value = '';
+        document.getElementById('produtoTitulo').value = '';
+        document.getElementById('produtoDesc').value = '';
+        document.getElementById('produtoPreco').value = '';
+        document.getElementById('previewProduto').classList.remove('visivel');
+    }
+    function renderizarProdutos() {
+        const el = document.getElementById('listaProdutos');
+        if (!produtos.length) { el.innerHTML='<p class="vazio">Nenhum cadastrado.</p>'; return; }
+        el.innerHTML = '';
+        produtos.forEach(p => el.innerHTML += `
+            <div class="item-card">
+                <img src="${p.foto}" class="item-imagem" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 150%22><rect fill=%22%232a1010%22 width=%22200%22 height=%22150%22/><text x=%22100%22 y=%2275%22 text-anchor=%22middle%22 fill=%22%23886666%22>Imagem</text></svg>'">
+                <div class="item-corpo">
+                    <h4 class="item-titulo">${p.titulo}</h4>
+                    <p class="item-desc">${p.descricao}</p>
+                    <p class="item-preco">R$ ${p.preco.toFixed(2)}</p>
+                    <div class="item-acoes"><button class="btn-excluir" onclick="excluirProd(${p.id})">🗑️</button></div>
+                </div>
+            </div>`);
+    }
+    function excluirProd(id) { produtos = produtos.filter(p=>p.id!==id); renderizarProdutos(); salvarLocal(); }
+
+    // 🚀 ENVIAR ARQUIVO GITHUB
+    async function enviarArquivoGitHub(caminho, conteudoB64, msg) {
+        const cfg = getConfig(); if (!cfg) throw new Error('Configure o GitHub!');
+        let sha = null;
+        try {
+            const r = await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/${caminho}`, {headers:{Authorization:`token ${cfg.token}`}});
+            if (r.ok) sha = (await r.json()).sha;
+        } catch(e) {}
+        const res = await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/${caminho}`, {
+            method:'PUT', headers:{Authorization:`token ${cfg.token}`,'Content-Type':'application/json'},
+            body: JSON.stringify({message:msg, content:conteudoB64, sha, branch:cfg.branch})
+        });
+        if (!res.ok) throw new Error(await res.text());
+    }
+    function arquivoParaBase64(arq) {
+        return new Promise((res, rej) => {
+            const leitor = new FileReader();
+            leitor.onload = e => res(e.target.result.split(',')[1]);
+            leitor.onerror = rej;
+            leitor.readAsDataURL(arq);
+        });
+    }
+    async function publicarTudo() {
+        try {
+            mostrarStatus('📤 Enviando imagens...', 'aviso');
+            for (const img of arquivosImagens) await enviarArquivoGitHub(img.caminho, await arquivoParaBase64(img.arquivo), `Imagem: ${img.arquivo.name}`);
+            mostrarStatus('📤 Atualizando dados...', 'aviso');
+            const jsonT = JSON.stringify(trabalhos.map(t=>({foto:t.foto,titulo:t.titulo,descricao:t.descricao})), null, 2);
+            await enviarArquivoGitHub('dados/trabalhos.json', btoa(unescape(encodeURIComponent(jsonT))), 'Atualização Trabalhos');
+            const jsonP = JSON.stringify(produtos.map(p=>({foto:p.foto,titulo:p.titulo,descricao:p.descricao,preco:p.preco})), null, 2);
+            await enviarArquivoGitHub('dados/produtos.json', btoa(unescape(encodeURIComponent(jsonP))), 'Atualização Produtos');
+            mostrarStatus('🎉 TUDO PUBLICADO!', 'sucesso');
+            arquivosImagens = [];
+        } catch(e) { mostrarStatus('❌ Erro: ' + e.message.substring(0,80), 'erro'); }
+    }
+
+    // 💾 SALVAR
+    function salvarLocal() {
+        localStorage.setItem('painel_trabalhos', JSON.stringify(trabalhos));
+        localStorage.setItem('painel_produtos', JSON.stringify(produtos));
+    }
+    function carregarLocal() {
+        const t = localStorage.getItem('painel_trabalhos');
+        const p = localStorage.getItem('painel_produtos');
+        if (t) trabalhos = JSON.parse(t);
+        if (p) produtos = JSON.parse(p);
+        renderizarTrabalhos(); renderizarProdutos();
+    }
+
+    // 🔄 INICIAR
+    carregarConfig();
+    carregarLocal();
+</script>
+
+</body>
+</html>
