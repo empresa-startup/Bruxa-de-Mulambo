@@ -64,7 +64,7 @@
             100% { transform: translateY(-100vh) translateX(12px) scale(0.4); opacity: 0; }
         }
 
-        /* ===== MENU — INTACTO ===== */
+        /* ===== MENU — SEM A LINHA! ✅ */
         .menu-topo {
             position: fixed;
             top: 10px;
@@ -80,12 +80,16 @@
             cursor: pointer;
             border: none;
             background: transparent;
+            /* ✅ REMOVENDO QUALQUER LINHA/BORDA/SOMBRA */
+            border-bottom: none !important;
+            box-shadow: none !important;
+            text-decoration: none !important;
         }
         .botao-sanduiche span {
             width: 100%;
             height: 2px;
             background: var(--vermelho);
-            box-shadow: 0 0 8px rgba(255, 40, 40, 0.4);
+            box-shadow: none !important; /* ✅ SEM SOMBRA/LINHA EMBAIXO */
             transition: all 0.3s ease;
         }
         .botao-sanduiche.aberto span:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
@@ -393,7 +397,7 @@
         .vazio { color: #705050; font-style: italic; }
 
         /* ✅ ========================================== */
-        /* ✅ CELULAR — CAPA SUBINDO MAIS! AGORA -60px ✅ */
+        /* ✅ CELULAR — CAPA EM -60px + SEM LINHA! ✅ */
         /* ✅ ========================================== */
         @media (max-width: 768px) {
             .capa-container {
