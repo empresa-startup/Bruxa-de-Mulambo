@@ -117,19 +117,26 @@
             color: var(--vermelho);
             font-weight: 600;
         }
+        /* ✅ CAPA AJUSTADA — MOSTRA TUDO SEM CORTAR! */
         .capa-container {
             width: 100%;
-            height: 80vh;
+            height: auto;           /* ✅ Altura se ajusta sozinha */
+            min-height: 50vh;       /* ✅ Não fica muito pequena */
+            max-height: 80vh;       /* ✅ Não passa do tamanho da tela */
             overflow: hidden;
             position: relative;
             z-index: 10;
+            background: #0c0404;    /* ✅ Cor de fundo se sobrar espaço */
         }
         .capa-container img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;           /* ✅ Mantém a proporção original */
+            max-height: 80vh;       /* ✅ Limita a altura na tela */
+            object-fit: contain;    /* ✅ MOSTRA TODA A IMAGEM — SEM CORTAR NADA! */
             object-position: center top;
             filter: brightness(1.15) contrast(1.05) saturate(1.35);
+            display: block;
+            margin: 0 auto;         /* ✅ Centraliza perfeitamente */
         }
         .capa-sombra {
             position: absolute;
@@ -321,6 +328,7 @@
             .intro h1 { font-size: 2rem; }
             .rituais-grade { gap: 20px; }
             .ritual-card { width: 90%; }
+            .capa-container img { max-height: 60vh; } /* ✅ Menor no celular */
         }
     </style>
 </head>
@@ -384,7 +392,6 @@
     </footer>
     <script>
         const WHATSAPP = '5531987276275';
-
         // ✅ FUNÇÃO MÁGICA — FUNCIONA COM OU SEM O PONTO! NÃO IMPORTA!
         function ajustarCaminhoImagem(caminho) {
             if (!caminho) return '';
@@ -392,7 +399,6 @@
             if (caminho.startsWith('imagens/')) return './' + caminho;
             return caminho;
         }
-
         function criarBrasas() {
             const container = document.getElementById('fogoGlobal');
             for(let i = 0; i < 60; i++){
@@ -406,7 +412,6 @@
                 container.appendChild(b);
             }
         }
-
         const botaoMenu = document.getElementById('botaoMenu');
         const menuSuspenso = document.getElementById('menuSuspenso');
         botaoMenu.onclick = () => {
@@ -417,7 +422,6 @@
             botaoMenu.classList.remove('aberto');
             menuSuspenso.classList.remove('aberto');
         });
-
         async function carregarTrabalhos() {
             try {
                 const resposta = await fetch('./dados/trabalhos.json');
@@ -436,7 +440,6 @@
                 }
             }
         }
-
         function renderizarTrabalhos(lista) {
             const grade = document.getElementById('gradeRituais');
             if (!lista.length) {
@@ -459,7 +462,6 @@
                 grade.appendChild(card);
             });
         }
-
         criarBrasas();
         carregarTrabalhos();
     </script>
