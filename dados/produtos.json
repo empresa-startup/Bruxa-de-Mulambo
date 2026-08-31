@@ -1,20 +1,8 @@
 [
   {
-    "foto": "imagens/FOTO.jpg",
-    "titulo": "rr",
-    "descricao": "rrc3",
-    "preco": 85
-  },
-  {
     "foto": "./imagens/FOTO (2).jpg",
     "titulo": "HKK U",
     "descricao": "YYY",
     "preco": 52
-  },
-  {
-    "foto": "./imagens/FOTO.jpg",
-    "titulo": "WDWD",
-    "descricao": "WDWDW",
-    "preco": 85
   }
 ]
