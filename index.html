@@ -169,7 +169,7 @@
             text-shadow: 0 0 15px rgba(255, 40, 40, 0.4);
         }
 
-        /* ✅ CARDS — IGUAIS À IMAGEM QUE VOCÊ MOSTROU! ✅ */
+        /* ✅ CARDS — IMAGEM GRANDE OCUPANDO TODO O ESPAÇO DE CIMA! ✅ */
         .rituais-grade {
             display: flex;
             flex-wrap: wrap;
@@ -179,7 +179,7 @@
             margin: 0 auto;
         }
         .ritual-card {
-            width: 240px;
+            width: 280px; /* ✅ Card um pouco mais largo */
             background: var(--fundo-card);
             border: 2px solid var(--borda-vermelha);
             border-radius: 4px;
@@ -187,13 +187,15 @@
             position: relative;
             transition: all 0.35s ease;
             box-shadow: inset 0 0 20px rgba(200, 40, 40, 0.05);
+            display: flex;
+            flex-direction: column;
         }
         .ritual-card:hover {
             transform: translateY(-8px);
             border-color: var(--vermelho-fogo);
             box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 25px rgba(255, 40, 40, 0.25);
         }
-        /* Borda brilhante interna */
+        /* Borda interna brilhante */
         .ritual-card::before {
             content: '';
             position: absolute;
@@ -205,44 +207,53 @@
             pointer-events: none;
             z-index: 2;
         }
+
+        /* ✅ IMAGEM — OCUPA TODO O TOPO, GRANDE E BONITA! ✅ */
         .foto-trabalho {
             width: 100%;
-            height: 200px;
-            object-fit: cover;
+            height: 260px; /* ✅ IMAGEM BEM MAIS ALTA — OCUPA MAIS ESPAÇO */
+            object-fit: cover; /* ✅ PREENCHE TODO O QUADRO SEM DEFORMAR */
+            object-position: center top; /* ✅ MOSTRA A PARTE DE CIMA DA IMAGEM */
             display: block;
+            background: #000;
         }
+
         .card-conteudo {
-            padding: 18px 15px;
+            padding: 20px 15px;
             position: relative;
             z-index: 3;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
         .ritual-card h3 {
             font-family: 'Cinzel Decorative', serif;
             color: var(--vermelho);
-            font-size: 1.15rem;
-            margin-bottom: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
             text-shadow: 0 0 8px rgba(255, 40, 40, 0.3);
         }
         .ritual-card p {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--texto-claro);
             line-height: 1.5;
-            margin-bottom: 18px;
-            min-height: 40px;
+            margin-bottom: 10px;
         }
         .botao-card {
             display: block;
             width: 100%;
-            padding: 10px;
+            padding: 11px;
             background: linear-gradient(135deg, var(--vermelho-escuro), var(--vermelho));
             color: #fff;
             font-family: 'Cinzel', serif;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             text-decoration: none;
             text-align: center;
             border-radius: 3px;
             border: 1px solid rgba(255, 80, 80, 0.3);
             transition: all 0.3s ease;
+            margin-top: auto;
         }
         .botao-card:hover {
             background: linear-gradient(135deg, var(--vermelho), var(--vermelho-fogo));
@@ -291,7 +302,8 @@
         /* ===== CELULAR ===== */
         @media (max-width: 768px) {
             .rituais-grade { gap: 20px; }
-            .ritual-card { width: 85%; max-width: 280px; }
+            .ritual-card { width: 90%; max-width: 300px; }
+            .foto-trabalho { height: 240px; }
         }
     </style>
 </head>
@@ -323,9 +335,9 @@
 
     <!-- RITUAIS -->
     <section id="rituais">
-        <h2>Nossos Rituais</h2>
+        <h2>NOSSOS RITUAIS</h2>
         <div class="rituais-grade" id="gradeRituais">
-            <p>Carregando trabalhos...</p>
+            <p style="color:#806060">Carregando trabalhos...</p>
         </div>
     </section>
 
@@ -401,7 +413,7 @@
                     <div class="card-conteudo">
                         <h3>${t.titulo}</h3>
                         <p>${t.descricao}</p>
-                        <a href="https://wa.me/${WHATSAPP}?text=Olá!%20Quero%20saber%20mais:%20${encodeURIComponent(t.titulo)}!" target="_blank" class="botao-card">Saiba mais</a>
+                        <a href="https://wa.me/${WHATSAPP}?text=Olá!%20Quero%20saber%20mais:%20${encodeURIComponent(t.titulo)}!" target="_blank" class="botao-card">SAIBA MAIS</a>
                     </div>`;
                 grade.appendChild(card);
             });
