@@ -395,7 +395,7 @@
         .vazio { color: #705050; font-style: italic; }
 
         /* ✅ ========================================== */
-        /* ✅ CELULAR — AGORA 3 CARDS LADO A LADO! */
+        /* ✅ CELULAR — 3 CARDS + IMAGEM SUBINDO! */
         /* ✅ ========================================== */
         @media (max-width: 768px) {
             .capa-container {
@@ -404,7 +404,7 @@
             }
             .capa-container img {
                 object-fit: contain;
-                transform: none;
+                transform: translateY(-18px); /* ← SUBIU SÓ UM POUQUINHO NO CELULAR ✅ */
             }
             .intro h1 { font-size: 1.7rem; }
             .rituais-grade { gap: 6px; }
@@ -434,6 +434,7 @@
             .capa-container img {
                 object-fit: cover;
                 object-position: center top;
+                transform: none; /* ← NO PC CONTINUA NO LUGAR, NÃO MEXEU! ✅ */
             }
             .intro h1 {
                 font-size: 2.8rem;
