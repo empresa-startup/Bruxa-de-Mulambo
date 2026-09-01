@@ -43,8 +43,8 @@
         .sombra-etérea {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: 
-                radial-gradient(ellipse at 30% 20%, rgba(60,15,25,0.05), transparent 60%),
-                radial-gradient(ellipse at 70% 80%, rgba(50,12,20,0.04), transparent 60%);
+                radial-gradient(circle at 30% 20%, rgba(60,15,25,0.05), transparent 60%),
+                radial-gradient(circle at 70% 80%, rgba(50,12,20,0.04), transparent 60%);
             z-index: -7; pointer-events: none;
         }
         .fogo-container {
@@ -218,12 +218,13 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
+            gap: 12px;
             padding-bottom: 60px;
         }
         .produto-card {
-            width: 300px;
-            min-height: 480px;
+            width: calc(33.333% - 10px);
+            min-width: 140px;
+            max-width: 280px;
             background: linear-gradient(180deg, rgba(25, 8, 8, 0.95), rgba(10, 2, 2, 0.98));
             border: none;
             border-radius: 8px;
@@ -312,7 +313,7 @@
         }
         .produto-foto {
             width: calc(100% - 24px);
-            height: 220px;
+            height: 160px;
             margin: 18px 12px 12px;
             object-fit: contain;
             object-position: center;
@@ -320,9 +321,12 @@
             background: rgba(10, 2, 2, 0.6);
             position: relative;
             z-index: 3;
+            cursor: pointer;
+            transition: opacity 0.25s ease;
         }
+        .produto-foto:hover { opacity: 0.9; }
         .produto-corpo {
-            padding: 10px 16px 16px;
+            padding: 10px 12px 16px;
             position: relative;
             z-index: 3;
             display: flex;
@@ -332,34 +336,34 @@
         .produto-nome {
             font-family: 'Cinzel Decorative', serif;
             color: #ff5050;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
             text-align: center;
             text-shadow: 0 0 8px rgba(255, 40, 40, 0.3);
         }
         .produto-desc {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #b09090;
-            line-height: 1.6;
-            margin-bottom: 15px;
+            line-height: 1.4;
+            margin-bottom: 10px;
             text-align: center;
-            min-height: 40px;
+            min-height: 36px;
         }
         .produto-preco {
-            font-size: 1.4rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: #ff9944;
             text-align: center;
             text-shadow: 0 0 8px rgba(255,153,68,0.35);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         .botao-adicionar {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background: linear-gradient(135deg, #7a1528, #b81818);
             color: #fff;
             font-family: 'Cinzel', serif;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             border-radius: 4px;
             border: 1px solid rgba(255, 80, 80, 0.3);
             transition: all 0.3s ease;
@@ -378,31 +382,56 @@
             text-shadow: 0 0 10px #ff2b2b, 0 0 25px rgba(255,43,43,0.3);
         }
         .carregando { text-align: center; padding: 40px; color: #996666; font-style: italic; }
+        .tela-cheia-fundo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.94);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .tela-cheia-fundo.aberto { opacity: 1; visibility: visible; }
+        .tela-cheia-img {
+            max-width: 92%;
+            max-height: 92vh;
+            border-radius: 6px;
+            box-shadow: 0 0 40px rgba(255, 40, 40, 0.2);
+        }
         @media (max-width: 768px) {
-            .grade-produtos { gap: 12px; padding: 0 8px; }
+            .grade-produtos { gap: 10px; padding: 0 6px; }
+            .produto-card {
+                width: calc(33.333% - 8px);
+                min-height: 320px;
+            }
+            .produto-foto { height: 120px; margin: 12px 8px 8px; }
+            .produto-nome { font-size: 0.85rem; }
+            .produto-desc { font-size: 0.72rem; margin-bottom: 6px; }
+            .produto-preco { font-size: 1rem; margin-bottom: 8px; }
+            .botao-adicionar { padding: 8px; font-size: 0.75rem; }
+        }
+        @media (max-width: 480px) {
             .produto-card {
                 width: calc(50% - 8px);
-                min-height: 400px;
-            }
-            .produto-foto { height: 160px; }
-            .produto-nome { font-size: 0.95rem; }
-            .produto-desc { font-size: 0.8rem; margin-bottom: 10px; }
-            .produto-preco { font-size: 1.15rem; margin-bottom: 10px; }
-            .botao-adicionar { padding: 10px; font-size: 0.85rem; }
-        }
-        @media (max-width: 420px) {
-            .grade-produtos { gap: 15px; }
-            .produto-card {
-                width: 100%;
-                max-width: 280px;
             }
         }
         @media (min-width: 1024px) {
+            .produto-card { width: 280px; }
             .grade-produtos { gap: 25px; }
         }
     </style>
 </head>
 <body>
+    <div class="tela-cheia-fundo" id="telaCheia" onclick="fecharImagem()">
+        <img src="" alt="" class="tela-cheia-img" id="imgTelaCheia">
+    </div>
     <div class="fundo-imagem"></div>
     <div class="fundo"></div>
     <div class="sombra-etérea"></div>
@@ -444,17 +473,33 @@
         const WHATSAPP = '5531987276275';
         const CHAVE_CARRINHO = 'carrinho_domus_obscura';
         let listaProdutos = [];
-
+        
         function urlAntiCache(url) {
             const separador = url.includes('?') ? '&' : '?';
             return url + separador + 't=' + Date.now() + Math.random();
         }
+        
         function ajustarCaminhoImagem(caminho) {
             if (!caminho) return '';
             if (caminho.startsWith('./')) return caminho;
             if (caminho.startsWith('imagens/')) return './' + caminho;
             return caminho;
         }
+        
+        function abrirImagem(caminho, titulo) {
+            const fundo = document.getElementById('telaCheia');
+            const img = document.getElementById('imgTelaCheia');
+            img.src = caminho;
+            img.alt = titulo;
+            fundo.classList.add('aberto');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function fecharImagem() {
+            document.getElementById('telaCheia').classList.remove('aberto');
+            document.body.style.overflow = '';
+        }
+        
         function criarBrasas() {
             const container = document.getElementById('containerFogo');
             for(let i = 0; i < 40; i++){
@@ -468,13 +513,14 @@
                 container.appendChild(b);
             }
         }
+        
         const menuOverlay = document.getElementById('menuOverlay');
         function abrirMenu(){ menuOverlay.classList.add('aberto'); }
         function fecharMenuFn(){ menuOverlay.classList.remove('aberto'); }
         document.getElementById('botaoSanduiche').onclick = abrirMenu;
         document.getElementById('fecharMenu').onclick = fecharMenuFn;
         document.getElementById('linkCarrinho').onclick = ()=>{ fecharMenuFn(); abrirCarrinho(); return false; };
-
+        
         async function carregarProdutos() {
             try {
                 const resposta = await fetch(urlAntiCache('./dados/produtos.json'), {cache: 'no-store'});
@@ -497,6 +543,7 @@
                 }
             }
         }
+        
         function renderizarProdutos() {
             const grade = document.getElementById('gradeProdutos');
             if (!listaProdutos.length) {
@@ -513,6 +560,7 @@
                     <div class="canto canto-sup-esq"></div>
                     <div class="canto canto-sup-dir"></div>
                     <img src="${caminhoFoto}" alt="${prod.titulo}" class="produto-foto"
+                         onclick="abrirImagem('${caminhoFoto.replace(/'/g, "\\'")}', '${prod.titulo.replace(/'/g, "\\'")}')"
                          onerror="this.src='${caminhoFoto.replace('./', '')}'">
                     <div class="produto-corpo">
                         <div class="canto canto-inf-esq"></div>
@@ -531,6 +579,7 @@
                 };
             });
         }
+        
         function pegarCarrinho(){ return JSON.parse(localStorage.getItem(CHAVE_CARRINHO) || '[]'); }
         function salvarCarrinho(carrinho){ localStorage.setItem(CHAVE_CARRINHO, JSON.stringify(carrinho)); }
         function adicionarAoCarrinho(produto){
