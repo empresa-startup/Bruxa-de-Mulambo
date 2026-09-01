@@ -138,7 +138,7 @@
             height: 100%;
             object-fit: contain;
             object-position: center;
-            filter: brightness(1.30) contrast(1.10) saturate(1.40); /* ✅ MAIS BRILHO! */
+            filter: brightness(1.30) contrast(1.10) saturate(1.40);
             transform: none;
         }
         .capa-sombra {
@@ -147,7 +147,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(10, 2, 2, 0.10), rgba(10, 2, 2, 0.45)); /* ✅ SOMBRA MAIS LEVE */
+            background: linear-gradient(to bottom, rgba(10, 2, 2, 0.10), rgba(10, 2, 2, 0.45));
             pointer-events: none;
         }
         .brilho-capa {
@@ -156,7 +156,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 30%, rgba(255, 80, 80, 0.15), transparent 60%); /* ✅ MAIS BRILHO VERMELHO */
+            background: radial-gradient(circle at 50% 30%, rgba(255, 80, 80, 0.15), transparent 60%);
             pointer-events: none;
             animation: brilhoPulsar 4s ease-in-out infinite alternate;
         }
@@ -166,7 +166,7 @@
         }
         .intro {
             text-align: center;
-            padding: 40px 20px 60px;
+            padding: 10px 20px 50px; /* ✅ SUBIU OS TEXTOS — MENOS ESPAÇO EM CIMA */
             position: relative;
             z-index: 20;
         }
@@ -175,17 +175,16 @@
             font-size: clamp(1.8rem, 6vw, 3rem);
             color: var(--vermelho);
             text-shadow: 0 0 20px rgba(255, 40, 40, 0.6), 0 0 40px rgba(255, 40, 40, 0.3);
-            margin-bottom: 12px;
+            margin-bottom: 8px; /* ✅ ESPAÇO MENOR ENTRE TÍTULO E SUBTÍTULO */
             line-height: 1.2;
         }
         .intro p {
             font-size: clamp(0.85rem, 2.5vw, 1rem);
             color: var(--texto-claro);
-            margin-bottom: 25px;
+            margin-bottom: 15px; /* ✅ ESPAÇO MENOR */
             letter-spacing: 2px;
             text-transform: uppercase;
         }
-        /* ✅ CAIXA DE DÚVIDAS — SOMENTE ABAIXO */
         .caixa-duvidas {
             display: inline-block;
             background: linear-gradient(135deg, rgba(20, 12, 8, 0.9), rgba(12, 6, 4, 0.95));
@@ -509,6 +508,7 @@
         @media (max-width: 768px) {
             .capa-container { height: 60vh; min-height: 350px; }
             .capa-container img { object-fit: contain; transform: translateY(-60px); filter: brightness(1.35) contrast(1.10) saturate(1.45); }
+            .intro { padding: 5px 15px 40px; } /* ✅ MAIS SUBIDO NO CELULAR */
             .intro h1 { font-size: 1.7rem; }
             .caixa-duvidas { padding: 12px 18px; }
             .texto-duvidas { font-size: 0.8rem; }
@@ -561,7 +561,6 @@
     <section class="intro" id="inicio">
         <h1>Poder e Magia<br>na Quimbanda</h1>
         <p>Trabalhos espirituais com força e resultados reais</p>
-        <!-- ✅ REMOVIDO O BOTÃO DO TOPO -->
     </section>
     <section id="rituais">
         <h2>NOSSOS RITUAIS</h2>
@@ -612,7 +611,6 @@
     <section id="contato">
         <h2>Contato</h2>
         <div class="caixa-texto">
-            <!-- ✅ ÚNICO BOTÃO — AGORA SÓ AQUI EMBAIXO -->
             <div class="caixa-duvidas" style="margin:0 auto; display:block; text-align:center;">
                 <div class="texto-duvidas">✨ Em caso de dúvidas, entre em contato:</div>
                 <a href="https://wa.me/5531987276275?text=Olá!%20Tenho%20algumas%20dúvidas%20e%20gostaria%20de%20saber%20mais!" target="_blank" class="btn-whatsapp">💬 Falar no WhatsApp</a>
@@ -708,7 +706,7 @@
                         <div class="canto canto-inf-dir"></div>
                         <h3>${t.titulo}</h3>
                         <p>${t.descricao}</p>
-                        <a href="agendar.html?trabalho=${encodeURIComponent(t.titulo)}" class="botao-card">SAIBA MAIS</a>
+                        <a href="agendar.html?trabalho=${encodeURIComponent(t.titulo)}" class="botao-card">AGENDAR</a>
                     </div>`;
                 grade.appendChild(card);
             });
