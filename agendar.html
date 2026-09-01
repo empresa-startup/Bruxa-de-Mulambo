@@ -33,10 +33,38 @@
             padding: 20px;
         }
         
+        .fogo-global {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .brasa {
+            position: absolute;
+            bottom: -10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ff4444, #991a1a);
+            box-shadow: 0 0 8px #ff3333, 0 0 16px #991a1a, 0 0 25px rgba(150,20,20,0.4);
+            opacity: 0;
+            animation: subirBrasa linear infinite;
+            filter: blur(1px);
+        }
+        @keyframes subirBrasa {
+            0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+            10% { opacity: 0.85; }
+            100% { transform: translateY(-100vh) translateX(12px) scale(0.4); opacity: 0; }
+        }
+        
         .container {
             max-width: 650px;
             margin: 0 auto;
             padding: 30px 20px;
+            position: relative;
+            z-index: 10;
         }
         
         .cabecalho {
@@ -100,7 +128,6 @@
             margin-bottom: 20px;
         }
         
-        /* ✅ TRABALHO SELECIONADO — JÁ VEM PREENCHIDO */
         .trabalho-selecionado {
             background: rgba(201,162,77,0.12);
             border: 1px solid rgba(201,162,77,0.35);
@@ -167,9 +194,7 @@
         .bolinha.livre { background: var(--livre); }
         .bolinha.ocupado { background: var(--ocupado); }
         
-        .secao {
-            margin-bottom: 25px;
-        }
+        .secao { margin-bottom: 25px; }
         
         label {
             display: block;
@@ -276,16 +301,11 @@
             padding: 4px;
         }
         
-        .dia-btn:disabled {
-            opacity: 0.25;
-            cursor: not-allowed;
-        }
-        
+        .dia-btn:disabled { opacity: 0.25; cursor: not-allowed; }
         .dia-btn:not(:disabled):hover {
             border-color: rgba(204,34,34,0.4);
             background: rgba(139,0,0,0.12);
         }
-        
         .dia-btn.selecionado {
             background: rgba(46,139,87,0.25);
             border-color: var(--livre);
@@ -376,6 +396,7 @@
             font-size: 1rem;
             cursor: pointer;
             margin-top: 10px;
+            transition: all 0.3s;
         }
         .botao-enviar:hover {
             background: linear-gradient(135deg, #a50000 0%, #770000 100%);
@@ -452,6 +473,16 @@
             background: linear-gradient(135deg, #553333, #332222);
         }
         
+        .erro-envio {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(139,30,30,0.15);
+            border: 1px solid rgba(200,60,60,0.35);
+            border-radius: 6px;
+            color: #ff9999;
+            display: none;
+        }
+        
         @media (max-width: 600px) {
             .grade-dias { gap: 4px; }
             .dia-btn { font-size: 0.75rem; }
@@ -461,13 +492,12 @@
     </style>
 </head>
 <body>
-
-<div class="container">
+    <div class="fogo-global" id="fogoGlobal"></div>
+    <div class="container">
     <div class="botoes-superior">
         <button type="button" class="btn-voltar" id="btnVoltar">← Voltar</button>
         <button type="button" class="btn-duvidas" id="btnDuvidas">❓ Tirar Dúvidas</button>
     </div>
-
     <div class="caixa-ajuda" id="caixaAjuda">
         <h3>📜 Como funciona o agendamento</h3>
         <p>✅ <strong>Escolha o dia:</strong> Clique em uma data no calendário. Dias com bolinha verde estão disponíveis, vermelho estão ocupados.</p>
@@ -477,24 +507,20 @@
         <p>✅ <strong>Confirmação:</strong> Ao enviar, entraremos em contato pelo WhatsApp em breve para confirmar tudo e combinar os valores.</p>
         <button type="button" class="fechar" id="btnFecharAjuda">Fechar</button>
     </div>
-
     <div class="cabecalho">
         <div class="simbolo">☽ ✧ ☾</div>
         <h1>Agendar Consulta</h1>
         <p class="subtitulo">Escolha um dia disponível e o horário que prefere.</p>
     </div>
 
-    <!-- ✅ CAIXA QUE APARECE O TRABALHO JÁ SELECIONADO -->
     <div class="trabalho-selecionado" id="caixaTrabalho">
         <div class="etiqueta">✨ Trabalho selecionado:</div>
         <div class="nome-trabalho" id="nomeTrabalho"></div>
     </div>
-
     <div class="legenda">
         <span><span class="bolinha livre"></span> Disponível</span>
         <span><span class="bolinha ocupado"></span> Ocupado</span>
     </div>
-
     <div id="formulario">
         <div class="secao">
             <label>📅 Escolha o Dia</label>
@@ -516,14 +542,12 @@
                 <div class="grade-dias" id="gradeDias"></div>
             </div>
         </div>
-
         <div class="secao">
             <label>⏰ Horários — Escolha um dia acima</label>
             <div class="grade-horarios" id="gradeHorarios">
                 <p style="grid-column:1/-1;color:#886666;text-align:center;">Selecione uma data primeiro...</p>
             </div>
         </div>
-
         <div class="secao">
             <label>📍 Tipo de Atendimento</label>
             <div class="tipo-atendimento">
@@ -531,35 +555,29 @@
                 <button type="button" class="tipo-btn" id="btnOnline">📱 Por WhatsApp</button>
             </div>
         </div>
-
         <div class="secao">
             <label>👤 Seu nome completo</label>
             <input type="text" id="nome" required placeholder="Seu nome completo">
         </div>
-
         <div class="secao">
             <label>✨ Como prefere ser chamado(a)? <span class="campo-opcional">(opcional)</span></label>
             <input type="text" id="nomePreferido" placeholder="Ex: Dona Maria, Sr. João...">
         </div>
-
         <div class="secao">
             <label>📱 Telefone com WhatsApp</label>
             <input type="tel" id="telefone" required placeholder="(31) 9XXXX-XXXX">
         </div>
-
         <div class="secao">
             <label>📝 Descreva o que está sentindo e o que busca</label>
             <textarea id="descricao" required placeholder="Fale com calma..."></textarea>
         </div>
-
         <div class="aviso">
             ⏰ Entraremos em contato em até 24h pelo WhatsApp para confirmação.<br>
             💰 Os valores serão combinados no momento da confirmação.
         </div>
-
         <button type="button" class="botao-enviar" id="botaoEnviar" disabled>🕯️ SOLICITAR AGENDAMENTO</button>
+        <div class="erro-envio" id="caixaErro">❌ Erro ao enviar. Tente novamente ou contate pelo WhatsApp.</div>
     </div>
-
     <div class="mensagem-sucesso" id="caixaMensagem">
         <div class="simbolo">✧ ☽ ✧</div>
         <div class="titulo">Solicitação Enviada com Sucesso!</div>
@@ -577,9 +595,43 @@
     </div>
 </div>
 
+<!-- ✅ FIREBASE CONECTADO -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
 <script>
+    // 🔥 CONFIGURAÇÃO DO FIREBASE — JÁ PRONTA!
+    const firebaseConfig = {
+        apiKey: "AIzaSyBROXsW_Eaer_9suDCiWS6-iOT0E_-Bgkk",
+        authDomain: "bruxa-de-mulambo.firebaseapp.com",
+        databaseURL: "https://bruxa-de-mulambo-default-rtdb.firebaseio.com",
+        projectId: "bruxa-de-mulambo",
+        storageBucket: "bruxa-de-mulambo.firebasestorage.app",
+        messagingSenderId: "1047663203212",
+        appId: "1:1047663203212:web:c22645867a36104276fca9",
+        measurementId: "G-362SXB7FR7"
+    };
+
+    // INICIALIZAR
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // EFEITO DAS BRASAS
+    function criarBrasas() {
+        const container = document.getElementById('fogoGlobal');
+        for(let i = 0; i < 40; i++){
+            const b = document.createElement('div');
+            b.className = 'brasa';
+            const tam = Math.random() * 10 + 4;
+            b.style.width = b.style.height = tam + 'px';
+            b.style.left = Math.random() * 100 + '%';
+            b.style.animationDuration = (Math.random() * 4 + 5) + 's';
+            b.style.animationDelay = Math.random() * 4 + 's';
+            container.appendChild(b);
+        }
+    }
+
     const CHAVE_AGENDA = 'agendamentos_ocupados';
-    const CHAVE_SOLICITACOES = 'agendamentos_recebidos';
     const horariosFixos = ['08:00','09:00','10:00','11:00','14:00','15:00','16:00','17:00'];
     const nomesMeses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
     
@@ -589,25 +641,21 @@
     let tipoSelecionado = null;
     let trabalhoEspecifico = '';
 
-    // ✅ LER O NOME DO TRABALHO QUE VEIO DO CARD
     function lerParametroUrl(nomeParam) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(nomeParam);
     }
 
-    // ✅ PREENCHER AUTOMATICAMENTE SE VIER DO CARD
     window.onload = function() {
+        criarBrasas();
         trabalhoEspecifico = lerParametroUrl('trabalho');
         if (trabalhoEspecifico) {
-            // Mostra a caixinha com o nome do trabalho
             document.getElementById('caixaTrabalho').classList.add('visivel');
             document.getElementById('nomeTrabalho').textContent = trabalhoEspecifico;
-            // Já preenche na descrição também
             document.getElementById('descricao').value = trabalhoEspecifico + ' — Gostaria de saber mais e agendar.';
         }
     };
 
-    // ✅ BOTÃO DÚVIDAS
     document.getElementById('btnDuvidas').onclick = function() {
         const caixa = document.getElementById('caixaAjuda');
         caixa.style.display = (caixa.style.display === 'block') ? 'none' : 'block';
@@ -615,17 +663,13 @@
     document.getElementById('btnFecharAjuda').onclick = function() {
         document.getElementById('caixaAjuda').style.display = 'none';
     };
-
-    // ✅ BOTÃO VOLTAR
     document.getElementById('btnVoltar').onclick = function() {
-        // Se quiser voltar direto pro site principal, coloque:
-        // window.location.href = 'index.html';
-        window.history.back(); // Volta pra página que veio (o card)
+        window.history.back();
     };
-
     document.getElementById('btnVoltarSucesso').onclick = function() {
         document.getElementById('formulario').style.display = 'block';
         document.getElementById('caixaMensagem').style.display = 'none';
+        document.getElementById('caixaErro').style.display = 'none';
         dataSelecionada = null;
         horarioSelecionado = null;
         tipoSelecionado = null;
@@ -636,6 +680,7 @@
         document.getElementById('telefone').value = '';
         document.getElementById('descricao').value = trabalhoEspecifico ? trabalhoEspecifico + ' — Gostaria de saber mais e agendar.' : '';
         document.getElementById('botaoEnviar').disabled = true;
+        document.getElementById('botaoEnviar').textContent = '🕯️ SOLICITAR AGENDAMENTO';
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -643,22 +688,18 @@
         const salvo = localStorage.getItem(CHAVE_AGENDA);
         return salvo ? JSON.parse(salvo) : [];
     }
-
     function formatarDataISO(data) {
         const ano = data.getFullYear();
         const mes = String(data.getMonth() + 1).padStart(2, '0');
         const dia = String(data.getDate()).padStart(2, '0');
         return `${ano}-${mes}-${dia}`;
     }
-
     function horarioEstaOcupado(dataISO, horario) {
         return carregarAgenda().some(item => item.data === dataISO && item.horario === horario);
     }
-
     function diaTemOcupado(dataISO) {
         return carregarAgenda().some(item => item.data === dataISO);
     }
-
     function renderizarCalendario() {
         const ano = dataAtual.getFullYear();
         const mes = dataAtual.getMonth();
@@ -707,24 +748,20 @@
             grade.appendChild(btn);
         }
     }
-
     function selecionarData(data) {
         dataSelecionada = data;
         horarioSelecionado = null;
         renderizarCalendario();
         renderizarHorarios();
     }
-
     function renderizarHorarios() {
         const grade = document.getElementById('gradeHorarios');
         if (!dataSelecionada) {
             grade.innerHTML = '<p style="grid-column:1/-1;color:#886666;text-align:center;">Selecione uma data primeiro...</p>';
             return;
         }
-        
         const dataISO = formatarDataISO(dataSelecionada);
         grade.innerHTML = '';
-        
         horariosFixos.forEach(hora => {
             const ocupado = horarioEstaOcupado(dataISO, hora);
             const btn = document.createElement('button');
@@ -732,7 +769,6 @@
             btn.className = 'horario-btn ' + (ocupado ? 'ocupado' : 'livre');
             btn.textContent = ocupado ? `${hora} ⛔` : `${hora} ✅`;
             btn.disabled = ocupado;
-            
             if (!ocupado) {
                 btn.onclick = (function(h, b) {
                     return function() {
@@ -747,7 +783,6 @@
         });
         verificarLiberarBotao();
     }
-
     document.getElementById('btnMesAnterior').onclick = function() {
         dataAtual.setMonth(dataAtual.getMonth() - 1);
         renderizarCalendario();
@@ -756,7 +791,6 @@
         dataAtual.setMonth(dataAtual.getMonth() + 1);
         renderizarCalendario();
     };
-
     document.getElementById('btnPresencial').onclick = function() {
         document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('selecionado'));
         this.classList.add('selecionado');
@@ -769,7 +803,6 @@
         tipoSelecionado = 'whatsapp';
         verificarLiberarBotao();
     };
-
     function verificarLiberarBotao() {
         const nome = document.getElementById('nome').value.trim();
         const telefone = document.getElementById('telefone').value.trim();
@@ -778,8 +811,14 @@
         document.getElementById('botaoEnviar').disabled = !ok;
     }
 
-    // ✅ SALVA TUDO INCLUINDO O TRABALHO
-    document.getElementById('botaoEnviar').onclick = function() {
+    // ✅ SALVA NO FIREBASE + MARCA HORÁRIO OCUPADO
+    document.getElementById('botaoEnviar').onclick = async function() {
+        const botao = this;
+        const caixaErro = document.getElementById('caixaErro');
+        botao.disabled = true;
+        botao.textContent = 'Enviando...';
+        caixaErro.style.display = 'none';
+
         const dados = {
             nome: document.getElementById('nome').value.trim(),
             nomePreferido: document.getElementById('nomePreferido').value.trim() || '(não informado)',
@@ -790,20 +829,29 @@
             dataTexto: dataSelecionada.toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'}),
             horario: horarioSelecionado,
             tipo: tipoSelecionado,
-            dataEnvio: new Date().toLocaleString('pt-BR'),
-            status: 'pendente'
+            dataEnvio: new Date().toISOString(),
+            lida: false
         };
 
-        const agenda = carregarAgenda();
-        agenda.push({ data: dados.data, horario: dados.horario, nome: dados.nome, tipo: dados.tipo });
-        localStorage.setItem(CHAVE_AGENDA, JSON.stringify(agenda));
+        try {
+            // Salva no Firebase
+            await db.ref('agendamentos').push(dados);
 
-        const solicitacoes = JSON.parse(localStorage.getItem(CHAVE_SOLICITACOES) || '[]');
-        solicitacoes.unshift(dados);
-        localStorage.setItem(CHAVE_SOLICITACOES, JSON.stringify(solicitacoes));
+            // Marca horário como ocupado no computador do usuário
+            const agenda = carregarAgenda();
+            agenda.push({ data: dados.data, horario: dados.horario, nome: dados.nome, tipo: dados.tipo });
+            localStorage.setItem(CHAVE_AGENDA, JSON.stringify(agenda));
 
-        document.getElementById('formulario').style.display = 'none';
-        document.getElementById('caixaMensagem').style.display = 'block';
+            // Mostra sucesso
+            document.getElementById('formulario').style.display = 'none';
+            document.getElementById('caixaMensagem').style.display = 'block';
+
+        } catch (erro) {
+            caixaErro.style.display = 'block';
+            console.error(erro);
+            botao.disabled = false;
+            botao.textContent = '🕯️ SOLICITAR AGENDAMENTO';
+        }
     };
 
     ['nome','telefone','descricao'].forEach(id => {
@@ -812,6 +860,5 @@
 
     renderizarCalendario();
 </script>
-
 </body>
 </html>
