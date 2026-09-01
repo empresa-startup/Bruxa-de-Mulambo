@@ -218,12 +218,12 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
+            gap: 6px; /* ← espaço menor entre os cards */
             padding-bottom: 60px;
         }
         .produto-card {
-            width: calc(33.333% - 8px);
-            min-width: 110px;
+            width: calc(33.333% - 5px); /* ← EXATAMENTE 3 por linha no celular */
+            min-width: 100px; /* ← não deixa ficar menor que isso */
             background: linear-gradient(180deg, rgba(25, 8, 8, 0.95), rgba(10, 2, 2, 0.98));
             border: none;
             border-radius: 8px;
@@ -311,9 +311,9 @@
             border-color: rgba(110, 85, 40, 0.9);
         }
         .produto-foto {
-            width: calc(100% - 20px);
-            height: 110px;
-            margin: 14px 10px 8px;
+            width: calc(100% - 16px);
+            height: 100px;
+            margin: 10px 8px 6px;
             object-fit: contain;
             object-position: center;
             border-radius: 4px;
@@ -325,7 +325,7 @@
         }
         .produto-foto:hover { opacity: 0.9; }
         .produto-corpo {
-            padding: 6px 8px 12px;
+            padding: 4px 6px 10px;
             position: relative;
             z-index: 3;
             display: flex;
@@ -335,34 +335,34 @@
         .produto-nome {
             font-family: 'Cinzel Decorative', serif;
             color: #ff5050;
-            font-size: 0.82rem;
-            margin-bottom: 4px;
+            font-size: 0.75rem;
+            margin-bottom: 3px;
             text-align: center;
             text-shadow: 0 0 8px rgba(255, 40, 40, 0.3);
         }
         .produto-desc {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: #b09090;
-            line-height: 1.3;
-            margin-bottom: 6px;
+            line-height: 1.2;
+            margin-bottom: 4px;
             text-align: center;
-            min-height: 32px;
+            min-height: 28px;
         }
         .produto-preco {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-weight: 700;
             color: #ff9944;
             text-align: center;
             text-shadow: 0 0 8px rgba(255,153,68,0.35);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .botao-adicionar {
             width: 100%;
-            padding: 7px;
+            padding: 5px;
             background: linear-gradient(135deg, #7a1528, #b81818);
             color: #fff;
             font-family: 'Cinzel', serif;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             border-radius: 4px;
             border: 1px solid rgba(255, 80, 80, 0.3);
             transition: all 0.3s ease;
@@ -555,7 +555,7 @@
                         <h3 class="produto-nome">${prod.titulo}</h3>
                         <p class="produto-desc">${prod.descricao}</p>
                         <p class="produto-preco">R$ ${prod.preco.toFixed(2).replace('.', ',')}</p>
-                        <button class="botao-adicionar" data-id="${prod.id}">🛒 Adicionar</button>
+                        <button class="botao-adicionar" data-id="${prod.id}">🛒</button>
                     </div>`;
                 grade.appendChild(card);
             });
