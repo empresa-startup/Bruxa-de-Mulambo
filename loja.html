@@ -95,12 +95,12 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,.97); z-index: 150;
             display: none; flex-direction: column; align-items: center; justify-content: center;
-            gap: 35px;
+            gap: 25px;
         }
         .menu-overlay.aberto { display: flex; }
         .menu-overlay a, .menu-overlay button {
-            color: #cc3333; text-decoration: none; font-size: 1.2rem; letter-spacing: 2px;
-            padding: 15px 35px; border: 1px solid transparent;
+            color: #cc3333; text-decoration: none; font-size: 1.1rem; letter-spacing: 2px;
+            padding: 12px 30px; border: 1px solid transparent;
             text-shadow: 0 0 6px rgba(200,50,50,0.3);
             transition: all .4s ease;
             background: none; border: none; cursor: pointer; font-family: 'Cinzel', serif;
@@ -253,6 +253,17 @@
         .subtitulo-destaque {
             color: #ff7755; font-weight: 600; letter-spacing: 1px;
             text-shadow: 0 0 8px rgba(255,119,85,0.25);
+        }
+        .instagram-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: #cc5555; text-decoration: none; font-size: .9rem; margin-top: 15px;
+            padding: 8px 20px; border: 1px solid rgba(204,85,85,.2); border-radius: 4px;
+            transition: all .3s ease;
+        }
+        .instagram-link:hover {
+            color: #ff4444; border-color: rgba(255,68,68,.4);
+            text-shadow: 0 0 8px rgba(255,68,68,0.3);
+            box-shadow: 0 0 12px rgba(255,68,68,0.15);
         }
         .grade-produtos {
             display: flex;
@@ -416,6 +427,11 @@
             box-shadow: 0 0 12px #ff2b2b, 0 0 25px rgba(255,43,43,0.3);
             color: #ffffff;
         }
+        footer {
+            text-align: center; padding: 30px 20px 50px;
+            border-top: 1px solid rgba(60,15,25,.15); margin-top: 20px;
+        }
+        .rodape-texto { color: #664444; font-size: .8rem; }
         .vazio { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #663333; font-style: italic; }
         .vazio .simbolo-grande { font-size: 2.5rem; color: #ff2b2b; margin-bottom: 15px;
             text-shadow: 0 0 10px #ff2b2b, 0 0 25px rgba(255,43,43,0.3);
@@ -476,6 +492,7 @@
         <a href="index.html">🏠 Início</a>
         <a href="loja.html" class="ativo">🕯️ Produtos</a>
         <a href="#" id="linkCarrinho">🛒 Meu Carrinho</a>
+        <a href="https://www.instagram.com/domusobscuraloja" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
         <button id="linkDuvidas">❓ Dúvidas / Como Funciona</button>
     </div>
     <div class="modal-carrinho" id="modalCarrinho">
@@ -486,7 +503,6 @@
             <div class="carrinho-total" id="areaTotal" style="display:none;">
                 Total dos produtos: <span id="valorTotal">R$ 0,00</span>
             </div>
-            <!-- ⚠️ AVISO DE FRETE -->
             <div class="aviso-frete" id="avisoFrete" style="display:none;">
                 ⚠️ <strong>Atenção:</strong> Valor dos produtos não inclui taxa de entrega. O valor final poderá ser ajustado de acordo com o frete e a região de entrega.
             </div>
@@ -521,7 +537,8 @@
             Loja de Produtos Esotéricos<br>
             🌹 Despertando o empoderamento, a sensualidade e a magia interior através do axé das Pombagiras.<br>
             <span class="subtitulo-destaque">🔥 Perfumes • Óleos • Banhos • Amuletos</span><br>
-            📦 Entregas para todo o Brasil
+            📦 Entregas para todo o Brasil<br>
+            <a href="https://www.instagram.com/domusobscuraloja" target="_blank" rel="noopener noreferrer" class="instagram-link">📸 @domusobscuraloja</a>
         </p>
     </header>
     <main class="conteudo">
@@ -529,6 +546,10 @@
             <p class="carregando">Carregando produtos...</p>
         </div>
     </main>
+    <footer>
+        <a href="https://www.instagram.com/domusobscuraloja" target="_blank" rel="noopener noreferrer" class="instagram-link">📸 Siga nosso Instagram — @domusobscuraloja</a>
+        <p class="rodape-texto" style="margin-top:15px;">🕯️ DOMUS OBSCURA — Todos os direitos reservados 🕯️</p>
+    </footer>
     <script>
         const WHATSAPP = '5531987276275';
         const CHAVE_CARRINHO = 'carrinho_domus_obscura';
