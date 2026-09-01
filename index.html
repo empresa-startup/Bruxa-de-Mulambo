@@ -23,11 +23,7 @@
             --texto-claro: #b07070;
             --borda: rgba(150, 30, 30, 0.25);
         }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Cinzel', serif;
@@ -36,8 +32,6 @@
             line-height: 1.75;
             position: relative;
         }
-
-        /* ✅ BRASAS — INTACTO */
         .fogo-global {
             position: fixed;
             bottom: 0;
@@ -63,8 +57,6 @@
             10% { opacity: 0.85; }
             100% { transform: translateY(-100vh) translateX(12px) scale(0.4); opacity: 0; }
         }
-
-        /* ✅ MENU — SEM LINK DO PAINEL */
         .menu-topo {
             position: fixed;
             top: 10px;
@@ -98,7 +90,6 @@
         .botao-sanduiche.aberto span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
         .botao-sanduiche.aberto span:nth-child(2) { opacity: 0; }
         .botao-sanduiche.aberto span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
-
         .menu-suspenso {
             position: fixed;
             top: 48px;
@@ -133,8 +124,6 @@
             color: var(--vermelho);
             font-weight: 600;
         }
-
-        /* ✅ CAPA */
         .capa-container {
             width: 100%;
             height: 70vh;
@@ -174,7 +163,6 @@
             0% { opacity: 0.5; }
             100% { opacity: 0.8; }
         }
-
         .intro {
             text-align: center;
             padding: 40px 20px 60px;
@@ -217,7 +205,6 @@
             background: linear-gradient(135deg, #b01818, #d82828);
             box-shadow: 0 0 15px rgba(255, 40, 40, 0.35);
         }
-
         section {
             padding: 50px 20px;
             text-align: center;
@@ -231,10 +218,6 @@
             margin-bottom: 35px;
             text-shadow: 0 0 12px rgba(255, 40, 40, 0.3);
         }
-
-        /* ✅ ================================================= */
-        /* ✅ MOLDURA DE PORTAL RITUALÍSTICA — SEM LINHA VERMELHA */
-        /* ✅ ================================================= */
         .rituais-grade {
             display: flex;
             flex-wrap: wrap;
@@ -254,15 +237,12 @@
             display: flex;
             flex-direction: column;
             transform: scale(1);
-
             box-shadow:
                 inset 0 0 18px rgba(0, 0, 0, 0.9),
                 0 0 8px rgba(0, 0, 0, 0.9),
                 0 0 18px rgba(60, 40, 20, 0.15),
                 0 0 30px rgba(30, 20, 10, 0.1);
         }
-
-        /* ✅ Moldura externa ornamentada — madeira escura envelhecida */
         .ritual-card::before {
             content: '';
             position: absolute;
@@ -285,8 +265,6 @@
                 inset 0 0 12px rgba(0, 0, 0, 0.8),
                 0 0 8px rgba(40, 30, 15, 0.2);
         }
-
-        /* ✅ Moldura interna — ESCURA, SEM LINHA VERMELHA */
         .ritual-card::after {
             content: '';
             position: absolute;
@@ -300,8 +278,6 @@
             border-radius: 4px;
             box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
         }
-
-        /* ✅ Cantos ornamentados — detalhes dourado-escuros */
         .ritual-card .canto {
             position: absolute;
             width: 26px;
@@ -310,24 +286,10 @@
             pointer-events: none;
             z-index: 4;
         }
-        .ritual-card .canto-sup-esq {
-            top: 8px; left: 8px;
-            border-right: none; border-bottom: none;
-        }
-        .ritual-card .canto-sup-dir {
-            top: 8px; right: 8px;
-            border-left: none; border-bottom: none;
-        }
-        .ritual-card .canto-inf-esq {
-            bottom: 8px; left: 8px;
-            border-right: none; border-top: none;
-        }
-        .ritual-card .canto-inf-dir {
-            bottom: 8px; right: 8px;
-            border-left: none; border-top: none;
-        }
-
-        /* ✅ AO PASSAR O MOUSE — moldura brilha com tom dourado-escuro */
+        .ritual-card .canto-sup-esq { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+        .ritual-card .canto-sup-dir { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+        .ritual-card .canto-inf-esq { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+        .ritual-card .canto-inf-dir { bottom: 8px; right: 8px; border-left: none; border-top: none; }
         .ritual-card:hover {
             transform: translateY(-6px) scale(1.02);
             box-shadow:
@@ -336,13 +298,8 @@
                 0 0 30px rgba(80, 60, 30, 0.25),
                 0 0 50px rgba(40, 30, 15, 0.15);
         }
-        .ritual-card:hover::after {
-            border-color: rgba(80, 60, 30, 0.8);
-        }
-        .ritual-card:hover .canto {
-            border-color: rgba(110, 85, 40, 0.9);
-        }
-
+        .ritual-card:hover::after { border-color: rgba(80, 60, 30, 0.8); }
+        .ritual-card:hover .canto { border-color: rgba(110, 85, 40, 0.9); }
         .foto-trabalho {
             width: 100%;
             height: 190px;
@@ -355,9 +312,7 @@
             position: relative;
             z-index: 5;
         }
-        .foto-trabalho:hover {
-            opacity: 0.9;
-        }
+        .foto-trabalho:hover { opacity: 0.9; }
         .card-conteudo {
             padding: 10px;
             position: relative;
@@ -401,13 +356,7 @@
             position: relative;
             z-index: 5;
         }
-        .botao-card:hover {
-            background: linear-gradient(135deg, var(--vermelho), #ff4444);
-        }
-
-        /* ✅ ================================================= */
-        /* ✅ SEÇÃO DE DEPOIMENTOS — ESTILO ALINHADO */
-        /* ✅ ================================================= */
+        .botao-card:hover { background: linear-gradient(135deg, var(--vermelho), #ff4444); }
         .depoimentos-grade {
             display: flex;
             flex-wrap: wrap;
@@ -428,8 +377,6 @@
                 0 0 18px rgba(60, 40, 20, 0.15);
             transition: all 0.35s ease;
         }
-
-        /* ✅ Moldura ornamentada igual aos rituais */
         .depoimento-card::before {
             content: '';
             position: absolute;
@@ -438,13 +385,7 @@
             right: 4px;
             bottom: 4px;
             border: 3px solid transparent;
-            border-image: linear-gradient(
-                45deg,
-                #1a1510,
-                #3a2d1f,
-                #2b2015,
-                #1a1510
-            ) 1;
+            border-image: linear-gradient(45deg, #1a1510, #3a2d1f, #2b2015, #1a1510) 1;
             border-radius: 6px;
             box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8);
         }
@@ -459,11 +400,7 @@
             border-radius: 4px;
             box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
         }
-
-        .depoimento-conteudo {
-            position: relative;
-            z-index: 5;
-        }
+        .depoimento-conteudo { position: relative; z-index: 5; }
         .aspas {
             font-family: 'Cinzel Decorative', serif;
             font-size: 3rem;
@@ -491,8 +428,6 @@
                 0 0 12px rgba(0, 0, 0, 0.95),
                 0 0 30px rgba(80, 60, 30, 0.25);
         }
-
-        /* ✅ TELA CHEIA */
         .tela-cheia-fundo {
             position: fixed;
             top: 0;
@@ -509,17 +444,13 @@
             visibility: hidden;
             transition: all 0.3s ease;
         }
-        .tela-cheia-fundo.aberto {
-            opacity: 1;
-            visibility: visible;
-        }
+        .tela-cheia-fundo.aberto { opacity: 1; visibility: visible; }
         .tela-cheia-img {
             max-width: 92%;
             max-height: 92vh;
             border-radius: 6px;
             box-shadow: 0 0 40px rgba(255, 40, 40, 0.2);
         }
-
         .frase-final {
             font-family: 'Cinzel Decorative', serif;
             font-size: clamp(1rem, 4vw, 1.25rem);
@@ -540,11 +471,7 @@
             position: relative;
             z-index: 20;
         }
-        .caixa-texto p {
-            font-size: 0.9rem;
-            color: #d0b0b0;
-            line-height: 1.7;
-        }
+        .caixa-texto p { font-size: 0.9rem; color: #d0b0b0; line-height: 1.7; }
         .botao-whatsapp-grande {
             display: inline-block;
             margin-top: 15px;
@@ -567,28 +494,13 @@
         }
         .carregando { color: #907070; font-style: italic; }
         .vazio { color: #705050; font-style: italic; }
-
-        /* ✅ CELULAR */
         @media (max-width: 768px) {
-            .capa-container {
-                height: 60vh;
-                min-height: 350px;
-            }
-            .capa-container img {
-                object-fit: contain;
-                transform: translateY(-60px);
-            }
+            .capa-container { height: 60vh; min-height: 350px; }
+            .capa-container img { object-fit: contain; transform: translateY(-60px); }
             .intro h1 { font-size: 1.7rem; }
             .rituais-grade { gap: 6px; }
-            .ritual-card {
-                width: 31%;
-                min-width: 85px;
-                transform: scale(1);
-            }
-            .foto-trabalho { 
-                height: 110px;
-                object-fit: contain;
-            }
+            .ritual-card { width: 31%; min-width: 85px; transform: scale(1); }
+            .foto-trabalho { height: 110px; object-fit: contain; }
             .card-conteudo { padding: 6px; gap: 4px; }
             .ritual-card h3 { font-size: 0.85rem; }
             .ritual-card p { font-size: 0.7rem; line-height: 1.3; }
@@ -596,47 +508,23 @@
             .depoimentos-grade { gap: 15px; }
             .depoimento-card { width: 100%; max-width: 300px; }
         }
-
-        /* ✅ PC */
         @media (min-width: 1024px) {
-            .capa-container {
-                height: 85vh;
-                max-height: 650px;
-            }
-            .capa-container img {
-                object-fit: cover;
-                object-position: center top;
-                transform: none;
-            }
-            .intro h1 {
-                font-size: 2.8rem;
-            }
-            .rituais-grade {
-                gap: 20px;
-            }
-            .ritual-card {
-                width: 320px;
-                transform: scale(1);
-            }
-            .ritual-card:hover {
-                transform: translateY(-8px);
-            }
-            .foto-trabalho {
-                height: 190px;
-            }
-            section h2 {
-                font-size: 2.2rem;
-            }
+            .capa-container { height: 85vh; max-height: 650px; }
+            .capa-container img { object-fit: cover; object-position: center top; transform: none; }
+            .intro h1 { font-size: 2.8rem; }
+            .rituais-grade { gap: 20px; }
+            .ritual-card { width: 320px; transform: scale(1); }
+            .ritual-card:hover { transform: translateY(-8px); }
+            .foto-trabalho { height: 190px; }
+            section h2 { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
     <div class="fogo-global" id="fogoGlobal"></div>
-
     <div class="tela-cheia-fundo" id="telaCheia" onclick="fecharImagem()">
         <img src="" alt="" class="tela-cheia-img" id="imgTelaCheia">
     </div>
-
     <div class="menu-topo">
         <button class="botao-sanduiche" id="botaoMenu" type="button" aria-label="Abrir menu">
             <span></span><span></span><span></span>
@@ -650,27 +538,22 @@
         <a href="#contato">Contato</a>
         <a href="loja.html" class="loja-link">🛒 Loja</a>
     </div>
-
     <div class="capa-container">
         <img src="IMAGEM-DE-FUNDO.png" alt="Bruxa de Mulambo — Poder e Magia na Quimbanda">
         <div class="capa-sombra"></div>
         <div class="brilho-capa"></div>
     </div>
-
     <section class="intro" id="inicio">
         <h1>Poder e Magia<br>na Quimbanda</h1>
         <p>Trabalhos espirituais com força e resultados reais</p>
         <a href="https://wa.me/5531987276275?text=Olá!%20Quero%20agendar%20uma%20consulta!" target="_blank" class="btn">📅 Agendar Consulta</a>
     </section>
-
     <section id="rituais">
         <h2>NOSSOS RITUAIS</h2>
         <div class="rituais-grade" id="gradeRituais">
             <p class="carregando">Carregando trabalhos...</p>
         </div>
     </section>
-
-    <!-- ✅ SEÇÃO DE DEPOIMENTOS NOVA -->
     <section id="depoimentos">
         <h2>QUEM JÁ SENTIU ESTE PODER</h2>
         <div class="depoimentos-grade">
@@ -684,7 +567,7 @@
             <div class="depoimento-card">
                 <div class="depoimento-conteudo">
                     <div class="aspas">"</div>
-                    <p class="depoimento-texto">Passei por muitos lugares, mas aqui senti a presença verdadeira. O trabalho foi feito com respeito, seriedade e muita força. Recomendo a todos.</p>
+                    <p class="depoimento-texto">Passei por muitos lugares, mas aqui senti a presença verdadeira. O trabalho foi feito com fé, seriedade e muita força. Recomendo a todos.</p>
                     <p class="depoimento-nome">— Maria, 42 anos</p>
                 </div>
             </div>
@@ -697,14 +580,12 @@
             </div>
         </div>
     </section>
-
     <section>
         <p class="frase-final">
             Nem todos estão preparados para acessar este poder…<br>
             mas você não chegou aqui por acaso.
         </p>
     </section>
-
     <section id="sobre">
         <h2>Sobre o Portal</h2>
         <div class="caixa-texto">
@@ -713,7 +594,6 @@
             <p>Cada trabalho é feito com fé, conhecimento e respeito às forças que guiam este caminho.</p>
         </div>
     </section>
-
     <section id="contato">
         <h2>Contato</h2>
         <div class="contato-bloco">
@@ -724,14 +604,15 @@
             <a href="https://wa.me/5531987276275?text=Olá!%20Contato%20pelo%20site!" target="_blank" class="botao-whatsapp-grande">💬 Falar no WhatsApp</a>
         </div>
     </section>
-
     <footer>
         © 2026 Bruxa de Mulambo — Todos os direitos reservados
     </footer>
-
     <script>
         const WHATSAPP = '5531987276275';
-
+        function urlAntiCache(url) {
+            const separador = url.includes('?') ? '&' : '?';
+            return url + separador + 't=' + Date.now() + Math.random();
+        }
         function criarBrasas() {
             const container = document.getElementById('fogoGlobal');
             for(let i = 0; i < 60; i++){
@@ -745,7 +626,6 @@
                 container.appendChild(b);
             }
         }
-
         function abrirImagem(caminho, titulo) {
             const fundo = document.getElementById('telaCheia');
             const img = document.getElementById('imgTelaCheia');
@@ -758,7 +638,6 @@
             document.getElementById('telaCheia').classList.remove('aberto');
             document.body.style.overflow = '';
         }
-
         const botaoMenu = document.getElementById('botaoMenu');
         const menuSuspenso = document.getElementById('menuSuspenso');
         botaoMenu.onclick = () => {
@@ -769,22 +648,20 @@
             botaoMenu.classList.remove('aberto');
             menuSuspenso.classList.remove('aberto');
         });
-
         function ajustarCaminhoImagem(caminho) {
             if (caminho.startsWith('./')) return caminho;
             if (caminho.startsWith('imagens/')) return './' + caminho;
             return caminho;
         }
-
         async function carregarTrabalhos() {
             try {
-                const resposta = await fetch('./dados/trabalhos.json');
+                const resposta = await fetch(urlAntiCache('./dados/trabalhos.json'), {cache: 'no-store'});
                 if (!resposta.ok) throw new Error('Sem dados');
                 const trabalhos = await resposta.json();
                 renderizarTrabalhos(trabalhos);
             } catch {
                 try {
-                    const resposta2 = await fetch('dados/trabalhos.json');
+                    const resposta2 = await fetch(urlAntiCache('dados/trabalhos.json'), {cache: 'no-store'});
                     if (!resposta2.ok) throw new Error('Sem dados');
                     const trabalhos2 = await resposta2.json();
                     renderizarTrabalhos(trabalhos2);
@@ -794,7 +671,6 @@
                 }
             }
         }
-
         function renderizarTrabalhos(lista) {
             const grade = document.getElementById('gradeRituais');
             if (!lista.length) {
@@ -822,7 +698,6 @@
                 grade.appendChild(card);
             });
         }
-
         criarBrasas();
         carregarTrabalhos();
     </script>
