@@ -185,8 +185,8 @@
             letter-spacing: 2px;
             text-transform: uppercase;
         }
-        /* ✅ CAIXA DE DÚVIDAS — NOVA */
-        .caixa-duvidas {
+        /* ✅ CAIXA DE DÚVIDAS — NO INÍCIO */
+        .caixa-duvidas-topo {
             display: inline-block;
             background: linear-gradient(135deg, rgba(20, 12, 8, 0.9), rgba(12, 6, 4, 0.95));
             border: 1px solid var(--dourado-suave);
@@ -196,7 +196,7 @@
             box-shadow: 0 0 15px rgba(201, 162, 77, 0.08);
             transition: all 0.35s ease;
         }
-        .caixa-duvidas:hover {
+        .caixa-duvidas-topo:hover {
             border-color: rgba(201, 162, 77, 0.55);
             box-shadow: 0 0 25px rgba(201, 162, 77, 0.15);
             transform: translateY(-2px);
@@ -207,7 +207,7 @@
             margin-bottom: 10px;
             letter-spacing: 1px;
         }
-        .btn-whatsapp-duvidas {
+        .btn-whatsapp {
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -222,7 +222,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 0 10px rgba(37, 211, 102, 0.15);
         }
-        .btn-whatsapp-duvidas:hover {
+        .btn-whatsapp:hover {
             background: linear-gradient(135deg, #20b85c, #149670);
             transform: translateY(-2px);
             box-shadow: 0 0 18px rgba(37, 211, 102, 0.25);
@@ -494,16 +494,6 @@
             z-index: 20;
         }
         .caixa-texto p { font-size: 0.9rem; color: #d0b0b0; line-height: 1.7; }
-        .botao-whatsapp-grande {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 25px;
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 0.95rem;
-        }
         footer {
             background: #000;
             text-align: center;
@@ -520,9 +510,9 @@
             .capa-container { height: 60vh; min-height: 350px; }
             .capa-container img { object-fit: contain; transform: translateY(-60px); }
             .intro h1 { font-size: 1.7rem; }
-            .caixa-duvidas { padding: 12px 18px; }
+            .caixa-duvidas-topo { padding: 12px 18px; }
             .texto-duvidas { font-size: 0.8rem; }
-            .btn-whatsapp-duvidas { padding: 9px 18px; font-size: 0.85rem; }
+            .btn-whatsapp { padding: 9px 18px; font-size: 0.85rem; }
             .rituais-grade { gap: 6px; }
             .ritual-card { width: 31%; min-width: 85px; transform: scale(1); }
             .foto-trabalho { height: 110px; object-fit: contain; }
@@ -572,10 +562,10 @@
         <h1>Poder e Magia<br>na Quimbanda</h1>
         <p>Trabalhos espirituais com força e resultados reais</p>
 
-        <!-- ✅ CAIXA DE DÚVIDAS NO LUGAR DO BOTÃO ANTIGO -->
-        <div class="caixa-duvidas">
+        <!-- ✅ CAIXA DE DÚVIDAS NO INÍCIO -->
+        <div class="caixa-duvidas-topo">
             <div class="texto-duvidas">✨ Em caso de dúvidas, entre em contato:</div>
-            <a href="https://wa.me/5531987276275?text=Olá!%20Tenho%20algumas%20dúvidas%20e%20gostaria%20de%20saber%20mais!" target="_blank" class="btn-whatsapp-duvidas">💬 Falar no WhatsApp</a>
+            <a href="https://wa.me/5531987276275?text=Olá!%20Tenho%20algumas%20dúvidas%20e%20gostaria%20de%20saber%20mais!" target="_blank" class="btn-whatsapp">💬 Falar no WhatsApp</a>
         </div>
     </section>
     <section id="rituais">
@@ -626,12 +616,12 @@
     </section>
     <section id="contato">
         <h2>Contato</h2>
-        <div class="contato-bloco">
-            <p>📱 Pelo WhatsApp abaixo</p>
-            <br>
-            <p>Atendimento personalizado e reservado</p>
-            <br>
-            <a href="https://wa.me/5531987276275?text=Olá!%20Contato%20pelo%20site!" target="_blank" class="botao-whatsapp-grande">💬 Falar no WhatsApp</a>
+        <div class="caixa-texto">
+            <!-- ✅ CAIXA DE DÚVIDAS AGORA TAMBÉM NA SEÇÃO CONTATO -->
+            <div class="caixa-duvidas-topo" style="margin:0 auto; display:block;">
+                <div class="texto-duvidas">✨ Em caso de dúvidas, entre em contato:</div>
+                <a href="https://wa.me/5531987276275?text=Olá!%20Tenho%20algumas%20dúvidas%20e%20gostaria%20de%20saber%20mais!" target="_blank" class="btn-whatsapp">💬 Falar no WhatsApp</a>
+            </div>
         </div>
     </section>
     <footer>
