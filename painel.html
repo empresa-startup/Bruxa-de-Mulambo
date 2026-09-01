@@ -10,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cinzel', serif; }
         body { background: #0c0404; color: #e0c8c8; min-height: 100vh; padding: 100px 20px 40px; }
@@ -53,6 +52,7 @@
         button.sucesso { background: linear-gradient(135deg, #109040, #18b858); border-color: rgba(60,255,120,.4); }
         button.sucesso:hover { box-shadow: 0 0 15px rgba(60,255,120,.25); }
         button.secundario { background: linear-gradient(135deg, #3a3a3a, #2a2a2a); }
+        button.perigo { background: linear-gradient(135deg, #701010, #a01818); border-color: rgba(255,40,40,.4); }
         button.pequeno { padding: 6px 10px; font-size: .8rem; }
         .lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; margin-top: 20px; }
         .item-card { background: linear-gradient(180deg, rgba(25,8,8,.95), rgba(10,2,2,.98)); border: 1px solid rgba(150,30,30,.3); border-radius: 6px; overflow: hidden; }
@@ -69,19 +69,16 @@
         .status.erro { background: rgba(144,16,16,.15); border-color: rgba(255,60,60,.4); color: #ff8080; display: block; }
         .status.aviso { background: rgba(144,96,16,.15); border-color: rgba(255,180,60,.4); color: #ffd080; display: block; }
         @keyframes brilhoSucesso { 0% { box-shadow: 0 0 5px rgba(60,255,120,.2); } 100% { box-shadow: 0 0 20px rgba(60,255,120,.4); } }
-        .linha-botoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; justify-content: center; }
+        .linha-botoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; justify-content: flex-start; }
         .vazio { grid-column: 1/-1; text-align: center; padding: 40px; color: #705050; font-style: italic; }
         .dica { font-size: .78rem; color: #775555; margin-top: 4px; display: block; }
         
-        /* 📊 ESTILOS NOVOS — AGENDAMENTOS E GRÁFICOS */
+        /* 📋 ESTILOS AGENDAMENTOS */
         .agendamento-card { background: linear-gradient(180deg, rgba(20,12,8,.95), rgba(10,4,4,.98)); border: 1px solid rgba(150,30,30,.3); border-radius: 8px; padding: 18px; margin-bottom: 15px; }
         .agendamento-card.lida { opacity: 0.65; border-style: dashed; }
         .agendamento-titulo { color: #ff6060; font-weight: bold; margin-bottom: 8px; font-size: 1rem; }
         .agendamento-dados { font-size: .88rem; color: #b09090; line-height: 1.7; }
         .agendamento-dados span { color: #ffdd88; }
-        .graficos-grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 25px; }
-        .grafico-caixa { background: linear-gradient(180deg, rgba(25,8,8,.95), rgba(10,2,2,.98)); border: 1px solid rgba(150,30,30,.3); border-radius: 8px; padding: 20px; }
-        canvas { max-height: 300px; }
         .sem-dados { text-align: center; padding: 40px; color: #705050; font-style: italic; }
         .filtros { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
         .filtros button { padding: 6px 12px; font-size: .85rem; background: linear-gradient(135deg, #2a2a2a, #1a1a1a); }
@@ -89,10 +86,6 @@
         .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: .75rem; margin-left: 8px; }
         .badge-pendente { background: rgba(180,60,60,.3); color: #ff9090; }
         .badge-lida { background: rgba(60,180,100,.3); color: #90ffb0; }
-        
-        @media (max-width: 600px) {
-            .graficos-grade { grid-template-columns: 1fr; }
-        }
     </style>
 </head>
 <body>
@@ -109,7 +102,6 @@
     <button class="menu-item ativa" data-pagina="trabalhos" onclick="irParaPagina('trabalhos')">🎭 Trabalhos</button>
     <button class="menu-item" data-pagina="loja" onclick="irParaPagina('loja')">🛒 Loja</button>
     <button class="menu-item" data-pagina="agendamentos" onclick="irParaPagina('agendamentos')">📋 Agendamentos</button>
-    <button class="menu-item" data-pagina="estatisticas" onclick="irParaPagina('estatisticas')">📊 Estatísticas</button>
     <button class="menu-item" data-pagina="publicar" onclick="irParaPagina('publicar')">🚀 Publicar</button>
     <div class="menu-config">
         <button class="menu-item" onclick="abrirModalSenha()">⚙️ Configurações</button>
@@ -146,7 +138,7 @@
 <div class="container">
     <div id="statusMsg" class="status"></div>
 
-    <!-- 🎭 PÁGINA TRABALHOS — ORIGINAL -->
+    <!-- 🎭 PÁGINA TRABALHOS -->
     <div class="conteudo-pagina visivel" id="pagina-trabalhos">
         <h2>🎭 Trabalhos / Rituais</h2>
         <div class="form-bloco">
@@ -163,7 +155,7 @@
         <div class="lista" id="listaTrabalhos"><p class="vazio">Nenhum cadastrado.</p></div>
     </div>
 
-    <!-- 🛒 PÁGINA LOJA — ORIGINAL -->
+    <!-- 🛒 PÁGINA LOJA -->
     <div class="conteudo-pagina" id="pagina-loja">
         <h2>🛒 Loja</h2>
         <div class="form-bloco">
@@ -181,7 +173,7 @@
         <div class="lista" id="listaProdutos"><p class="vazio">Nenhum cadastrado.</p></div>
     </div>
 
-    <!-- 📋 PÁGINA AGENDAMENTOS — NOVA! LÊ DO FIREBASE -->
+    <!-- 📋 PÁGINA AGENDAMENTOS -->
     <div class="conteudo-pagina" id="pagina-agendamentos">
         <h2>📋 Agendamentos Recebidos</h2>
         <div class="form-bloco" style="background: rgba(20,15,10,.6);">
@@ -196,41 +188,24 @@
         </div>
     </div>
 
-    <!-- 📊 PÁGINA ESTATÍSTICAS — NOVA! DOIS GRÁFICOS -->
-    <div class="conteudo-pagina" id="pagina-estatisticas">
-        <h2>📊 Estatísticas</h2>
-        <div class="graficos-grade">
-            <div class="grafico-caixa">
-                <h3>🔥 Trabalhos Mais Solicitados</h3>
-                <canvas id="graficoTrabalhos"></canvas>
-                <p style="text-align:center;font-size:.8rem;color:#886666;margin-top:8px;">Origem: Firebase (Agendamentos)</p>
-            </div>
-            <div class="grafico-caixa">
-                <h3>💰 Produtos Cadastrados</h3>
-                <canvas id="graficoProdutos"></canvas>
-                <p style="text-align:center;font-size:.8rem;color:#886666;margin-top:8px;">Origem: JSON (GitHub)</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- 🚀 PÁGINA PUBLICAR — ORIGINAL -->
+    <!-- 🚀 PÁGINA PUBLICAR -->
     <div class="conteudo-pagina" id="pagina-publicar">
         <h2>🚀 Publicar</h2>
         <div class="form-bloco" style="text-align:center;">
             <p style="color:#907070;margin:15px 0;">Imagens → vão sozinhas para pasta "imagens/" ✅<br>Dados → ADICIONA sem apagar os antigos ✅</p>
-            <div class="linha-botoes">
+            <div class="linha-botoes" style="justify-content:center;">
                 <button class="sucesso" onclick="publicarTudo()" style="font-size:1.1rem;padding:15px 30px;">🚀 PUBLICAR TUDO!</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 🔥 FIREBASE CONECTADO -->
+<!-- 🔥 FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-    // 🔥 FIREBASE — JÁ CONFIGURADO
+    // 🔥 FIREBASE
     const firebaseConfig = {
         apiKey: "AIzaSyBROXsW_Eaer_9suDCiWS6-iOT0E_-Bgkk",
         authDomain: "bruxa-de-mulambo.firebaseapp.com",
@@ -248,8 +223,6 @@
     let trabalhos = [], produtos = [], arquivosImagens = [];
     let agendamentos = [];
     let filtroAtual = 'todos';
-    let graficoTrabalhosObj = null;
-    let graficoProdutosObj = null;
 
     // ⚡ ANTI-CACHE
     function urlAntiCache(url) {
@@ -257,7 +230,7 @@
         return url + separador + 't=' + Date.now() + Math.random();
     }
 
-    // 📂 CARREGA DADOS DO GITHUB (trabalhos e produtos)
+    // 📂 CARREGA DADOS DO GITHUB
     async function carregarDadosDoGitHub() {
         const cfg = getConfig();
         if (!cfg) return;
@@ -273,7 +246,6 @@
                 const dP = await rP.json();
                 produtos = JSON.parse(atob(dP.content));
                 salvarLocal(); renderizarProdutos();
-                setTimeout(()=>desenharGraficoProdutos(), 300);
             }
         } catch(e) { console.log('Nenhum dado antigo. Tudo certo!'); }
     }
@@ -284,7 +256,6 @@
             const dados = snap.val();
             agendamentos = dados ? Object.entries(dados).map(([id, val]) => ({id, ...val})).reverse() : [];
             renderizarAgendamentos();
-            setTimeout(()=>desenharGraficoTrabalhosSolicitados(), 300);
         });
     }
 
@@ -312,12 +283,13 @@
                     <span>Descrição:</span> ${a.descricao}<br>
                     <span>Recebido em:</span> ${a.dataEnvio ? new Date(a.dataEnvio).toLocaleString('pt-BR') : '—'}
                 </div>
-                <div class="linha-botoes" style="justify-content:flex-start;margin-top:12px;">
+                <div class="linha-botoes">
                     ${a.lida 
                         ? `<button class="pequeno" onclick="marcarComoNaoLida('${a.id}')">🔄 Marcar como pendente</button>`
                         : `<button class="sucesso pequeno" onclick="marcarComoLida('${a.id}')">✅ Marcar como lida</button>`
                     }
                     <button class="pequeno" onclick="contatarWhatsapp('${a.telefone}', \`${a.nome}\`, \`${a.trabalho}\`, \`${a.dataTexto} às ${a.horario}\`)">💱 WhatsApp</button>
+                    <button class="perigo pequeno" onclick="excluirAgendamento('${a.id}')">🗑️ Excluir</button>
                 </div>
             </div>
         `).join('');
@@ -336,77 +308,16 @@
     async function marcarComoNaoLida(id) {
         await db.ref('agendamentos/'+id).update({lida: false});
     }
+    async function excluirAgendamento(id) {
+        if(!confirm('Tem certeza que deseja EXCLUIR este agendamento? Essa ação não tem volta!')) return;
+        await db.ref('agendamentos/'+id).remove();
+        mostrarStatus('✅ Agendamento excluído!','sucesso');
+    }
 
     function contatarWhatsapp(tel, nome, trab, data) {
         const numero = tel.replace(/\D/g,'');
         const mensagem = encodeURIComponent(`Olá ${nome}! Recebemos seu agendamento${trab ? ` para ${trab}` : ''} em ${data}. Vamos confirmar?`);
         window.open(`https://wa.me/55${numero}?text=${mensagem}`, '_blank');
-    }
-
-    // 📊 GRÁFICO 1 — TRABALHOS MAIS SOLICITADOS (do Firebase)
-    function desenharGraficoTrabalhosSolicitados() {
-        const contagem = {};
-        agendamentos.forEach(a => {
-            const nome = a.trabalho || 'Atendimento Geral';
-            contagem[nome] = (contagem[nome] || 0) + 1;
-        });
-        
-        const labels = Object.keys(contagem);
-        const valores = Object.values(contagem);
-        const cores = ['#ff4444','#ff8822','#ffcc22','#88cc22','#22cc88','#22aadd','#8866dd','#cc44dd'];
-
-        if(graficoTrabalhosObj) graficoTrabalhosObj.destroy();
-        const ctx = document.getElementById('graficoTrabalhos').getContext('2d');
-        graficoTrabalhosObj = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Quantidade de Agendamentos',
-                    data: valores,
-                    backgroundColor: cores.slice(0, labels.length),
-                    borderWidth: 0,
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { ticks: { color: '#b09090' }, grid: { color: 'rgba(150,30,30,.1)' }, beginAtZero: true, ticks:{stepSize:1} },
-                    x: { ticks: { color: '#b09090', font:{size:10} }, grid: { display:false } }
-                }
-            }
-        });
-    }
-
-    // 📈 GRÁFICO 2 — PRODUTOS CADASTRADOS (do JSON/GitHub)
-    function desenharGraficoProdutos() {
-        const nomes = produtos.map(p => p.titulo.substring(0,20));
-        const valores = produtos.map(() => 1); // cada produto = 1 unidade cadastrada
-        const cores = ['#50ff90','#40dd70','#30bb60','#209950','#107740','#22aadd','#8866dd','#cc44dd'];
-
-        if(graficoProdutosObj) graficoProdutosObj.destroy();
-        const ctx = document.getElementById('graficoProdutos').getContext('2d');
-        graficoProdutosObj = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: nomes.length ? nomes : ['Sem produtos'],
-                datasets: [{
-                    label: 'Produtos Cadastrados',
-                    data: nomes.length ? valores : [1],
-                    backgroundColor: nomes.length ? cores.slice(0, nomes.length) : ['#443333'],
-                    borderWidth: 2,
-                    borderColor: '#0c0404'
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'bottom', labels: { color: '#b09090', font:{size:10}, boxWidth:12, padding:12 } }
-                }
-            }
-        });
     }
 
     // === RESTO DO CÓDIGO — CONTINUA EXATAMENTE IGUAL ===
@@ -418,18 +329,13 @@
         document.querySelector(`.menu-item[data-pagina="${nome}"]`)?.classList.add('ativa');
         document.querySelectorAll('.conteudo-pagina').forEach(p=>p.classList.remove('visivel'));
         document.getElementById(`pagina-${nome}`).classList.add('visivel');
-        
-        // Ao abrir Estatísticas → redesenha gráficos
-        if(nome==='estatisticas') {
-            setTimeout(()=>{desenharGraficoTrabalhosSolicitados(); desenharGraficoProdutos();},100);
-        }
     }
     function abrirModalSenha() { fecharMenu(); document.getElementById('modalSenha').classList.add('aberto'); document.getElementById('inputSenha').value=''; document.getElementById('erroSenha').style.display='none'; document.getElementById('areaConfig').classList.remove('visivel'); }
     function fecharModalSenha() { document.getElementById('modalSenha').classList.remove('aberto'); }
     function verificarSenha() { if (document.getElementById('inputSenha').value === SENHA_CONFIG) { document.getElementById('areaConfig').classList.add('visivel'); } else { document.getElementById('erroSenha').style.display='block'; } }
     function fecharConfig() { document.getElementById('areaConfig').classList.remove('visivel'); }
     function previewImagem(input, idImg) { if (input.files && input.files[0]) { const arq=input.files[0]; const leitor=new FileReader(); leitor.onload=e=>{document.getElementById(idImg).src=e.target.result; document.getElementById(idImg).classList.add('visivel');}; leitor.readAsDataURL(arq); input.arquivo=arq; } }
-    function salvarConfig() { const cfg={usuario:document.getElementById('gitUsuario').value.trim(),repo:document.getElementById('gitRepo').value.trim(),token:document.getElementById('gitToken').value.trim(),branch:document.getElementById('gitBranch').value.trim()||'main'}; if(!cfg.usuario||!cfg.repo||!cfg.token) return mostrarStatus('Preencha tudo!','aviso'); localStorage.setItem('gitConfig',JSON.stringify(cfg)); document.getElementById('configSalva').style.display='block'; mostrarStatus('✅ Salvo! Carregando dados...','aviso'); setTimeout(()=>carregarDadosDoGitHub(),800); }
+    function salvarConfig() { const cfg={usuario:document.getElementById('gitUsuario').value.trim(),repo:document.getElementById('gitRepo').value.trim(),token:document.getElementById('gitToken').value.trim(),branch:document.getElementById('gitBranch').value.trim()||'main'}; if(!cfg.usuario||!cfg.repo||!cfg.token) return mostrarStatus('Preencha tudo!','aviso'); localStorage.setItem('gitConfig',JSON.stringify(cfg)); document.getElementById('configSalva').style.display='block'; mostrarStatus('✅ Salvo! Carregando dados...','sucesso'); setTimeout(()=>carregarDadosDoGitHub(),800); }
     function carregarConfig() { const s=localStorage.getItem('gitConfig'); if(!s)return; const c=JSON.parse(s); document.getElementById('gitUsuario').value=c.usuario; document.getElementById('gitRepo').value=c.repo; document.getElementById('gitToken').value=c.token; document.getElementById('gitBranch').value=c.branch||'main'; }
     function getConfig() { const s=localStorage.getItem('gitConfig'); return s?JSON.parse(s):null; }
     function mostrarStatus(t,tipo='aviso') { const el=document.getElementById('statusMsg'); el.textContent=t; el.className='status '+tipo; el.style.display='block'; clearTimeout(window.temporizadorStatus); window.temporizadorStatus=setTimeout(()=>{el.style.display='none';},12000); }
@@ -447,7 +353,7 @@
     function salvarLocal() { localStorage.setItem('painel_trabalhos',JSON.stringify(trabalhos)); localStorage.setItem('painel_produtos',JSON.stringify(produtos)); }
     function carregarLocal() { const t=localStorage.getItem('painel_trabalhos'); const p=localStorage.getItem('painel_produtos'); if(t)trabalhos=JSON.parse(t); if(p)produtos=JSON.parse(p); renderizarTrabalhos(); renderizarProdutos(); }
 
-    // ✅ INICIALIZA TUDO
+    // ✅ INICIALIZA
     carregarConfig(); carregarLocal(); carregarAgendamentos();
     setTimeout(()=>{if(getConfig())carregarDadosDoGitHub();},1500);
 </script>
