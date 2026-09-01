@@ -212,25 +212,24 @@
         }
 
         /* ✅ ================================================= */
-        /* ✅ CARDS IGUAIS AO SITE PRINCIPAL — MESMO TAMANHO */
+        /* ✅ CARDS MAIORES + DESCRIÇÃO E PREÇO AJUSTADOS */
         /* ✅ ================================================= */
         .grade-produtos {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 8px;
+            gap: 20px;
             padding-bottom: 60px;
         }
         .produto-card {
-            width: 31%;
-            min-width: 100px;
+            width: 300px;
+            min-height: 480px;
             background: linear-gradient(180deg, rgba(25, 8, 8, 0.95), rgba(10, 2, 2, 0.98));
             border: none;
             border-radius: 8px;
             position: relative;
             display: flex;
             flex-direction: column;
-            transform: scale(1);
             transition: all .35s ease;
 
             box-shadow:
@@ -240,7 +239,7 @@
                 0 0 30px rgba(30, 20, 10, 0.1);
         }
 
-        /* ✅ Moldura externa ornamentada — IGUAL AO SITE PRINCIPAL */
+        /* ✅ Moldura externa ornamentada */
         .produto-card::before {
             content: '';
             position: absolute;
@@ -264,7 +263,7 @@
                 0 0 8px rgba(40, 30, 15, 0.2);
         }
 
-        /* ✅ Moldura interna — IGUAL AO SITE PRINCIPAL */
+        /* ✅ Moldura interna */
         .produto-card::after {
             content: '';
             position: absolute;
@@ -279,7 +278,7 @@
             box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
         }
 
-        /* ✅ Cantos ornamentados — IGUAIS */
+        /* ✅ Cantos ornamentados */
         .produto-card .canto {
             position: absolute;
             width: 26px;
@@ -305,7 +304,7 @@
             border-left: none; border-top: none;
         }
 
-        /* ✅ Efeito hover — IGUAL */
+        /* ✅ Efeito hover */
         .produto-card:hover {
             transform: translateY(-6px) scale(1.02);
             box-shadow:
@@ -321,73 +320,70 @@
             border-color: rgba(110, 85, 40, 0.9);
         }
 
-        /* ✅ FOTO — IGUAL TAMANHO E AJUSTE */
+        /* ✅ FOTO — Tamanho bom e visível */
         .produto-foto {
-            width: 100%;
-            height: 190px;
+            width: calc(100% - 24px);
+            height: 220px;
+            margin: 18px 12px 12px;
             object-fit: contain;
             object-position: center;
-            border-radius: 5px 5px 0 0;
-            cursor: pointer;
-            transition: opacity .25s ease;
-            background: rgba(10, 2, 2, 0.8);
+            border-radius: 4px;
+            background: rgba(10, 2, 2, 0.6);
             position: relative;
             z-index: 3;
-            margin-top: 12px;
         }
-        .produto-foto:hover { opacity: 0.9; }
 
-        /* ✅ CONTEÚDO — IGUAL ESPAÇAMENTO */
+        /* ✅ CONTEÚDO — DESCRIÇÃO E PREÇO BEM AJUSTADOS */
         .produto-corpo {
-            padding: 10px;
+            padding: 10px 16px 16px;
             position: relative;
             z-index: 3;
             display: flex;
             flex-direction: column;
-            gap: 6px;
             flex-grow: 1;
         }
         .produto-nome {
             font-family: 'Cinzel Decorative', serif;
             color: #ff5050;
-            font-size: 1rem;
-            margin-bottom: 2px;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            text-align: center;
             text-shadow: 0 0 8px rgba(255, 40, 40, 0.3);
         }
         .produto-desc {
-            font-size: 0.8rem;
-            color: #907070;
-            line-height: 1.4;
-            margin-bottom: 4px;
-            flex-grow: 1;
+            font-size: 0.9rem;
+            color: #b09090;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: center;
+            min-height: 40px;
         }
         .produto-preco {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #ff8844;
-            text-shadow: 0 0 6px rgba(255,136,68,0.25);
-            margin-bottom: 6px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ff9944;
+            text-align: center;
+            text-shadow: 0 0 8px rgba(255,153,68,0.35);
+            margin-bottom: 15px;
         }
         .botao-adicionar {
-            display: block;
             width: 100%;
-            padding: 8px;
+            padding: 12px;
             background: linear-gradient(135deg, #7a1528, #b81818);
             color: #fff;
             font-family: 'Cinzel', serif;
-            font-size: 0.8rem;
-            text-decoration: none;
-            text-align: center;
-            border-radius: 3px;
+            font-size: 0.95rem;
+            border-radius: 4px;
             border: 1px solid rgba(255, 80, 80, 0.3);
             transition: all 0.3s ease;
             text-transform: uppercase;
+            letter-spacing: 1px;
             position: relative;
             z-index: 3;
         }
         .botao-adicionar:hover {
             background: linear-gradient(135deg, #991a2e, #cc283a);
-            box-shadow: 0 0 10px #ff2b2b, 0 0 20px rgba(255,43,43,0.3);
+            box-shadow: 0 0 12px #ff2b2b, 0 0 25px rgba(255,43,43,0.3);
             color: #ffffff;
         }
 
@@ -397,34 +393,34 @@
         }
         .carregando { text-align: center; padding: 40px; color: #996666; font-style: italic; }
 
-        /* ✅ CELULAR — IGUAL AO SITE PRINCIPAL */
+        /* ✅ CELULAR — 2 CARDS POR LINHA, MAIORES E BEM AJUSTADOS */
         @media (max-width: 768px) {
-            .grade-produtos { gap: 6px; }
+            .grade-produtos { gap: 12px; padding: 0 8px; }
             .produto-card {
-                width: 31%;
-                min-width: 85px;
-                transform: scale(1);
+                width: calc(50% - 8px);
+                min-height: 400px;
             }
             .produto-foto { 
-                height: 110px;
-                object-fit: contain;
+                height: 160px;
             }
-            .produto-corpo { padding: 6px; gap: 4px; }
-            .produto-nome { font-size: 0.85rem; }
-            .produto-desc { font-size: 0.7rem; line-height: 1.3; }
-            .produto-preco { font-size: 0.85rem; }
-            .botao-adicionar { padding: 6px; font-size: 0.7rem; }
+            .produto-nome { font-size: 0.95rem; }
+            .produto-desc { font-size: 0.8rem; margin-bottom: 10px; }
+            .produto-preco { font-size: 1.15rem; margin-bottom: 10px; }
+            .botao-adicionar { padding: 10px; font-size: 0.85rem; }
         }
 
-        /* ✅ PC — IGUAL AO SITE PRINCIPAL */
-        @media (min-width: 1024px) {
-            .grade-produtos { gap: 20px; }
+        /* ✅ TELAS PEQUENAS — 1 CARD POR LINHA */
+        @media (max-width: 420px) {
+            .grade-produtos { gap: 15px; }
             .produto-card {
-                width: 320px;
-                transform: scale(1);
+                width: 100%;
+                max-width: 280px;
             }
-            .produto-card:hover { transform: translateY(-8px); }
-            .produto-foto { height: 190px; }
+        }
+
+        /* ✅ PC — 3 CARDS POR LINHA */
+        @media (min-width: 1024px) {
+            .grade-produtos { gap: 25px; }
         }
     </style>
 </head>
