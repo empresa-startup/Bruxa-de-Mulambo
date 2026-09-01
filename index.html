@@ -138,7 +138,7 @@
             height: 100%;
             object-fit: contain;
             object-position: center;
-            filter: brightness(1.15) contrast(1.05) saturate(1.35);
+            filter: brightness(1.30) contrast(1.10) saturate(1.40); /* ✅ MAIS BRILHO! */
             transform: none;
         }
         .capa-sombra {
@@ -147,7 +147,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(10, 2, 2, 0.20), rgba(10, 2, 2, 0.60));
+            background: linear-gradient(to bottom, rgba(10, 2, 2, 0.10), rgba(10, 2, 2, 0.45)); /* ✅ SOMBRA MAIS LEVE */
             pointer-events: none;
         }
         .brilho-capa {
@@ -156,13 +156,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 30%, rgba(255, 60, 60, 0.08), transparent 60%);
+            background: radial-gradient(circle at 50% 30%, rgba(255, 80, 80, 0.15), transparent 60%); /* ✅ MAIS BRILHO VERMELHO */
             pointer-events: none;
             animation: brilhoPulsar 4s ease-in-out infinite alternate;
         }
         @keyframes brilhoPulsar {
-            0% { opacity: 0.5; }
-            100% { opacity: 0.8; }
+            0% { opacity: 0.6; }
+            100% { opacity: 1.0; }
         }
         .intro {
             text-align: center;
@@ -185,8 +185,8 @@
             letter-spacing: 2px;
             text-transform: uppercase;
         }
-        /* ✅ CAIXA DE DÚVIDAS — NO INÍCIO */
-        .caixa-duvidas-topo {
+        /* ✅ CAIXA DE DÚVIDAS — SOMENTE ABAIXO */
+        .caixa-duvidas {
             display: inline-block;
             background: linear-gradient(135deg, rgba(20, 12, 8, 0.9), rgba(12, 6, 4, 0.95));
             border: 1px solid var(--dourado-suave);
@@ -196,7 +196,7 @@
             box-shadow: 0 0 15px rgba(201, 162, 77, 0.08);
             transition: all 0.35s ease;
         }
-        .caixa-duvidas-topo:hover {
+        .caixa-duvidas:hover {
             border-color: rgba(201, 162, 77, 0.55);
             box-shadow: 0 0 25px rgba(201, 162, 77, 0.15);
             transform: translateY(-2px);
@@ -508,9 +508,9 @@
         .vazio { color: #705050; font-style: italic; }
         @media (max-width: 768px) {
             .capa-container { height: 60vh; min-height: 350px; }
-            .capa-container img { object-fit: contain; transform: translateY(-60px); }
+            .capa-container img { object-fit: contain; transform: translateY(-60px); filter: brightness(1.35) contrast(1.10) saturate(1.45); }
             .intro h1 { font-size: 1.7rem; }
-            .caixa-duvidas-topo { padding: 12px 18px; }
+            .caixa-duvidas { padding: 12px 18px; }
             .texto-duvidas { font-size: 0.8rem; }
             .btn-whatsapp { padding: 9px 18px; font-size: 0.85rem; }
             .rituais-grade { gap: 6px; }
@@ -561,12 +561,7 @@
     <section class="intro" id="inicio">
         <h1>Poder e Magia<br>na Quimbanda</h1>
         <p>Trabalhos espirituais com força e resultados reais</p>
-
-        <!-- ✅ CAIXA DE DÚVIDAS NO INÍCIO -->
-        <div class="caixa-duvidas-topo">
-            <div class="texto-duvidas">✨ Em caso de dúvidas, entre em contato:</div>
-            <a href="https://wa.me/5531987276275?text=Olá!%20Tenho%20algumas%20dúvidas%20e%20gostaria%20de%20saber%20mais!" target="_blank" class="btn-whatsapp">💬 Falar no WhatsApp</a>
-        </div>
+        <!-- ✅ REMOVIDO O BOTÃO DO TOPO -->
     </section>
     <section id="rituais">
         <h2>NOSSOS RITUAIS</h2>
@@ -617,8 +612,8 @@
     <section id="contato">
         <h2>Contato</h2>
         <div class="caixa-texto">
-            <!-- ✅ CAIXA DE DÚVIDAS AGORA TAMBÉM NA SEÇÃO CONTATO -->
-            <div class="caixa-duvidas-topo" style="margin:0 auto; display:block;">
+            <!-- ✅ ÚNICO BOTÃO — AGORA SÓ AQUI EMBAIXO -->
+            <div class="caixa-duvidas" style="margin:0 auto; display:block; text-align:center;">
                 <div class="texto-duvidas">✨ Em caso de dúvidas, entre em contato:</div>
                 <a href="https://wa.me/5531987276275?text=Olá!%20Tenho%20algumas%20dúvidas%20e%20gostaria%20de%20saber%20mais!" target="_blank" class="btn-whatsapp">💬 Falar no WhatsApp</a>
             </div>
