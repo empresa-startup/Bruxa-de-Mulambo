@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Agendar Consulta — Bruxa de Mulambo</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        :root {
+            --vermelho: #8b0000;
+            --vermelho-claro: #cc2222;
+            --dourado: #c9a24d;
+            --escuro: #0c0c0c;
+            --fundo: #110808;
+            --texto: #e0c5c5;
+            --livre: #2e8b57;
+            --ocupado: #8b2222;
+        }
+        
+        body {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(180deg, var(--escuro) 0%, var(--fundo) 100%);
+            color: var(--texto);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .cabecalho {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .botoes-superior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .btn-voltar, .btn-duvidas {
+            padding: 8px 15px;
+            border-radius: 6px;
+            border: none;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-voltar {
+            background: linear-gradient(135deg, #442222, #221111);
+            color: #dd9999;
+        }
+        .btn-voltar:hover {
+            background: linear-gradient(135deg, #553333, #332222);
+            transform: translateX(-2px);
+        }
+        
+        .btn-duvidas {
+            background: linear-gradient(135deg, #223344, #112233);
+            color: #99bbdd;
+        }
+        .btn-duvidas:hover {
+            background: linear-gradient(135deg, #334455, #223344);
+            transform: translateX(2px);
+        }
+        
+        .simbolo {
+            font-size: 2.5rem;
+            color: var(--dourado);
+            margin-bottom: 8px;
+            text-shadow: 0 0 15px rgba(201,162,77,0.4);
+        }
+        
+        h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.6rem;
+            color: var(--vermelho-claro);
+            margin-bottom: 8px;
+        }
+        
+        .subtitulo {
+            font-size: 0.9rem;
+            color: #997777;
+            margin-bottom: 20px;
+        }
+        
+        /* ✅ TRABALHO SELECIONADO — JÁ VEM PREENCHIDO */
+        .trabalho-selecionado {
+            background: rgba(201,162,77,0.12);
+            border: 1px solid rgba(201,162,77,0.35);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+        .trabalho-selecionado.visivel { display: block; }
+        .trabalho-selecionado .etiqueta {
+            font-size: 0.8rem;
+            color: #c9a24d;
+            margin-bottom: 5px;
+        }
+        .trabalho-selecionado .nome-trabalho {
+            font-size: 1.05rem;
+            color: #ffdd88;
+            font-weight: 600;
+        }
+        
+        .caixa-ajuda {
+            display: none;
+            background: rgba(34,51,68,0.2);
+            border: 1px solid rgba(51,85,119,0.4);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #ccddee;
+        }
+        
+        .caixa-ajuda h3 {
+            color: #99ccff;
+            margin-bottom: 12px;
+            font-family: 'Cinzel Decorative', serif;
+        }
+        
+        .caixa-ajuda p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .caixa-ajuda .fechar {
+            margin-top: 10px;
+            background: #223344;
+            color: #aaccff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .legenda {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+        }
+        .legenda span { display: flex; align-items: center; gap: 6px; }
+        .bolinha { width:12px; height:12px; border-radius:50%; display:inline-block; }
+        .bolinha.livre { background: var(--livre); }
+        .bolinha.ocupado { background: var(--ocupado); }
+        
+        .secao {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.92rem;
+            color: #d4b8b8;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(139,0,0,0.35);
+            border-radius: 6px;
+            color: #f0d8d8;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        
+        input:focus, textarea:focus {
+            border-color: var(--vermelho-claro);
+            box-shadow: 0 0 10px rgba(139,0,0,0.25);
+        }
+        
+        .campo-opcional {
+            font-size: 0.8rem;
+            color: #887766;
+            margin-left: 8px;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .agenda-container {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(80,20,30,0.25);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .navegacao-dias {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .btn-navega {
+            background: rgba(80,20,30,0.2);
+            border: 1px solid rgba(139,0,0,0.3);
+            color: #dd7777;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-navega:hover {
+            background: rgba(139,0,0,0.25);
+            color: #ff9999;
+        }
+        
+        .mes-ano {
+            font-size: 1rem;
+            color: #e0c5c5;
+            font-weight: 600;
+        }
+        
+        .dias-semana {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .dia-semana {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #997777;
+            padding: 6px;
+        }
+        
+        .grade-dias {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+        }
+        
+        .dia-btn {
+            aspect-ratio: 1;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            background: rgba(40,20,30,0.15);
+            color: #c0a0a0;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+        }
+        
+        .dia-btn:disabled {
+            opacity: 0.25;
+            cursor: not-allowed;
+        }
+        
+        .dia-btn:not(:disabled):hover {
+            border-color: rgba(204,34,34,0.4);
+            background: rgba(139,0,0,0.12);
+        }
+        
+        .dia-btn.selecionado {
+            background: rgba(46,139,87,0.25);
+            border-color: var(--livre);
+            color: #90eeaa;
+        }
+        
+        .ponto-status {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-top: 3px;
+        }
+        .ponto-livre { background: var(--livre); }
+        .ponto-ocupado { background: var(--ocupado); }
+        
+        .grade-horarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            margin-top: 18px;
+        }
+        
+        .horario-btn {
+            padding: 10px 8px;
+            border-radius: 6px;
+            border: 1px solid;
+            font-family: 'Cinzel', serif;
+            font-size: 0.88rem;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .horario-btn.livre {
+            background: rgba(46,139,87,0.12);
+            border-color: rgba(46,139,87,0.4);
+            color: #88eeaa;
+        }
+        .horario-btn.livre:hover {
+            background: rgba(46,139,87,0.25);
+            transform: translateY(-2px);
+        }
+        .horario-btn.selecionado {
+            background: rgba(46,139,87,0.35);
+            border-color: #66ffaa;
+            color: #ccffdd;
+        }
+        .horario-btn.ocupado {
+            background: rgba(139,34,34,0.15);
+            border-color: rgba(139,34,34,0.35);
+            color: #775555;
+            cursor: not-allowed;
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
+        
+        .tipo-atendimento {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .tipo-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(139,0,0,0.35);
+            border-radius: 6px;
+            color: #d4b8b8;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .tipo-btn.selecionado {
+            border-color: var(--vermelho-claro);
+            background: rgba(139,0,0,0.15);
+            color: #ff7777;
+        }
+        
+        .botao-enviar {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--vermelho) 0%, #660000 100%);
+            color: #f8e0e0;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .botao-enviar:hover {
+            background: linear-gradient(135deg, #a50000 0%, #770000 100%);
+            transform: translateY(-2px);
+        }
+        .botao-enviar:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .aviso {
+            background: rgba(201,162,77,0.08);
+            border: 1px solid rgba(201,162,77,0.25);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #eeddaa;
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        .mensagem-sucesso {
+            display: none;
+            text-align: center;
+            padding: 40px 25px;
+            background: linear-gradient(180deg, rgba(46,139,87,0.12) 0%, rgba(30,80,50,0.08) 100%);
+            border: 1px solid rgba(46,139,87,0.25);
+            border-radius: 12px;
+            color: #b8e0c8;
+            margin-top: 30px;
+            line-height: 1.9;
+            animation: brilhoSucesso 2.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes brilhoSucesso {
+            from { box-shadow: 0 0 15px rgba(46,139,87,0.15); }
+            to   { box-shadow: 0 0 30px rgba(46,139,87,0.30); }
+        }
+        
+        .mensagem-sucesso .simbolo {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: #66ffaa;
+            text-shadow: 0 0 12px rgba(102,255,170,0.35);
+        }
+        
+        .mensagem-sucesso .titulo {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.25rem;
+            color: #90eeaa;
+            margin-bottom: 12px;
+        }
+        
+        .mensagem-sucesso .destaque {
+            color: #ffdd88;
+            font-weight: 600;
+            text-shadow: 0 0 6px rgba(255,221,136,0.25);
+        }
+        
+        .btn-voltar-sucesso {
+            margin-top: 20px;
+            background: linear-gradient(135deg, #442222, #221111);
+            color: #ffcccc;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .btn-voltar-sucesso:hover {
+            background: linear-gradient(135deg, #553333, #332222);
+        }
+        
+        @media (max-width: 600px) {
+            .grade-dias { gap: 4px; }
+            .dia-btn { font-size: 0.75rem; }
+            .grade-horarios { grid-template-columns: repeat(2, 1fr); }
+            .botoes-superior { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="botoes-superior">
+        <button type="button" class="btn-voltar" id="btnVoltar">← Voltar</button>
+        <button type="button" class="btn-duvidas" id="btnDuvidas">❓ Tirar Dúvidas</button>
+    </div>
+
+    <div class="caixa-ajuda" id="caixaAjuda">
+        <h3>📜 Como funciona o agendamento</h3>
+        <p>✅ <strong>Escolha o dia:</strong> Clique em uma data no calendário. Dias com bolinha verde estão disponíveis, vermelho estão ocupados.</p>
+        <p>✅ <strong>Escolha o horário:</strong> Ao clicar no dia, apareceram os horários livres. Clique no horário desejado.</p>
+        <p>✅ <strong>Tipo de atendimento:</strong> Escolha entre Presencial ou atendimento por WhatsApp.</p>
+        <p>✅ <strong>Seus dados:</strong> Preencha seu nome, telefone com WhatsApp e descreva o que busca.</p>
+        <p>✅ <strong>Confirmação:</strong> Ao enviar, entraremos em contato pelo WhatsApp em breve para confirmar tudo e combinar os valores.</p>
+        <button type="button" class="fechar" id="btnFecharAjuda">Fechar</button>
+    </div>
+
+    <div class="cabecalho">
+        <div class="simbolo">☽ ✧ ☾</div>
+        <h1>Agendar Consulta</h1>
+        <p class="subtitulo">Escolha um dia disponível e o horário que prefere.</p>
+    </div>
+
+    <!-- ✅ CAIXA QUE APARECE O TRABALHO JÁ SELECIONADO -->
+    <div class="trabalho-selecionado" id="caixaTrabalho">
+        <div class="etiqueta">✨ Trabalho selecionado:</div>
+        <div class="nome-trabalho" id="nomeTrabalho"></div>
+    </div>
+
+    <div class="legenda">
+        <span><span class="bolinha livre"></span> Disponível</span>
+        <span><span class="bolinha ocupado"></span> Ocupado</span>
+    </div>
+
+    <div id="formulario">
+        <div class="secao">
+            <label>📅 Escolha o Dia</label>
+            <div class="agenda-container">
+                <div class="navegacao-dias">
+                    <button type="button" class="btn-navega" id="btnMesAnterior">‹</button>
+                    <span class="mes-ano" id="textoMesAno"></span>
+                    <button type="button" class="btn-navega" id="btnProximoMes">›</button>
+                </div>
+                <div class="dias-semana">
+                    <span class="dia-semana">D</span>
+                    <span class="dia-semana">S</span>
+                    <span class="dia-semana">T</span>
+                    <span class="dia-semana">Q</span>
+                    <span class="dia-semana">Q</span>
+                    <span class="dia-semana">S</span>
+                    <span class="dia-semana">S</span>
+                </div>
+                <div class="grade-dias" id="gradeDias"></div>
+            </div>
+        </div>
+
+        <div class="secao">
+            <label>⏰ Horários — Escolha um dia acima</label>
+            <div class="grade-horarios" id="gradeHorarios">
+                <p style="grid-column:1/-1;color:#886666;text-align:center;">Selecione uma data primeiro...</p>
+            </div>
+        </div>
+
+        <div class="secao">
+            <label>📍 Tipo de Atendimento</label>
+            <div class="tipo-atendimento">
+                <button type="button" class="tipo-btn" id="btnPresencial">🏠 Presencial</button>
+                <button type="button" class="tipo-btn" id="btnOnline">📱 Por WhatsApp</button>
+            </div>
+        </div>
+
+        <div class="secao">
+            <label>👤 Seu nome completo</label>
+            <input type="text" id="nome" required placeholder="Seu nome completo">
+        </div>
+
+        <div class="secao">
+            <label>✨ Como prefere ser chamado(a)? <span class="campo-opcional">(opcional)</span></label>
+            <input type="text" id="nomePreferido" placeholder="Ex: Dona Maria, Sr. João...">
+        </div>
+
+        <div class="secao">
+            <label>📱 Telefone com WhatsApp</label>
+            <input type="tel" id="telefone" required placeholder="(31) 9XXXX-XXXX">
+        </div>
+
+        <div class="secao">
+            <label>📝 Descreva o que está sentindo e o que busca</label>
+            <textarea id="descricao" required placeholder="Fale com calma..."></textarea>
+        </div>
+
+        <div class="aviso">
+            ⏰ Entraremos em contato em até 24h pelo WhatsApp para confirmação.<br>
+            💰 Os valores serão combinados no momento da confirmação.
+        </div>
+
+        <button type="button" class="botao-enviar" id="botaoEnviar" disabled>🕯️ SOLICITAR AGENDAMENTO</button>
+    </div>
+
+    <div class="mensagem-sucesso" id="caixaMensagem">
+        <div class="simbolo">✧ ☽ ✧</div>
+        <div class="titulo">Solicitação Enviada com Sucesso!</div>
+        
+        Agradecemos sua confiança e sua luz.<br><br>
+        
+        <span class="destaque">Em breve entraremos em contato pelo WhatsApp</span><br>
+        para confirmar seu horário e combinarmos tudo com calma.<br><br>
+        
+        Que as forças do bem estejam com você.<br>
+        Gratidão, luz e caminhos abertos! ✨🕯️
+        
+        <br>
+        <button type="button" class="btn-voltar-sucesso" id="btnVoltarSucesso">← Voltar para o Agendamento</button>
+    </div>
+</div>
+
+<script>
+    const CHAVE_AGENDA = 'agendamentos_ocupados';
+    const CHAVE_SOLICITACOES = 'agendamentos_recebidos';
+    const horariosFixos = ['08:00','09:00','10:00','11:00','14:00','15:00','16:00','17:00'];
+    const nomesMeses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    
+    let dataAtual = new Date();
+    let dataSelecionada = null;
+    let horarioSelecionado = null;
+    let tipoSelecionado = null;
+    let trabalhoEspecifico = '';
+
+    // ✅ LER O NOME DO TRABALHO QUE VEIO DO CARD
+    function lerParametroUrl(nomeParam) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(nomeParam);
+    }
+
+    // ✅ PREENCHER AUTOMATICAMENTE SE VIER DO CARD
+    window.onload = function() {
+        trabalhoEspecifico = lerParametroUrl('trabalho');
+        if (trabalhoEspecifico) {
+            // Mostra a caixinha com o nome do trabalho
+            document.getElementById('caixaTrabalho').classList.add('visivel');
+            document.getElementById('nomeTrabalho').textContent = trabalhoEspecifico;
+            // Já preenche na descrição também
+            document.getElementById('descricao').value = trabalhoEspecifico + ' — Gostaria de saber mais e agendar.';
+        }
+    };
+
+    // ✅ BOTÃO DÚVIDAS
+    document.getElementById('btnDuvidas').onclick = function() {
+        const caixa = document.getElementById('caixaAjuda');
+        caixa.style.display = (caixa.style.display === 'block') ? 'none' : 'block';
+    };
+    document.getElementById('btnFecharAjuda').onclick = function() {
+        document.getElementById('caixaAjuda').style.display = 'none';
+    };
+
+    // ✅ BOTÃO VOLTAR
+    document.getElementById('btnVoltar').onclick = function() {
+        // Se quiser voltar direto pro site principal, coloque:
+        // window.location.href = 'index.html';
+        window.history.back(); // Volta pra página que veio (o card)
+    };
+
+    document.getElementById('btnVoltarSucesso').onclick = function() {
+        document.getElementById('formulario').style.display = 'block';
+        document.getElementById('caixaMensagem').style.display = 'none';
+        dataSelecionada = null;
+        horarioSelecionado = null;
+        tipoSelecionado = null;
+        renderizarCalendario();
+        document.getElementById('gradeHorarios').innerHTML = '<p style="grid-column:1/-1;color:#886666;text-align:center;">Selecione uma data primeiro...</p>';
+        document.getElementById('nome').value = '';
+        document.getElementById('nomePreferido').value = '';
+        document.getElementById('telefone').value = '';
+        document.getElementById('descricao').value = trabalhoEspecifico ? trabalhoEspecifico + ' — Gostaria de saber mais e agendar.' : '';
+        document.getElementById('botaoEnviar').disabled = true;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    function carregarAgenda() {
+        const salvo = localStorage.getItem(CHAVE_AGENDA);
+        return salvo ? JSON.parse(salvo) : [];
+    }
+
+    function formatarDataISO(data) {
+        const ano = data.getFullYear();
+        const mes = String(data.getMonth() + 1).padStart(2, '0');
+        const dia = String(data.getDate()).padStart(2, '0');
+        return `${ano}-${mes}-${dia}`;
+    }
+
+    function horarioEstaOcupado(dataISO, horario) {
+        return carregarAgenda().some(item => item.data === dataISO && item.horario === horario);
+    }
+
+    function diaTemOcupado(dataISO) {
+        return carregarAgenda().some(item => item.data === dataISO);
+    }
+
+    function renderizarCalendario() {
+        const ano = dataAtual.getFullYear();
+        const mes = dataAtual.getMonth();
+        document.getElementById('textoMesAno').textContent = `${nomesMeses[mes]} ${ano}`;
+        
+        const primeiroDia = new Date(ano, mes, 1);
+        const ultimoDia = new Date(ano, mes + 1, 0);
+        const diaSemanaInicio = primeiroDia.getDay();
+        const totalDias = ultimoDia.getDate();
+        const hoje = new Date();
+        hoje.setHours(0,0,0,0);
+        
+        const grade = document.getElementById('gradeDias');
+        grade.innerHTML = '';
+        
+        for (let i = 0; i < diaSemanaInicio; i++) {
+            const vazio = document.createElement('div');
+            vazio.style.aspectRatio = '1';
+            grade.appendChild(vazio);
+        }
+        
+        for (let dia = 1; dia <= totalDias; dia++) {
+            const dataCalendario = new Date(ano, mes, dia);
+            const dataISO = formatarDataISO(dataCalendario);
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'dia-btn';
+            btn.textContent = dia;
+            
+            const temOcupado = diaTemOcupado(dataISO);
+            const ponto = document.createElement('span');
+            ponto.className = 'ponto-status ' + (temOcupado ? 'ponto-ocupado' : 'ponto-livre');
+            btn.appendChild(ponto);
+            
+            if (dataCalendario < hoje) {
+                btn.disabled = true;
+            } else {
+                btn.onclick = (function(d) {
+                    return function() { selecionarData(d); };
+                })(dataCalendario);
+            }
+            
+            if (dataSelecionada && formatarDataISO(dataSelecionada) === dataISO) {
+                btn.classList.add('selecionado');
+            }
+            grade.appendChild(btn);
+        }
+    }
+
+    function selecionarData(data) {
+        dataSelecionada = data;
+        horarioSelecionado = null;
+        renderizarCalendario();
+        renderizarHorarios();
+    }
+
+    function renderizarHorarios() {
+        const grade = document.getElementById('gradeHorarios');
+        if (!dataSelecionada) {
+            grade.innerHTML = '<p style="grid-column:1/-1;color:#886666;text-align:center;">Selecione uma data primeiro...</p>';
+            return;
+        }
+        
+        const dataISO = formatarDataISO(dataSelecionada);
+        grade.innerHTML = '';
+        
+        horariosFixos.forEach(hora => {
+            const ocupado = horarioEstaOcupado(dataISO, hora);
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'horario-btn ' + (ocupado ? 'ocupado' : 'livre');
+            btn.textContent = ocupado ? `${hora} ⛔` : `${hora} ✅`;
+            btn.disabled = ocupado;
+            
+            if (!ocupado) {
+                btn.onclick = (function(h, b) {
+                    return function() {
+                        document.querySelectorAll('.horario-btn').forEach(bt => bt.classList.remove('selecionado'));
+                        b.classList.add('selecionado');
+                        horarioSelecionado = h;
+                        verificarLiberarBotao();
+                    };
+                })(hora, btn);
+            }
+            grade.appendChild(btn);
+        });
+        verificarLiberarBotao();
+    }
+
+    document.getElementById('btnMesAnterior').onclick = function() {
+        dataAtual.setMonth(dataAtual.getMonth() - 1);
+        renderizarCalendario();
+    };
+    document.getElementById('btnProximoMes').onclick = function() {
+        dataAtual.setMonth(dataAtual.getMonth() + 1);
+        renderizarCalendario();
+    };
+
+    document.getElementById('btnPresencial').onclick = function() {
+        document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('selecionado'));
+        this.classList.add('selecionado');
+        tipoSelecionado = 'presencial';
+        verificarLiberarBotao();
+    };
+    document.getElementById('btnOnline').onclick = function() {
+        document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('selecionado'));
+        this.classList.add('selecionado');
+        tipoSelecionado = 'whatsapp';
+        verificarLiberarBotao();
+    };
+
+    function verificarLiberarBotao() {
+        const nome = document.getElementById('nome').value.trim();
+        const telefone = document.getElementById('telefone').value.trim();
+        const descricao = document.getElementById('descricao').value.trim();
+        const ok = dataSelecionada && horarioSelecionado && tipoSelecionado && nome && telefone && descricao;
+        document.getElementById('botaoEnviar').disabled = !ok;
+    }
+
+    // ✅ SALVA TUDO INCLUINDO O TRABALHO
+    document.getElementById('botaoEnviar').onclick = function() {
+        const dados = {
+            nome: document.getElementById('nome').value.trim(),
+            nomePreferido: document.getElementById('nomePreferido').value.trim() || '(não informado)',
+            telefone: document.getElementById('telefone').value.trim(),
+            descricao: document.getElementById('descricao').value.trim(),
+            trabalho: trabalhoEspecifico || '(não especificado)',
+            data: formatarDataISO(dataSelecionada),
+            dataTexto: dataSelecionada.toLocaleDateString('pt-BR', {day:'numeric', month:'long', year:'numeric'}),
+            horario: horarioSelecionado,
+            tipo: tipoSelecionado,
+            dataEnvio: new Date().toLocaleString('pt-BR'),
+            status: 'pendente'
+        };
+
+        const agenda = carregarAgenda();
+        agenda.push({ data: dados.data, horario: dados.horario, nome: dados.nome, tipo: dados.tipo });
+        localStorage.setItem(CHAVE_AGENDA, JSON.stringify(agenda));
+
+        const solicitacoes = JSON.parse(localStorage.getItem(CHAVE_SOLICITACOES) || '[]');
+        solicitacoes.unshift(dados);
+        localStorage.setItem(CHAVE_SOLICITACOES, JSON.stringify(solicitacoes));
+
+        document.getElementById('formulario').style.display = 'none';
+        document.getElementById('caixaMensagem').style.display = 'block';
+    };
+
+    ['nome','telefone','descricao'].forEach(id => {
+        document.getElementById(id).addEventListener('input', verificarLiberarBotao);
+    });
+
+    renderizarCalendario();
+</script>
+
+</body>
+</html>
