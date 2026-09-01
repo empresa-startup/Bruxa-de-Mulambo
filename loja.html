@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <title>DOMUS OBSCURA</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -210,10 +214,6 @@
             max-width: 500px; margin: 0 auto; line-height: 1.8;
             text-shadow: 0 0 6px rgba(200,60,60,0.2);
         }
-
-        /* ✅ ================================================= */
-        /* ✅ CARDS MAIORES + DESCRIÇÃO E PREÇO AJUSTADOS */
-        /* ✅ ================================================= */
         .grade-produtos {
             display: flex;
             flex-wrap: wrap;
@@ -231,15 +231,12 @@
             display: flex;
             flex-direction: column;
             transition: all .35s ease;
-
             box-shadow:
                 inset 0 0 18px rgba(0, 0, 0, 0.9),
                 0 0 8px rgba(0, 0, 0, 0.9),
                 0 0 18px rgba(60, 40, 20, 0.15),
                 0 0 30px rgba(30, 20, 10, 0.1);
         }
-
-        /* ✅ Moldura externa ornamentada */
         .produto-card::before {
             content: '';
             position: absolute;
@@ -262,8 +259,6 @@
                 inset 0 0 12px rgba(0, 0, 0, 0.8),
                 0 0 8px rgba(40, 30, 15, 0.2);
         }
-
-        /* ✅ Moldura interna */
         .produto-card::after {
             content: '';
             position: absolute;
@@ -277,8 +272,6 @@
             border-radius: 4px;
             box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
         }
-
-        /* ✅ Cantos ornamentados */
         .produto-card .canto {
             position: absolute;
             width: 26px;
@@ -303,8 +296,6 @@
             bottom: 8px; right: 8px;
             border-left: none; border-top: none;
         }
-
-        /* ✅ Efeito hover */
         .produto-card:hover {
             transform: translateY(-6px) scale(1.02);
             box-shadow:
@@ -319,8 +310,6 @@
         .produto-card:hover .canto {
             border-color: rgba(110, 85, 40, 0.9);
         }
-
-        /* ✅ FOTO — Tamanho bom e visível */
         .produto-foto {
             width: calc(100% - 24px);
             height: 220px;
@@ -332,8 +321,6 @@
             position: relative;
             z-index: 3;
         }
-
-        /* ✅ CONTEÚDO — DESCRIÇÃO E PREÇO BEM AJUSTADOS */
         .produto-corpo {
             padding: 10px 16px 16px;
             position: relative;
@@ -386,30 +373,23 @@
             box-shadow: 0 0 12px #ff2b2b, 0 0 25px rgba(255,43,43,0.3);
             color: #ffffff;
         }
-
         .vazio { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #663333; font-style: italic; }
         .vazio .simbolo-grande { font-size: 2.5rem; color: #ff2b2b; margin-bottom: 15px;
             text-shadow: 0 0 10px #ff2b2b, 0 0 25px rgba(255,43,43,0.3);
         }
         .carregando { text-align: center; padding: 40px; color: #996666; font-style: italic; }
-
-        /* ✅ CELULAR — 2 CARDS POR LINHA, MAIORES E BEM AJUSTADOS */
         @media (max-width: 768px) {
             .grade-produtos { gap: 12px; padding: 0 8px; }
             .produto-card {
                 width: calc(50% - 8px);
                 min-height: 400px;
             }
-            .produto-foto { 
-                height: 160px;
-            }
+            .produto-foto { height: 160px; }
             .produto-nome { font-size: 0.95rem; }
             .produto-desc { font-size: 0.8rem; margin-bottom: 10px; }
             .produto-preco { font-size: 1.15rem; margin-bottom: 10px; }
             .botao-adicionar { padding: 10px; font-size: 0.85rem; }
         }
-
-        /* ✅ TELAS PEQUENAS — 1 CARD POR LINHA */
         @media (max-width: 420px) {
             .grade-produtos { gap: 15px; }
             .produto-card {
@@ -417,8 +397,6 @@
                 max-width: 280px;
             }
         }
-
-        /* ✅ PC — 3 CARDS POR LINHA */
         @media (min-width: 1024px) {
             .grade-produtos { gap: 25px; }
         }
@@ -467,13 +445,16 @@
         const CHAVE_CARRINHO = 'carrinho_domus_obscura';
         let listaProdutos = [];
 
+        function urlAntiCache(url) {
+            const separador = url.includes('?') ? '&' : '?';
+            return url + separador + 't=' + Date.now() + Math.random();
+        }
         function ajustarCaminhoImagem(caminho) {
             if (!caminho) return '';
             if (caminho.startsWith('./')) return caminho;
             if (caminho.startsWith('imagens/')) return './' + caminho;
             return caminho;
         }
-
         function criarBrasas() {
             const container = document.getElementById('containerFogo');
             for(let i = 0; i < 40; i++){
@@ -487,7 +468,6 @@
                 container.appendChild(b);
             }
         }
-
         const menuOverlay = document.getElementById('menuOverlay');
         function abrirMenu(){ menuOverlay.classList.add('aberto'); }
         function fecharMenuFn(){ menuOverlay.classList.remove('aberto'); }
@@ -497,17 +477,17 @@
 
         async function carregarProdutos() {
             try {
-                const resposta = await fetch('./dados/produtos.json');
+                const resposta = await fetch(urlAntiCache('./dados/produtos.json'), {cache: 'no-store'});
                 if (!resposta.ok) throw new Error('Arquivo não encontrado');
                 listaProdutos = await resposta.json();
                 renderizarProdutos();
-            } catch (erro) {
+            } catch {
                 try {
-                    const resposta2 = await fetch('dados/produtos.json');
+                    const resposta2 = await fetch(urlAntiCache('dados/produtos.json'), {cache: 'no-store'});
                     if (!resposta2.ok) throw new Error('Arquivo não encontrado');
                     listaProdutos = await resposta2.json();
                     renderizarProdutos();
-                } catch (erro2) {
+                } catch {
                     document.getElementById('gradeProdutos').innerHTML = `
                         <div class="vazio">
                             <p class="simbolo-grande">🕯️</p>
@@ -517,7 +497,6 @@
                 }
             }
         }
-
         function renderizarProdutos() {
             const grade = document.getElementById('gradeProdutos');
             if (!listaProdutos.length) {
@@ -525,7 +504,8 @@
                 return;
             }
             grade.innerHTML = '';
-            listaProdutos.forEach(prod => {
+            listaProdutos.forEach((prod, idx) => {
+                if (!prod.id) prod.id = idx + 1;
                 const caminhoFoto = ajustarCaminhoImagem(prod.foto);
                 const card = document.createElement('div');
                 card.className = 'produto-card';
@@ -551,7 +531,6 @@
                 };
             });
         }
-
         function pegarCarrinho(){ return JSON.parse(localStorage.getItem(CHAVE_CARRINHO) || '[]'); }
         function salvarCarrinho(carrinho){ localStorage.setItem(CHAVE_CARRINHO, JSON.stringify(carrinho)); }
         function adicionarAoCarrinho(produto){
