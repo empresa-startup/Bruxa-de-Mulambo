@@ -98,13 +98,14 @@
             gap: 35px;
         }
         .menu-overlay.aberto { display: flex; }
-        .menu-overlay a {
+        .menu-overlay a, .menu-overlay button {
             color: #cc3333; text-decoration: none; font-size: 1.2rem; letter-spacing: 2px;
             padding: 15px 35px; border: 1px solid transparent;
             text-shadow: 0 0 6px rgba(200,50,50,0.3);
             transition: all .4s ease;
+            background: none; border: none; cursor: pointer; font-family: 'Cinzel', serif;
         }
-        .menu-overlay a:hover {
+        .menu-overlay a:hover, .menu-overlay button:hover {
             color: #ff4444; border-color: rgba(255,50,50,.35);
             text-shadow: 0 0 12px #ff2b2b, 0 0 25px rgba(255,43,43,0.5);
         }
@@ -143,29 +144,40 @@
             opacity: 0; visibility: hidden; transition: all .3s ease;
         }
         .mensagem-sucesso.mostrar { opacity: 1; visibility: visible; top: 80px; }
-        .modal-carrinho {
+        .modal-carrinho, .modal-duvidas {
             position: fixed; top: 0; right: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,.95); z-index: 200; display: none;
             justify-content: flex-end;
         }
-        .modal-carrinho.aberto { display: flex; }
-        .carrinho-conteudo {
+        .modal-duvidas { justify-content: center; align-items: center; background: rgba(0,0,0,.97); }
+        .modal-carrinho.aberto, .modal-duvidas.aberto { display: flex; }
+        .carrinho-conteudo, .duvidas-conteudo {
             width: 100%; max-width: 360px; height: 100%;
             background: linear-gradient(180deg, #0a0204, #030102);
             border-left: 1px solid rgba(120,25,40,.25);
             padding: 20px; overflow-y: auto; position: relative;
         }
-        .fechar-carrinho {
+        .duvidas-conteudo {
+            max-width: 420px; height: auto; max-height: 85vh;
+            border: 1px solid rgba(120,25,40,.25);
+            border-radius: 8px; border-left: none; box-shadow: 0 0 30px rgba(180,30,50,0.15);
+        }
+        .fechar-carrinho, .fechar-duvidas {
             position: absolute; top: 15px; right: 15px;
             background: none; border: none; color: #882222; font-size: 1.5rem;
             cursor: pointer; transition: all .3s ease;
         }
-        .fechar-carrinho:hover { color: #ff4444; text-shadow: 0 0 10px #ff2b2b; }
-        .carrinho-titulo {
+        .fechar-carrinho:hover, .fechar-duvidas:hover { color: #ff4444; text-shadow: 0 0 10px #ff2b2b; }
+        .carrinho-titulo, .duvidas-titulo {
             font-family: 'Cinzel Decorative', serif; font-size: 1.2rem; letter-spacing: 2px;
             color: #ff2b2b; margin-bottom: 20px; text-align: center;
             text-shadow: 0 0 10px #ff2b2b, 0 0 20px rgba(255,43,43,0.4);
         }
+        .duvidas-texto {
+            color: #d0b0b0; font-size: .9rem; line-height: 1.8;
+        }
+        .duvidas-texto p { margin-bottom: 12px; }
+        .duvidas-texto strong { color: #ff7755; text-shadow: 0 0 4px rgba(255,119,85,0.2); }
         .item-carrinho {
             display: flex; gap: 10px; padding: 12px 0;
             border-bottom: 1px solid rgba(80,15,25,.2); align-items: center;
@@ -433,6 +445,7 @@
         <img src="" alt="" class="tela-cheia-img" id="imgTelaCheia">
     </div>
     <div class="mensagem-sucesso" id="avisoCarrinho">✓ Adicionado ao carrinho!</div>
+    <div class="mensagem-sucesso" id="avisoPedido" style="top: 110px; display:none;">✓ Pedido enviado! Em breve entraremos em contato ✨</div>
     <div class="fundo-imagem"></div>
     <div class="fundo"></div>
     <div class="sombra-etérea"></div>
@@ -448,6 +461,7 @@
         <a href="index.html">🏠 Início</a>
         <a href="loja.html" class="ativo">🕯️ Produtos</a>
         <a href="#" id="linkCarrinho">🛒 Meu Carrinho</a>
+        <button id="linkDuvidas">❓ Dúvidas / Como Funciona</button>
     </div>
     <div class="modal-carrinho" id="modalCarrinho">
         <div class="carrinho-conteudo">
@@ -460,13 +474,34 @@
             <button class="botao-finalizar" id="botaoFinalizar" disabled>📦 Enviar Pedido</button>
         </div>
     </div>
+    <div class="modal-duvidas" id="modalDuvidas">
+        <div class="duvidas-conteudo">
+            <button class="fechar-duvidas" id="fecharDuvidas">✕</button>
+            <h3 class="duvidas-titulo">❓ Como Funciona</h3>
+            <div class="duvidas-texto">
+                <p><strong>🕯️ Como faço meu pedido?</strong><br>
+                Escolha os produtos clicando em "Adicionar". Quando terminar, abra o carrinho e clique em "Enviar Pedido".</p>
+
+                <p><strong>📱 E para onde vai o pedido?</strong><br>
+                Ele abre o WhatsApp <strong>JÁ PRONTO</strong> com todos os produtos, quantidades e valor total. É só enviar!</p>
+
+                <p><strong>💰 E o pagamento e entrega?</strong><br>
+                Combinamos tudo direto pelo WhatsApp — valor, forma de pagamento e prazo de entrega.</p>
+
+                <p><strong>📦 Entregas para todo o Brasil</strong><br>
+                Enviamos para qualquer lugar do país! ✨</p>
+
+                <p style="text-align:center; margin-top:20px; color:#ff5555;">🕯️ Qualquer dúvida é só chamar no WhatsApp! 🕯️</p>
+            </div>
+        </div>
+    </div>
     <header>
         <div class="simbolo">☽ ✧ ☾</div>
         <h1>DOMUS OBSCURA</h1>
         <p class="subtitulo">
             Loja de Produtos Esotéricos<br>
             🌹 Despertando o empoderamento, a sensualidade e a magia interior através do axé das Pombagiras.<br>
-            <span class="subtitulo-destaque">🔥 Perfumes • Óleos • Banhos • Atrativos</span><br>
+            <span class="subtitulo-destaque">🔥 Perfumes • Óleos • Banhos • Amuletos</span><br>
             📦 Entregas para todo o Brasil
         </p>
     </header>
@@ -526,6 +561,11 @@
         document.getElementById('botaoSanduiche').onclick = abrirMenu;
         document.getElementById('fecharMenu').onclick = fecharMenuFn;
         document.getElementById('linkCarrinho').onclick = ()=>{ fecharMenuFn(); abrirCarrinho(); return false; };
+        
+        // Botão Dúvidas
+        const modalDuvidas = document.getElementById('modalDuvidas');
+        document.getElementById('linkDuvidas').onclick = ()=>{ fecharMenuFn(); modalDuvidas.classList.add('aberto'); return false; };
+        document.getElementById('fecharDuvidas').onclick = ()=>{ modalDuvidas.classList.remove('aberto'); };
         
         async function carregarProdutos() {
             try {
@@ -640,9 +680,30 @@
         document.getElementById('botaoFinalizar').onclick = () => {
             const carrinho = pegarCarrinho();
             if (!carrinho.length) return;
-            let mensagem = 'PEDIDO DOMUS OBSCURA%0A%0A';
-            carrinho.forEach(i => mensagem += `• ${i.titulo} — ${i.qtd}x — R$ ${(i.preco*i.qtd).toFixed(2).replace('.', ',')}%0A`);
-            mensagem += `%0ATOTAL: R$ ${calcularTotal().toFixed(2).replace('.', ',')}`;
+            
+            // ✅ MENSAGEM ORGANIZADA E BONITA NO WHATSAPP
+            let mensagem = '🕯️ PEDIDO — DOMUS OBSCURA 🕯️%0A';
+            mensagem += '═══════════════════%0A%0A';
+            mensagem += '📝 ITENS DO PEDIDO:%0A%0A';
+            
+            carrinho.forEach((item, indice) => {
+                const subtotal = (item.preco * item.qtd).toFixed(2).replace('.', ',');
+                mensagem += `${indice + 1}️⃣ ${item.titulo}%0A`;
+                mensagem += `   ├─ Quantidade: ${item.qtd}x%0A`;
+                mensagem += `   ├─ Unitário: R$ ${item.preco.toFixed(2).replace('.', ',')}%0A`;
+                mensagem += `   └─ Subtotal: R$ ${subtotal}%0A%0A`;
+            });
+            
+            mensagem += '═══════════════════%0A';
+            mensagem += `💰 TOTAL: R$ ${calcularTotal().toFixed(2).replace('.', ',')}%0A%0A`;
+            mensagem += 'Olá! Gostaria de confirmar este pedido. Aguardo retorno! ✨';
+            
+            // ✅ Mostra mensagem de confirmação pro cliente
+            const aviso = document.getElementById('avisoPedido');
+            aviso.style.display = 'block';
+            aviso.classList.add('mostrar');
+            setTimeout(() => { aviso.classList.remove('mostrar'); aviso.style.display = 'none'; }, 4000);
+            
             window.open(`https://wa.me/${WHATSAPP}?text=${mensagem}`, '_blank');
         };
         criarBrasas();
