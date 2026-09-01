@@ -37,7 +37,7 @@
         .config-bloco h4 { color: #50ff90; font-size: .95rem; margin-bottom: 15px; text-align: center; }
         .config-linha { display: grid; gap: 12px; }
         .grupo { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 6px color: #d0a0a0; font-size: .85rem; }
+        label { display: block; margin-bottom: 6px; color: #d0a0a0; font-size: .85rem; }
         input, textarea { width: 100%; padding: 10px; background: rgba(5,0,0,.6); border: 1px solid rgba(150,30,30,.3); color: #fff; border-radius: 4px; font-size: .95rem; }
         input:focus { outline: none; border-color: #ff4040; box-shadow: 0 0 8px rgba(255,40,40,.2); }
         .img-preview { max-width: 150px; max-height: 150px; margin-top: 10px; border-radius: 4px; display: none; object-fit: cover; }
@@ -73,6 +73,8 @@
         .linha-botoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; justify-content: center; }
         .vazio { grid-column: 1/-1; text-align: center; padding: 40px; color: #705050; font-style: italic; }
         .dica { font-size: .78rem; color: #775555; margin-top: 4px; display: block; }
+        .confirmacao { background: rgba(144,16,16,.15); border: 1px solid rgba(255,60,60,.3); padding: 10px; margin-top: 10px; border-radius: 4px; display: none; }
+        .confirmacao.visivel { display: block; }
     </style>
 </head>
 <body>
@@ -187,7 +189,7 @@
     <div class="conteudo-pagina" id="pagina-publicar">
         <h2>🚀 Publicar</h2>
         <div class="form-bloco" style="text-align:center;">
-            <p style="color:#907070;margin:15px 0;">Imagens → vão sozinhas para pasta "imagens/" ✅<br>Dados → atualizam JSON sozinhos ✅</p>
+            <p style="color:#907070;margin:15px 0;">Imagens → vão sozinhas para pasta "imagens/" ✅<br>Dados → ADICIONA sem apagar os antigos ✅</p>
             <div class="linha-botoes">
                 <button class="sucesso" onclick="publicarTudo()" style="font-size:1.1rem;padding:15px 30px;">🚀 PUBLICAR TUDO!</button>
             </div>
@@ -197,6 +199,34 @@
 <script>
     const SENHA_CONFIG = '968574';
     let trabalhos = [], produtos = [], arquivosImagens = [];
+    
+    // 📂 CARREGA OS DADOS ANTIGOS DIRETO DO GITHUB — NÃO PERDE NADA!
+    async function carregarDadosDoGitHub() {
+        const cfg = getConfig();
+        if (!cfg) return;
+        try {
+            // Carrega TRABALHOS já salvos
+            const rT = await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/trabalhos.json?ref=${cfg.branch}`);
+            if (rT.ok) {
+                const dT = await rT.json();
+                const conteudo = JSON.parse(atob(dT.content));
+                trabalhos = conteudo;
+                salvarLocal();
+                renderizarTrabalhos();
+            }
+            // Carrega PRODUTOS já salvos
+            const rP = await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/produtos.json?ref=${cfg.branch}`);
+            if (rP.ok) {
+                const dP = await rP.json();
+                const conteudo = JSON.parse(atob(dP.content));
+                produtos = conteudo;
+                salvarLocal();
+                renderizarProdutos();
+            }
+        } catch(e) {
+            console.log('Nenhum dado antigo encontrado ou ainda vazio — tudo certo!');
+        }
+    }
 
     function abrirMenu() {
         document.getElementById('menuFundo').classList.add('aberto');
@@ -213,7 +243,6 @@
         document.querySelectorAll('.conteudo-pagina').forEach(p => p.classList.remove('visivel'));
         document.getElementById(`pagina-${nome}`).classList.add('visivel');
     }
-
     function abrirModalSenha() {
         fecharMenu();
         document.getElementById('modalSenha').classList.add('aberto');
@@ -230,7 +259,6 @@
         }
     }
     function fecharConfig() { document.getElementById('areaConfig').classList.remove('visivel'); }
-
     function previewImagem(input, idImg) {
         if (input.files && input.files[0]) {
             const arq = input.files[0];
@@ -243,7 +271,6 @@
             input.arquivo = arq;
         }
     }
-
     function salvarConfig() {
         const cfg = {
             usuario: document.getElementById('gitUsuario').value.trim(),
@@ -254,7 +281,8 @@
         if (!cfg.usuario || !cfg.repo || !cfg.token) return mostrarStatus('Preencha tudo!', 'aviso');
         localStorage.setItem('gitConfig', JSON.stringify(cfg));
         document.getElementById('configSalva').style.display = 'block';
-        mostrarStatus('✅ Salvo!', 'sucesso');
+        mostrarStatus('✅ Salvo! Carregando dados antigos...', 'aviso');
+        setTimeout(() => { carregarDadosDoGitHub(); }, 1000);
     }
     function carregarConfig() {
         const s = localStorage.getItem('gitConfig'); if (!s) return;
@@ -265,32 +293,30 @@
         document.getElementById('gitBranch').value = c.branch || 'main';
     }
     function getConfig() { const s = localStorage.getItem('gitConfig'); return s ? JSON.parse(s) : null; }
-
-    // 📢 MENSAGENS DE STATUS — FICAM VISÍVEIS POR 10 SEGUNDOS
+    
+    // 📢 MENSAGENS DE STATUS
     function mostrarStatus(t, tipo='aviso') {
         const el = document.getElementById('statusMsg');
         el.textContent = t; 
         el.className = 'status ' + tipo;
         el.style.display = 'block';
-        // Tira a mensagem depois de 10 segundos
         clearTimeout(window.temporizadorStatus);
         window.temporizadorStatus = setTimeout(() => {
             el.style.display = 'none';
-        }, 10000);
+        }, 12000);
     }
 
-    // 🎭 TRABALHOS — COM PONTO AUTOMÁTICO!
+    // 🎭 TRABALHOS — ADICIONA SEM APAGAR OS ANTIGOS!
     function adicionarTrabalho() {
         const arqImg = document.getElementById('trabalhoArquivoImg').arquivo;
         const titulo = document.getElementById('trabalhoTitulo').value.trim();
         const desc = document.getElementById('trabalhoDesc').value.trim();
         if (!arqImg || !titulo || !desc) return mostrarStatus('Imagem + título + descrição!', 'aviso');
-        // ✅ PONTO ADICIONADO AUTOMATICAMENTE!
         const caminho = './imagens/' + arqImg.name;
         trabalhos.push({ id: Date.now(), foto: caminho, titulo, descricao: desc });
         arquivosImagens.push({ caminho: 'imagens/' + arqImg.name, arquivo: arqImg });
         renderizarTrabalhos(); limparCamposTrab(); salvarLocal();
-        mostrarStatus('✅ Card criado!', 'sucesso');
+        mostrarStatus('✅ Card criado! Publique para salvar!', 'sucesso');
     }
     function limparCamposTrab() {
         document.getElementById('trabalhoArquivoImg').value = '';
@@ -312,21 +338,25 @@
                 </div>
             </div>`);
     }
-    function excluirTrab(id) { trabalhos = trabalhos.filter(t=>t.id!==id); renderizarTrabalhos(); salvarLocal(); }
+    function excluirTrab(id) {
+        if (!confirm('Tem certeza que deseja excluir este card?')) return;
+        trabalhos = trabalhos.filter(t=>t.id!==id);
+        renderizarTrabalhos(); salvarLocal();
+        mostrarStatus('✅ Excluído! Publique para atualizar.', 'sucesso');
+    }
 
-    // 🛒 PRODUTOS / LOJA — COM PONTO AUTOMÁTICO!
+    // 🛒 PRODUTOS / LOJA — ADICIONA SEM APAGAR OS ANTIGOS!
     function adicionarProduto() {
         const arqImg = document.getElementById('produtoArquivoImg').arquivo;
         const titulo = document.getElementById('produtoTitulo').value.trim();
         const desc = document.getElementById('produtoDesc').value.trim();
         const preco = parseFloat(document.getElementById('produtoPreco').value);
         if (!arqImg || !titulo || !desc || isNaN(preco)) return mostrarStatus('Preencha tudo!', 'aviso');
-        // ✅ PONTO ADICIONADO AUTOMATICAMENTE!
         const caminho = './imagens/' + arqImg.name;
         produtos.push({ id: Date.now(), foto: caminho, titulo, descricao: desc, preco });
         arquivosImagens.push({ caminho: 'imagens/' + arqImg.name, arquivo: arqImg });
         renderizarProdutos(); limparCamposProd(); salvarLocal();
-        mostrarStatus('✅ Card criado!', 'sucesso');
+        mostrarStatus('✅ Card criado! Publique para salvar!', 'sucesso');
     }
     function limparCamposProd() {
         document.getElementById('produtoArquivoImg').value = '';
@@ -350,7 +380,12 @@
                 </div>
             </div>`);
     }
-    function excluirProd(id) { produtos = produtos.filter(p=>p.id!==id); renderizarProdutos(); salvarLocal(); }
+    function excluirProd(id) {
+        if (!confirm('Tem certeza que deseja excluir este produto?')) return;
+        produtos = produtos.filter(p=>p.id!==id);
+        renderizarProdutos(); salvarLocal();
+        mostrarStatus('✅ Excluído! Publique para atualizar.', 'sucesso');
+    }
 
     async function enviarArquivoGitHub(caminho, conteudoB64, msg) {
         const cfg = getConfig(); if (!cfg) throw new Error('Configure o GitHub!');
@@ -374,7 +409,7 @@
         });
     }
 
-    // 🚀 PUBLICAR — COM MENSAGENS DE SUCESSO E ERRO!
+    // 🚀 PUBLICAR — AGORA LÊ OS ANTIGOS E ADICIONA, NÃO SUBSTITUI!
     async function publicarTudo() {
         try {
             mostrarStatus('📤 Enviando imagens...', 'aviso');
@@ -382,18 +417,48 @@
                 await enviarArquivoGitHub(img.caminho, await arquivoParaBase64(img.arquivo), `Imagem: ${img.arquivo.name}`);
             }
             mostrarStatus('📤 Atualizando dados...', 'aviso');
-            const jsonT = JSON.stringify(trabalhos.map(t=>({foto:t.foto,titulo:t.titulo,descricao:t.descricao})), null, 2);
+
+            // ✅ LÊ OS DADOS ANTIGOS DO GITHUB E JUNTA COM OS NOVOS — NÃO APAGA NADA!
+            const cfg = getConfig();
+            let trabalhosFinais = [...trabalhos];
+            let produtosFinais = [...produtos];
+
+            try {
+                // Busca trabalhos antigos do GitHub
+                const rT = await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/trabalhos.json?ref=${cfg.branch}`);
+                if (rT.ok) {
+                    const dT = await rT.json();
+                    const antigos = JSON.parse(atob(dT.content));
+                    trabalhosFinais = [...antigos, ...trabalhos]; // JUNTA ANTIGOS + NOVOS
+                }
+                // Busca produtos antigos do GitHub
+                const rP = await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/produtos.json?ref=${cfg.branch}`);
+                if (rP.ok) {
+                    const dP = await rP.json();
+                    const antigosP = JSON.parse(atob(dP.content));
+                    produtosFinais = [...antigosP, ...produtos]; // JUNTA ANTIGOS + NOVOS
+                }
+            } catch(e) {
+                // Se não existir ainda, usa só os novos
+                console.log('Usando apenas os novos cadastros');
+            }
+
+            // ✅ SALVA TUDO JUNTO — ANTIGOS CONTINUAM, NOVOS ENTRAM!
+            const jsonT = JSON.stringify(trabalhosFinais.map(t=>({foto:t.foto,titulo:t.titulo,descricao:t.descricao})), null, 2);
             await enviarArquivoGitHub('dados/trabalhos.json', btoa(unescape(encodeURIComponent(jsonT))), 'Atualização Trabalhos');
-            const jsonP = JSON.stringify(produtos.map(p=>({foto:p.foto,titulo:p.titulo,descricao:p.descricao,preco:p.preco})), null, 2);
+            const jsonP = JSON.stringify(produtosFinais.map(p=>({foto:p.foto,titulo:p.titulo,descricao:p.descricao,preco:p.preco})), null, 2);
             await enviarArquivoGitHub('dados/produtos.json', btoa(unescape(encodeURIComponent(jsonP))), 'Atualização Produtos');
             
-            // ✅ MENSAGEM DE SUCESSO — VAI APARECER BEM GRANDE E BRILHANDO!
-            mostrarStatus('🎉 PUBLICAÇÃO FEITA COM SUCESSO! ✅', 'sucesso');
+            // ✅ SUCESSO!
+            mostrarStatus('🎉 PUBLICADO COM SUCESSO! ✅ Nada foi apagado!', 'sucesso');
             arquivosImagens = [];
+            trabalhos = [];
+            produtos = [];
+            salvarLocal();
+            setTimeout(() => { carregarDadosDoGitHub(); }, 2000); // Recarrega na hora!
             
         } catch(e) {
-            // ❌ MENSAGEM DE ERRO — VAI APARECER EM VERMELHO
-            mostrarStatus('❌ ERRO NA PUBLICAÇÃO: ' + e.message.substring(0,100), 'erro');
+            mostrarStatus('❌ ERRO: ' + e.message.substring(0,120), 'erro');
         }
     }
 
@@ -411,6 +476,8 @@
 
     carregarConfig();
     carregarLocal();
+    // ✅ Carrega dados antigos do GitHub automaticamente
+    setTimeout(() => { if (getConfig()) carregarDadosDoGitHub(); }, 1500);
 </script>
 </body>
 </html>
