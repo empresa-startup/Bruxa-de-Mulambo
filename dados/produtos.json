@@ -28,5 +28,11 @@
     "titulo": "vr",
     "descricao": "grgr",
     "preco": 52
+  },
+  {
+    "foto": "./imagens/Captura de tela 2026-08-31 200511.jpg",
+    "titulo": "xad",
+    "descricao": "xaxa",
+    "preco": 85
   }
 ]
