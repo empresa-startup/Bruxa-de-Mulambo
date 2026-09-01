@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>⚶ Bruxa de Mulambo — Painel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +17,6 @@
         .cabecalho { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(180deg, #1a1010, #0c0404); padding: 20px; z-index: 100; box-shadow: 0 2px 15px rgba(255,40,40,.1); border-bottom: 1px solid rgba(150,30,30,.3); }
         .cabecalho-conteudo { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: 'Cinzel Decorative', serif; color: #ff4040; font-size: 1.4rem; text-shadow: 0 0 10px rgba(255,40,40,.3); letter-spacing: 1px; }
-        
         .btn-sanduiche { background: none; border: none; color: #ff4040; font-size: 1.8rem; cursor: pointer; padding: 5px 10px; line-height: 1; }
         .btn-sanduiche:hover { color: #fff; }
         .menu-fundo { position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 150; display: none; }
@@ -23,15 +25,13 @@
         .menu-lateral.aberto { transform: translateX(0); }
         .menu-fechar { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #999; font-size: 1.5rem; cursor: pointer; }
         .menu-fechar:hover { color: #ff4040; }
-        
         .menu-item { display: block; width: 100%; padding: 15px; margin-bottom: 8px; background: linear-gradient(135deg, #2a1010, #1a0808); border: 1px solid rgba(150,30,30,.3); color: #b89090; border-radius: 6px; text-align: left; cursor: pointer; font-size: 1rem; transition: all .3s; }
         .menu-item:hover, .menu-item.ativa { background: linear-gradient(135deg, #901010, #b81818); color: #fff; border-color: #ff4040; box-shadow: 0 0 12px rgba(255,40,40,.25); }
-        .menu-config { margin-top:  30px; border-top: 1px dashed rgba(150,30,30,.3); padding-top: 20px; }
+        .menu-config { margin-top: 30px; border-top: 1px dashed rgba(150,30,30,.3); padding-top: 20px; }
         .modal-fundo { position: fixed; inset: 0; background: rgba(0,0,0,.85); display: none; align-items: center; justify-content: center; z-index: 999; }
         .modal-fundo.aberto { display: flex; }
         .modal { background: linear-gradient(180deg, #1a1010, #0c0404); border: 2px solid rgba(150,30,30,.4); border-radius: 8px; padding: 25px; max-width: 400px; width: 90%; box-shadow: 0 0 30px rgba(255,40,40,.15); }
         .modal h3 { font-family: 'Cinzel Decorative', serif; color: #ff4040; text-align: center; margin-bottom: 20px; }
-        .fechar { margin-top: 15px; width: 100%; background: linear-gradient(135deg, #444, #333); }
         .config-bloco { background: linear-gradient(180deg, rgba(20,12,8,.95), rgba(10,4,4,.98)); border: 2px solid rgba(60,255,120,.25); padding: 20px; border-radius: 8px; margin-bottom: 25px; display: none; }
         .config-bloco.visivel { display: block; }
         .config-bloco h4 { color: #50ff90; font-size: .95rem; margin-bottom: 15px; text-align: center; }
@@ -66,15 +66,10 @@
         .status.sucesso { background: rgba(16,144,64,.15); border-color: rgba(60,255,120,.4); color: #80ffb0; display: block; animation: brilhoSucesso 2s ease-in-out infinite alternate; }
         .status.erro { background: rgba(144,16,16,.15); border-color: rgba(255,60,60,.4); color: #ff8080; display: block; }
         .status.aviso { background: rgba(144,96,16,.15); border-color: rgba(255,180,60,.4); color: #ffd080; display: block; }
-        @keyframes brilhoSucesso {
-            0% { box-shadow: 0 0 5px rgba(60,255,120,.2); }
-            100% { box-shadow: 0 0 20px rgba(60,255,120,.4); }
-        }
+        @keyframes brilhoSucesso { 0% { box-shadow: 0 0 5px rgba(60,255,120,.2); } 100% { box-shadow: 0 0 20px rgba(60,255,120,.4); } }
         .linha-botoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; justify-content: center; }
         .vazio { grid-column: 1/-1; text-align: center; padding: 40px; color: #705050; font-style: italic; }
         .dica { font-size: .78rem; color: #775555; margin-top: 4px; display: block; }
-        .confirmacao { background: rgba(144,16,16,.15); border: 1px solid rgba(255,60,60,.3); padding: 10px; margin-top: 10px; border-radius: 4px; display: none; }
-        .confirmacao.visivel { display: block; }
     </style>
 </head>
 <body>
@@ -88,11 +83,9 @@
 <div class="menu-fundo" id="menuFundo" onclick="fecharMenu()"></div>
 <nav class="menu-lateral" id="menuLateral">
     <button class="menu-fechar" onclick="fecharMenu()">✕</button>
-    
     <button class="menu-item ativa" data-pagina="trabalhos" onclick="irParaPagina('trabalhos')">🎭 Trabalhos</button>
     <button class="menu-item" data-pagina="loja" onclick="irParaPagina('loja')">🛒 Loja</button>
     <button class="menu-item" data-pagina="publicar" onclick="irParaPagina('publicar')">🚀 Publicar</button>
-    
     <div class="menu-config">
         <button class="menu-item" onclick="abrirModalSenha()">⚙️ Configurações</button>
     </div>
@@ -112,23 +105,10 @@
         <div class="config-bloco" id="areaConfig">
             <h4>🔌 Conexão com GitHub</h4>
             <div class="config-linha">
-                <div class="grupo">
-                    <label>Usuário GitHub</label>
-                    <input type="text" id="gitUsuario" placeholder="seu-usuario">
-                </div>
-                <div class="grupo">
-                    <label>Repositório</label>
-                    <input type="text" id="gitRepo" value="bruxa-de-mulambo">
-                    <small class="dica">✅ Já preenchido: bruxa-de-mulambo</small>
-                </div>
-                <div class="grupo">
-                    <label>Token de Acesso</label>
-                    <input type="password" id="gitToken" placeholder="ghp_xxxxxxxxxxxx">
-                </div>
-                <div class="grupo">
-                    <label>Branch</label>
-                    <input type="text" id="gitBranch" value="main">
-                </div>
+                <div class="grupo"><label>Usuário GitHub</label><input type="text" id="gitUsuario" placeholder="seu-usuario"></div>
+                <div class="grupo"><label>Repositório</label><input type="text" id="gitRepo" value="bruxa-de-mulambo"></div>
+                <div class="grupo"><label>Token de Acesso</label><input type="password" id="gitToken" placeholder="ghp_xxxxxxxxxxxx"></div>
+                <div class="grupo"><label>Branch</label><input type="text" id="gitBranch" value="main"></div>
             </div>
             <div class="linha-botoes">
                 <button class="secundario" onclick="salvarConfig()">💾 Salvar</button>
@@ -148,14 +128,8 @@
                 <input type="file" id="trabalhoArquivoImg" accept="image/*" onchange="previewImagem(this, 'previewTrabalho')">
                 <img id="previewTrabalho" class="img-preview" alt="Pré-visualização">
             </div>
-            <div class="grupo">
-                <label>Título</label>
-                <input type="text" id="trabalhoTitulo" placeholder="Abertura de Caminhos">
-            </div>
-            <div class="grupo">
-                <label>Descrição</label>
-                <textarea id="trabalhoDesc" rows="2" placeholder="Remoção de obstáculos e abertura de estradas..."></textarea>
-            </div>
+            <div class="grupo"><label>Título</label><input type="text" id="trabalhoTitulo" placeholder="Abertura de Caminhos"></div>
+            <div class="grupo"><label>Descrição</label><textarea id="trabalhoDesc" rows="2" placeholder="Remoção de obstáculos..."></textarea></div>
             <button onclick="adicionarTrabalho()">➕ Criar Card</button>
         </div>
         <h3>Cards Cadastrados</h3>
@@ -169,18 +143,9 @@
                 <input type="file" id="produtoArquivoImg" accept="image/*" onchange="previewImagem(this, 'previewProduto')">
                 <img id="previewProduto" class="img-preview" alt="Pré-visualização">
             </div>
-            <div class="grupo">
-                <label>Título</label>
-                <input type="text" id="produtoTitulo" placeholder="Incenso de Exu — 7 Ervas">
-            </div>
-            <div class="grupo">
-                <label>Descrição</label>
-                <textarea id="produtoDesc" rows="2" placeholder="Limpeza energética e abertura de caminhos..."></textarea>
-            </div>
-            <div class="grupo">
-                <label>Preço R$</label>
-                <input type="number" step="0.01" id="produtoPreco" placeholder="39.90">
-            </div>
+            <div class="grupo"><label>Título</label><input type="text" id="produtoTitulo" placeholder="Incenso de Exu — 7 Ervas"></div>
+            <div class="grupo"><label>Descrição</label><textarea id="produtoDesc" rows="2" placeholder="Limpeza energética..."></textarea></div>
+            <div class="grupo"><label>Preço R$</label><input type="number" step="0.01" id="produtoPreco" placeholder="39.90"></div>
             <button onclick="adicionarProduto()">➕ Criar Card</button>
         </div>
         <h3>Cards Cadastrados</h3>
@@ -200,284 +165,64 @@
     const SENHA_CONFIG = '968574';
     let trabalhos = [], produtos = [], arquivosImagens = [];
     
-    // 📂 CARREGA OS DADOS ANTIGOS DIRETO DO GITHUB — NÃO PERDE NADA!
+    // ⚡ ANTI-CACHE: Sempre busca a versão mais recente
+    function urlAntiCache(url) {
+        const separador = url.includes('?') ? '&' : '?';
+        return url + separador + 't=' + Date.now() + Math.random();
+    }
+
+    // 📂 CARREGA DADOS ANTIGOS — NÃO PERDE NADA!
     async function carregarDadosDoGitHub() {
         const cfg = getConfig();
         if (!cfg) return;
         try {
-            // Carrega TRABALHOS já salvos
-            const rT = await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/trabalhos.json?ref=${cfg.branch}`);
+            const rT = await fetch(urlAntiCache(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/trabalhos.json?ref=${cfg.branch}`), {cache: 'no-store'});
             if (rT.ok) {
                 const dT = await rT.json();
-                const conteudo = JSON.parse(atob(dT.content));
-                trabalhos = conteudo;
-                salvarLocal();
-                renderizarTrabalhos();
+                trabalhos = JSON.parse(atob(dT.content));
+                salvarLocal(); renderizarTrabalhos();
             }
-            // Carrega PRODUTOS já salvos
-            const rP = await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/produtos.json?ref=${cfg.branch}`);
+            const rP = await fetch(urlAntiCache(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/produtos.json?ref=${cfg.branch}`), {cache: 'no-store'});
             if (rP.ok) {
                 const dP = await rP.json();
-                const conteudo = JSON.parse(atob(dP.content));
-                produtos = conteudo;
-                salvarLocal();
-                renderizarProdutos();
+                produtos = JSON.parse(atob(dP.content));
+                salvarLocal(); renderizarProdutos();
             }
-        } catch(e) {
-            console.log('Nenhum dado antigo encontrado ou ainda vazio — tudo certo!');
-        }
+        } catch(e) { console.log('Nenhum dado antigo. Tudo certo!'); }
     }
 
-    function abrirMenu() {
-        document.getElementById('menuFundo').classList.add('aberto');
-        document.getElementById('menuLateral').classList.add('aberto');
-    }
-    function fecharMenu() {
-        document.getElementById('menuFundo').classList.remove('aberto');
-        document.getElementById('menuLateral').classList.remove('aberto');
-    }
-    function irParaPagina(nome) {
-        fecharMenu();
-        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('ativa'));
-        document.querySelector(`.menu-item[data-pagina="${nome}"]`)?.classList.add('ativa');
-        document.querySelectorAll('.conteudo-pagina').forEach(p => p.classList.remove('visivel'));
-        document.getElementById(`pagina-${nome}`).classList.add('visivel');
-    }
-    function abrirModalSenha() {
-        fecharMenu();
-        document.getElementById('modalSenha').classList.add('aberto');
-        document.getElementById('inputSenha').value = '';
-        document.getElementById('erroSenha').style.display = 'none';
-        document.getElementById('areaConfig').classList.remove('visivel');
-    }
+    function abrirMenu() { document.getElementById('menuFundo').classList.add('aberto'); document.getElementById('menuLateral').classList.add('aberto'); }
+    function fecharMenu() { document.getElementById('menuFundo').classList.remove('aberto'); document.getElementById('menuLateral').classList.remove('aberto'); }
+    function irParaPagina(nome) { fecharMenu(); document.querySelectorAll('.menu-item').forEach(i=>i.classList.remove('ativa')); document.querySelector(`.menu-item[data-pagina="${nome}"]`)?.classList.add('ativa'); document.querySelectorAll('.conteudo-pagina').forEach(p=>p.classList.remove('visivel')); document.getElementById(`pagina-${nome}`).classList.add('visivel'); }
+    function abrirModalSenha() { fecharMenu(); document.getElementById('modalSenha').classList.add('aberto'); document.getElementById('inputSenha').value=''; document.getElementById('erroSenha').style.display='none'; document.getElementById('areaConfig').classList.remove('visivel'); }
     function fecharModalSenha() { document.getElementById('modalSenha').classList.remove('aberto'); }
-    function verificarSenha() {
-        if (document.getElementById('inputSenha').value === SENHA_CONFIG) {
-            document.getElementById('areaConfig').classList.add('visivel');
-        } else {
-            document.getElementById('erroSenha').style.display = 'block';
-        }
-    }
+    function verificarSenha() { if (document.getElementById('inputSenha').value === SENHA_CONFIG) { document.getElementById('areaConfig').classList.add('visivel'); } else { document.getElementById('erroSenha').style.display='block'; } }
     function fecharConfig() { document.getElementById('areaConfig').classList.remove('visivel'); }
-    function previewImagem(input, idImg) {
-        if (input.files && input.files[0]) {
-            const arq = input.files[0];
-            const leitor = new FileReader();
-            leitor.onload = e => {
-                document.getElementById(idImg).src = e.target.result;
-                document.getElementById(idImg).classList.add('visivel');
-            };
-            leitor.readAsDataURL(arq);
-            input.arquivo = arq;
-        }
-    }
-    function salvarConfig() {
-        const cfg = {
-            usuario: document.getElementById('gitUsuario').value.trim(),
-            repo: document.getElementById('gitRepo').value.trim(),
-            token: document.getElementById('gitToken').value.trim(),
-            branch: document.getElementById('gitBranch').value.trim() || 'main'
-        };
-        if (!cfg.usuario || !cfg.repo || !cfg.token) return mostrarStatus('Preencha tudo!', 'aviso');
-        localStorage.setItem('gitConfig', JSON.stringify(cfg));
-        document.getElementById('configSalva').style.display = 'block';
-        mostrarStatus('✅ Salvo! Carregando dados antigos...', 'aviso');
-        setTimeout(() => { carregarDadosDoGitHub(); }, 1000);
-    }
-    function carregarConfig() {
-        const s = localStorage.getItem('gitConfig'); if (!s) return;
-        const c = JSON.parse(s);
-        document.getElementById('gitUsuario').value = c.usuario;
-        document.getElementById('gitRepo').value = c.repo;
-        document.getElementById('gitToken').value = c.token;
-        document.getElementById('gitBranch').value = c.branch || 'main';
-    }
-    function getConfig() { const s = localStorage.getItem('gitConfig'); return s ? JSON.parse(s) : null; }
-    
-    // 📢 MENSAGENS DE STATUS
-    function mostrarStatus(t, tipo='aviso') {
-        const el = document.getElementById('statusMsg');
-        el.textContent = t; 
-        el.className = 'status ' + tipo;
-        el.style.display = 'block';
-        clearTimeout(window.temporizadorStatus);
-        window.temporizadorStatus = setTimeout(() => {
-            el.style.display = 'none';
-        }, 12000);
-    }
+    function previewImagem(input, idImg) { if (input.files && input.files[0]) { const arq=input.files[0]; const leitor=new FileReader(); leitor.onload=e=>{document.getElementById(idImg).src=e.target.result; document.getElementById(idImg).classList.add('visivel');}; leitor.readAsDataURL(arq); input.arquivo=arq; } }
+    function salvarConfig() { const cfg={usuario:document.getElementById('gitUsuario').value.trim(),repo:document.getElementById('gitRepo').value.trim(),token:document.getElementById('gitToken').value.trim(),branch:document.getElementById('gitBranch').value.trim()||'main'}; if(!cfg.usuario||!cfg.repo||!cfg.token) return mostrarStatus('Preencha tudo!','aviso'); localStorage.setItem('gitConfig',JSON.stringify(cfg)); document.getElementById('configSalva').style.display='block'; mostrarStatus('✅ Salvo! Carregando dados...','aviso'); setTimeout(()=>carregarDadosDoGitHub(),800); }
+    function carregarConfig() { const s=localStorage.getItem('gitConfig'); if(!s)return; const c=JSON.parse(s); document.getElementById('gitUsuario').value=c.usuario; document.getElementById('gitRepo').value=c.repo; document.getElementById('gitToken').value=c.token; document.getElementById('gitBranch').value=c.branch||'main'; }
+    function getConfig() { const s=localStorage.getItem('gitConfig'); return s?JSON.parse(s):null; }
+    function mostrarStatus(t,tipo='aviso') { const el=document.getElementById('statusMsg'); el.textContent=t; el.className='status '+tipo; el.style.display='block'; clearTimeout(window.temporizadorStatus); window.temporizadorStatus=setTimeout(()=>{el.style.display='none';},12000); }
 
-    // 🎭 TRABALHOS — ADICIONA SEM APAGAR OS ANTIGOS!
-    function adicionarTrabalho() {
-        const arqImg = document.getElementById('trabalhoArquivoImg').arquivo;
-        const titulo = document.getElementById('trabalhoTitulo').value.trim();
-        const desc = document.getElementById('trabalhoDesc').value.trim();
-        if (!arqImg || !titulo || !desc) return mostrarStatus('Imagem + título + descrição!', 'aviso');
-        const caminho = './imagens/' + arqImg.name;
-        trabalhos.push({ id: Date.now(), foto: caminho, titulo, descricao: desc });
-        arquivosImagens.push({ caminho: 'imagens/' + arqImg.name, arquivo: arqImg });
-        renderizarTrabalhos(); limparCamposTrab(); salvarLocal();
-        mostrarStatus('✅ Card criado! Publique para salvar!', 'sucesso');
-    }
-    function limparCamposTrab() {
-        document.getElementById('trabalhoArquivoImg').value = '';
-        document.getElementById('trabalhoTitulo').value = '';
-        document.getElementById('trabalhoDesc').value = '';
-        document.getElementById('previewTrabalho').classList.remove('visivel');
-    }
-    function renderizarTrabalhos() {
-        const el = document.getElementById('listaTrabalhos');
-        if (!trabalhos.length) { el.innerHTML='<p class="vazio">Nenhum cadastrado.</p>'; return; }
-        el.innerHTML = '';
-        trabalhos.forEach(t => el.innerHTML += `
-            <div class="item-card">
-                <img src="${t.foto}" class="item-imagem" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 150%22><rect fill=%22%232a1010%22 width=%22200%22 height=%22150%22/><text x=%22100%22 y=%2275%22 text-anchor=%22middle%22 fill=%22%23886666%22>Imagem</text></svg>'">
-                <div class="item-corpo">
-                    <h4 class="item-titulo">${t.titulo}</h4>
-                    <p class="item-desc">${t.descricao}</p>
-                    <div class="item-acoes"><button class="btn-excluir" onclick="excluirTrab(${t.id})">🗑️</button></div>
-                </div>
-            </div>`);
-    }
-    function excluirTrab(id) {
-        if (!confirm('Tem certeza que deseja excluir este card?')) return;
-        trabalhos = trabalhos.filter(t=>t.id!==id);
-        renderizarTrabalhos(); salvarLocal();
-        mostrarStatus('✅ Excluído! Publique para atualizar.', 'sucesso');
-    }
+    function adicionarTrabalho() { const arqImg=document.getElementById('trabalhoArquivoImg').arquivo; const titulo=document.getElementById('trabalhoTitulo').value.trim(); const desc=document.getElementById('trabalhoDesc').value.trim(); if(!arqImg||!titulo||!desc) return mostrarStatus('Imagem + título + descrição!','aviso'); const caminho='./imagens/'+arqImg.name; trabalhos.push({id:Date.now(),foto:caminho,titulo,descricao:desc}); arquivosImagens.push({caminho:'imagens/'+arqImg.name,arquivo:arqImg}); renderizarTrabalhos(); limparCamposTrab(); salvarLocal(); mostrarStatus('✅ Card criado! Publique!','sucesso'); }
+    function limparCamposTrab() { document.getElementById('trabalhoArquivoImg').value=''; document.getElementById('trabalhoTitulo').value=''; document.getElementById('trabalhoDesc').value=''; document.getElementById('previewTrabalho').classList.remove('visivel'); }
+    function renderizarTrabalhos() { const el=document.getElementById('listaTrabalhos'); if(!trabalhos.length){el.innerHTML='<p class="vazio">Nenhum cadastrado.</p>';return;} el.innerHTML=''; trabalhos.forEach(t=>el.innerHTML+=`<div class="item-card"><img src="${t.foto}" class="item-imagem" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 150%22><rect fill=%22%232a1010%22 width=%22200%22 height=%22150%22/><text x=%22100%22 y=%2275%22 text-anchor=%22middle%22 fill=%22%23886666%22>Imagem</text></svg>'"><div class="item-corpo"><h4 class="item-titulo">${t.titulo}</h4><p class="item-desc">${t.descricao}</p><div class="item-acoes"><button class="btn-excluir" onclick="excluirTrab(${t.id})">🗑️</button></div></div></div>`); }
+    function excluirTrab(id) { if(!confirm('Tem certeza que deseja excluir?'))return; trabalhos=trabalhos.filter(t=>t.id!==id); renderizarTrabalhos(); salvarLocal(); mostrarStatus('✅ Excluído! Publique!','sucesso'); }
 
-    // 🛒 PRODUTOS / LOJA — ADICIONA SEM APAGAR OS ANTIGOS!
-    function adicionarProduto() {
-        const arqImg = document.getElementById('produtoArquivoImg').arquivo;
-        const titulo = document.getElementById('produtoTitulo').value.trim();
-        const desc = document.getElementById('produtoDesc').value.trim();
-        const preco = parseFloat(document.getElementById('produtoPreco').value);
-        if (!arqImg || !titulo || !desc || isNaN(preco)) return mostrarStatus('Preencha tudo!', 'aviso');
-        const caminho = './imagens/' + arqImg.name;
-        produtos.push({ id: Date.now(), foto: caminho, titulo, descricao: desc, preco });
-        arquivosImagens.push({ caminho: 'imagens/' + arqImg.name, arquivo: arqImg });
-        renderizarProdutos(); limparCamposProd(); salvarLocal();
-        mostrarStatus('✅ Card criado! Publique para salvar!', 'sucesso');
-    }
-    function limparCamposProd() {
-        document.getElementById('produtoArquivoImg').value = '';
-        document.getElementById('produtoTitulo').value = '';
-        document.getElementById('produtoDesc').value = '';
-        document.getElementById('produtoPreco').value = '';
-        document.getElementById('previewProduto').classList.remove('visivel');
-    }
-    function renderizarProdutos() {
-        const el = document.getElementById('listaProdutos');
-        if (!produtos.length) { el.innerHTML='<p class="vazio">Nenhum cadastrado.</p>'; return; }
-        el.innerHTML = '';
-        produtos.forEach(p => el.innerHTML += `
-            <div class="item-card">
-                <img src="${p.foto}" class="item-imagem" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 150%22><rect fill=%22%232a1010%22 width=%22200%22 height=%22150%22/><text x=%22100%22 y=%2275%22 text-anchor=%22middle%22 fill=%22%23886666%22>Imagem</text></svg>'">
-                <div class="item-corpo">
-                    <h4 class="item-titulo">${p.titulo}</h4>
-                    <p class="item-desc">${p.descricao}</p>
-                    <p class="item-preco">R$ ${p.preco.toFixed(2)}</p>
-                    <div class="item-acoes"><button class="btn-excluir" onclick="excluirProd(${p.id})">🗑️</button></div>
-                </div>
-            </div>`);
-    }
-    function excluirProd(id) {
-        if (!confirm('Tem certeza que deseja excluir este produto?')) return;
-        produtos = produtos.filter(p=>p.id!==id);
-        renderizarProdutos(); salvarLocal();
-        mostrarStatus('✅ Excluído! Publique para atualizar.', 'sucesso');
-    }
+    function adicionarProduto() { const arqImg=document.getElementById('produtoArquivoImg').arquivo; const titulo=document.getElementById('produtoTitulo').value.trim(); const desc=document.getElementById('produtoDesc').value.trim(); const preco=parseFloat(document.getElementById('produtoPreco').value); if(!arqImg||!titulo||!desc||isNaN(preco)) return mostrarStatus('Preencha tudo!','aviso'); const caminho='./imagens/'+arqImg.name; produtos.push({id:Date.now(),foto:caminho,titulo,descricao:desc,preco}); arquivosImagens.push({caminho:'imagens/'+arqImg.name,arquivo:arqImg}); renderizarProdutos(); limparCamposProd(); salvarLocal(); mostrarStatus('✅ Card criado! Publique!','sucesso'); }
+    function limparCamposProd() { document.getElementById('produtoArquivoImg').value=''; document.getElementById('produtoTitulo').value=''; document.getElementById('produtoDesc').value=''; document.getElementById('produtoPreco').value=''; document.getElementById('previewProduto').classList.remove('visivel'); }
+    function renderizarProdutos() { const el=document.getElementById('listaProdutos'); if(!produtos.length){el.innerHTML='<p class="vazio">Nenhum cadastrado.</p>';return;} el.innerHTML=''; produtos.forEach(p=>el.innerHTML+=`<div class="item-card"><img src="${p.foto}" class="item-imagem" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 150%22><rect fill=%22%232a1010%22 width=%22200%22 height=%22150%22/><text x=%22100%22 y=%2275%22 text-anchor=%22middle%22 fill=%22%23886666%22>Imagem</text></svg>'"><div class="item-corpo"><h4 class="item-titulo">${p.titulo}</h4><p class="item-desc">${p.descricao}</p><p class="item-preco">R$ ${p.preco.toFixed(2)}</p><div class="item-acoes"><button class="btn-excluir" onclick="excluirProd(${p.id})">🗑️</button></div></div></div>`); }
+    function excluirProd(id) { if(!confirm('Tem certeza que deseja excluir?'))return; produtos=produtos.filter(p=>p.id!==id); renderizarProdutos(); salvarLocal(); mostrarStatus('✅ Excluído! Publique!','sucesso'); }
 
-    async function enviarArquivoGitHub(caminho, conteudoB64, msg) {
-        const cfg = getConfig(); if (!cfg) throw new Error('Configure o GitHub!');
-        let sha = null;
-        try {
-            const r = await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/${caminho}`, {headers:{Authorization:`token ${cfg.token}`}});
-            if (r.ok) sha = (await r.json()).sha;
-        } catch(e) {}
-        const res = await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/${caminho}`, {
-            method:'PUT', headers:{Authorization:`token ${cfg.token}`,'Content-Type':'application/json'},
-            body: JSON.stringify({message:msg, content:conteudoB64, sha, branch:cfg.branch})
-        });
-        if (!res.ok) throw new Error(await res.text());
-    }
-    function arquivoParaBase64(arq) {
-        return new Promise((res, rej) => {
-            const leitor = new FileReader();
-            leitor.onload = e => res(e.target.result.split(',')[1]);
-            leitor.onerror = rej;
-            leitor.readAsDataURL(arq);
-        });
-    }
+    async function enviarArquivoGitHub(caminho, conteudoB64, msg) { const cfg=getConfig(); if(!cfg)throw new Error('Configure o GitHub!'); let sha=null; try{const r=await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/${caminho}`,{headers:{Authorization:`token ${cfg.token}`}}); if(r.ok)sha=(await r.json()).sha;}catch(e){} const res=await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/${caminho}`,{method:'PUT',headers:{Authorization:`token ${cfg.token}`,'Content-Type':'application/json'},body:JSON.stringify({message:msg,content:conteudoB64,sha,branch:cfg.branch})}); if(!res.ok)throw new Error(await res.text()); }
+    function arquivoParaBase64(arq) { return new Promise((res,rej)=>{const leitor=new FileReader(); leitor.onload=e=>res(e.target.result.split(',')[1]); leitor.onerror=rej; leitor.readAsDataURL(arq);}); }
 
-    // 🚀 PUBLICAR — AGORA LÊ OS ANTIGOS E ADICIONA, NÃO SUBSTITUI!
-    async function publicarTudo() {
-        try {
-            mostrarStatus('📤 Enviando imagens...', 'aviso');
-            for (const img of arquivosImagens) {
-                await enviarArquivoGitHub(img.caminho, await arquivoParaBase64(img.arquivo), `Imagem: ${img.arquivo.name}`);
-            }
-            mostrarStatus('📤 Atualizando dados...', 'aviso');
+    // 🚀 PUBLICA — JUNTA ANTIGOS + NOVOS, NÃO APAGA NADA!
+    async function publicarTudo() { try { mostrarStatus('📤 Enviando imagens...','aviso'); for(const img of arquivosImagens){await enviarArquivoGitHub(img.caminho,await arquivoParaBase64(img.arquivo),`Imagem: ${img.arquivo.name}`);} mostrarStatus('📤 Atualizando dados...','aviso'); const cfg=getConfig(); let trabalhosFinais=[...trabalhos]; let produtosFinais=[...produtos]; try{const rT=await fetch(urlAntiCache(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/trabalhos.json?ref=${cfg.branch}`),{cache:'no-store'}); if(rT.ok){const dT=await rT.json(); trabalhosFinais=[...JSON.parse(atob(dT.content)),...trabalhos];} const rP=await fetch(urlAntiCache(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/produtos.json?ref=${cfg.branch}`),{cache:'no-store'}); if(rP.ok){const dP=await rP.json(); produtosFinais=[...JSON.parse(atob(dP.content)),...produtos];}}catch(e){} const jsonT=JSON.stringify(trabalhosFinais.map(t=>({foto:t.foto,titulo:t.titulo,descricao:t.descricao})),null,2); await enviarArquivoGitHub('dados/trabalhos.json',btoa(unescape(encodeURIComponent(jsonT))),'Atualização Trabalhos'); const jsonP=JSON.stringify(produtosFinais.map(p=>({foto:p.foto,titulo:p.titulo,descricao:p.descricao,preco:p.preco})),null,2); await enviarArquivoGitHub('dados/produtos.json',btoa(unescape(encodeURIComponent(jsonP))),'Atualização Produtos'); mostrarStatus('✅ PUBLICADO COM SUCESSO! Atualizando em 2s...','sucesso'); arquivosImagens=[]; trabalhos=[]; produtos=[]; salvarLocal(); setTimeout(()=>carregarDadosDoGitHub(),2000); }catch(e){mostrarStatus('❌ ERRO: '+e.message.substring(0,120),'erro');}}
 
-            // ✅ LÊ OS DADOS ANTIGOS DO GITHUB E JUNTA COM OS NOVOS — NÃO APAGA NADA!
-            const cfg = getConfig();
-            let trabalhosFinais = [...trabalhos];
-            let produtosFinais = [...produtos];
-
-            try {
-                // Busca trabalhos antigos do GitHub
-                const rT = await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/trabalhos.json?ref=${cfg.branch}`);
-                if (rT.ok) {
-                    const dT = await rT.json();
-                    const antigos = JSON.parse(atob(dT.content));
-                    trabalhosFinais = [...antigos, ...trabalhos]; // JUNTA ANTIGOS + NOVOS
-                }
-                // Busca produtos antigos do GitHub
-                const rP = await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/produtos.json?ref=${cfg.branch}`);
-                if (rP.ok) {
-                    const dP = await rP.json();
-                    const antigosP = JSON.parse(atob(dP.content));
-                    produtosFinais = [...antigosP, ...produtos]; // JUNTA ANTIGOS + NOVOS
-                }
-            } catch(e) {
-                // Se não existir ainda, usa só os novos
-                console.log('Usando apenas os novos cadastros');
-            }
-
-            // ✅ SALVA TUDO JUNTO — ANTIGOS CONTINUAM, NOVOS ENTRAM!
-            const jsonT = JSON.stringify(trabalhosFinais.map(t=>({foto:t.foto,titulo:t.titulo,descricao:t.descricao})), null, 2);
-            await enviarArquivoGitHub('dados/trabalhos.json', btoa(unescape(encodeURIComponent(jsonT))), 'Atualização Trabalhos');
-            const jsonP = JSON.stringify(produtosFinais.map(p=>({foto:p.foto,titulo:p.titulo,descricao:p.descricao,preco:p.preco})), null, 2);
-            await enviarArquivoGitHub('dados/produtos.json', btoa(unescape(encodeURIComponent(jsonP))), 'Atualização Produtos');
-            
-            // ✅ SUCESSO!
-            mostrarStatus('🎉 PUBLICADO COM SUCESSO! ✅ Nada foi apagado!', 'sucesso');
-            arquivosImagens = [];
-            trabalhos = [];
-            produtos = [];
-            salvarLocal();
-            setTimeout(() => { carregarDadosDoGitHub(); }, 2000); // Recarrega na hora!
-            
-        } catch(e) {
-            mostrarStatus('❌ ERRO: ' + e.message.substring(0,120), 'erro');
-        }
-    }
-
-    function salvarLocal() {
-        localStorage.setItem('painel_trabalhos', JSON.stringify(trabalhos));
-        localStorage.setItem('painel_produtos', JSON.stringify(produtos));
-    }
-    function carregarLocal() {
-        const t = localStorage.getItem('painel_trabalhos');
-        const p = localStorage.getItem('painel_produtos');
-        if (t) trabalhos = JSON.parse(t);
-        if (p) produtos = JSON.parse(p);
-        renderizarTrabalhos(); renderizarProdutos();
-    }
-
-    carregarConfig();
-    carregarLocal();
-    // ✅ Carrega dados antigos do GitHub automaticamente
-    setTimeout(() => { if (getConfig()) carregarDadosDoGitHub(); }, 1500);
+    function salvarLocal() { localStorage.setItem('painel_trabalhos',JSON.stringify(trabalhos)); localStorage.setItem('painel_produtos',JSON.stringify(produtos)); }
+    function carregarLocal() { const t=localStorage.getItem('painel_trabalhos'); const p=localStorage.getItem('painel_produtos'); if(t)trabalhos=JSON.parse(t); if(p)produtos=JSON.parse(p); renderizarTrabalhos(); renderizarProdutos(); }
+    carregarConfig(); carregarLocal(); setTimeout(()=>{if(getConfig())carregarDadosDoGitHub();},1500);
 </script>
 </body>
 </html>
