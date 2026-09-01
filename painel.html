@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cinzel', serif; }
         body { background: #0c0404; color: #e0c8c8; min-height: 100vh; padding: 100px 20px 40px; }
@@ -52,6 +53,7 @@
         button.sucesso { background: linear-gradient(135deg, #109040, #18b858); border-color: rgba(60,255,120,.4); }
         button.sucesso:hover { box-shadow: 0 0 15px rgba(60,255,120,.25); }
         button.secundario { background: linear-gradient(135deg, #3a3a3a, #2a2a2a); }
+        button.pequeno { padding: 6px 10px; font-size: .8rem; }
         .lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; margin-top: 20px; }
         .item-card { background: linear-gradient(180deg, rgba(25,8,8,.95), rgba(10,2,2,.98)); border: 1px solid rgba(150,30,30,.3); border-radius: 6px; overflow: hidden; }
         .item-imagem { width: 100%; height: 150px; object-fit: cover; background: #1a0808; }
@@ -70,6 +72,27 @@
         .linha-botoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; justify-content: center; }
         .vazio { grid-column: 1/-1; text-align: center; padding: 40px; color: #705050; font-style: italic; }
         .dica { font-size: .78rem; color: #775555; margin-top: 4px; display: block; }
+        
+        /* 📊 ESTILOS NOVOS — AGENDAMENTOS E GRÁFICOS */
+        .agendamento-card { background: linear-gradient(180deg, rgba(20,12,8,.95), rgba(10,4,4,.98)); border: 1px solid rgba(150,30,30,.3); border-radius: 8px; padding: 18px; margin-bottom: 15px; }
+        .agendamento-card.lida { opacity: 0.65; border-style: dashed; }
+        .agendamento-titulo { color: #ff6060; font-weight: bold; margin-bottom: 8px; font-size: 1rem; }
+        .agendamento-dados { font-size: .88rem; color: #b09090; line-height: 1.7; }
+        .agendamento-dados span { color: #ffdd88; }
+        .graficos-grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 25px; }
+        .grafico-caixa { background: linear-gradient(180deg, rgba(25,8,8,.95), rgba(10,2,2,.98)); border: 1px solid rgba(150,30,30,.3); border-radius: 8px; padding: 20px; }
+        canvas { max-height: 300px; }
+        .sem-dados { text-align: center; padding: 40px; color: #705050; font-style: italic; }
+        .filtros { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .filtros button { padding: 6px 12px; font-size: .85rem; background: linear-gradient(135deg, #2a2a2a, #1a1a1a); }
+        .filtros button.ativo { background: linear-gradient(135deg, #901010, #b81818); }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: .75rem; margin-left: 8px; }
+        .badge-pendente { background: rgba(180,60,60,.3); color: #ff9090; }
+        .badge-lida { background: rgba(60,180,100,.3); color: #90ffb0; }
+        
+        @media (max-width: 600px) {
+            .graficos-grade { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -85,6 +108,8 @@
     <button class="menu-fechar" onclick="fecharMenu()">✕</button>
     <button class="menu-item ativa" data-pagina="trabalhos" onclick="irParaPagina('trabalhos')">🎭 Trabalhos</button>
     <button class="menu-item" data-pagina="loja" onclick="irParaPagina('loja')">🛒 Loja</button>
+    <button class="menu-item" data-pagina="agendamentos" onclick="irParaPagina('agendamentos')">📋 Agendamentos</button>
+    <button class="menu-item" data-pagina="estatisticas" onclick="irParaPagina('estatisticas')">📊 Estatísticas</button>
     <button class="menu-item" data-pagina="publicar" onclick="irParaPagina('publicar')">🚀 Publicar</button>
     <div class="menu-config">
         <button class="menu-item" onclick="abrirModalSenha()">⚙️ Configurações</button>
@@ -120,6 +145,8 @@
 </div>
 <div class="container">
     <div id="statusMsg" class="status"></div>
+
+    <!-- 🎭 PÁGINA TRABALHOS — ORIGINAL -->
     <div class="conteudo-pagina visivel" id="pagina-trabalhos">
         <h2>🎭 Trabalhos / Rituais</h2>
         <div class="form-bloco">
@@ -135,6 +162,8 @@
         <h3>Cards Cadastrados</h3>
         <div class="lista" id="listaTrabalhos"><p class="vazio">Nenhum cadastrado.</p></div>
     </div>
+
+    <!-- 🛒 PÁGINA LOJA — ORIGINAL -->
     <div class="conteudo-pagina" id="pagina-loja">
         <h2>🛒 Loja</h2>
         <div class="form-bloco">
@@ -151,6 +180,40 @@
         <h3>Cards Cadastrados</h3>
         <div class="lista" id="listaProdutos"><p class="vazio">Nenhum cadastrado.</p></div>
     </div>
+
+    <!-- 📋 PÁGINA AGENDAMENTOS — NOVA! LÊ DO FIREBASE -->
+    <div class="conteudo-pagina" id="pagina-agendamentos">
+        <h2>📋 Agendamentos Recebidos</h2>
+        <div class="form-bloco" style="background: rgba(20,15,10,.6);">
+            <div class="filtros">
+                <button class="ativo" onclick="filtrarAgendamentos('todos')">Todos</button>
+                <button onclick="filtrarAgendamentos('pendente')">🔴 Pendentes</button>
+                <button onclick="filtrarAgendamentos('lida')">✅ Lidos</button>
+            </div>
+            <div id="listaAgendamentos">
+                <p class="sem-dados">Carregando agendamentos...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📊 PÁGINA ESTATÍSTICAS — NOVA! DOIS GRÁFICOS -->
+    <div class="conteudo-pagina" id="pagina-estatisticas">
+        <h2>📊 Estatísticas</h2>
+        <div class="graficos-grade">
+            <div class="grafico-caixa">
+                <h3>🔥 Trabalhos Mais Solicitados</h3>
+                <canvas id="graficoTrabalhos"></canvas>
+                <p style="text-align:center;font-size:.8rem;color:#886666;margin-top:8px;">Origem: Firebase (Agendamentos)</p>
+            </div>
+            <div class="grafico-caixa">
+                <h3>💰 Produtos Cadastrados</h3>
+                <canvas id="graficoProdutos"></canvas>
+                <p style="text-align:center;font-size:.8rem;color:#886666;margin-top:8px;">Origem: JSON (GitHub)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🚀 PÁGINA PUBLICAR — ORIGINAL -->
     <div class="conteudo-pagina" id="pagina-publicar">
         <h2>🚀 Publicar</h2>
         <div class="form-bloco" style="text-align:center;">
@@ -161,17 +224,40 @@
         </div>
     </div>
 </div>
+
+<!-- 🔥 FIREBASE CONECTADO -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
 <script>
+    // 🔥 FIREBASE — JÁ CONFIGURADO
+    const firebaseConfig = {
+        apiKey: "AIzaSyBROXsW_Eaer_9suDCiWS6-iOT0E_-Bgkk",
+        authDomain: "bruxa-de-mulambo.firebaseapp.com",
+        databaseURL: "https://bruxa-de-mulambo-default-rtdb.firebaseio.com",
+        projectId: "bruxa-de-mulambo",
+        storageBucket: "bruxa-de-mulambo.firebasestorage.app",
+        messagingSenderId: "1047663203212",
+        appId: "1:1047663203212:web:c22645867a36104276fca9",
+        measurementId: "G-362SXB7FR7"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
     const SENHA_CONFIG = '968574';
     let trabalhos = [], produtos = [], arquivosImagens = [];
-    
-    // ⚡ ANTI-CACHE: Sempre busca a versão mais recente
+    let agendamentos = [];
+    let filtroAtual = 'todos';
+    let graficoTrabalhosObj = null;
+    let graficoProdutosObj = null;
+
+    // ⚡ ANTI-CACHE
     function urlAntiCache(url) {
         const separador = url.includes('?') ? '&' : '?';
         return url + separador + 't=' + Date.now() + Math.random();
     }
 
-    // 📂 CARREGA DADOS ANTIGOS — NÃO PERDE NADA!
+    // 📂 CARREGA DADOS DO GITHUB (trabalhos e produtos)
     async function carregarDadosDoGitHub() {
         const cfg = getConfig();
         if (!cfg) return;
@@ -187,13 +273,157 @@
                 const dP = await rP.json();
                 produtos = JSON.parse(atob(dP.content));
                 salvarLocal(); renderizarProdutos();
+                setTimeout(()=>desenharGraficoProdutos(), 300);
             }
         } catch(e) { console.log('Nenhum dado antigo. Tudo certo!'); }
     }
 
+    // 📋 CARREGA AGENDAMENTOS DO FIREBASE
+    function carregarAgendamentos() {
+        db.ref('agendamentos').on('value', (snap) => {
+            const dados = snap.val();
+            agendamentos = dados ? Object.entries(dados).map(([id, val]) => ({id, ...val})).reverse() : [];
+            renderizarAgendamentos();
+            setTimeout(()=>desenharGraficoTrabalhosSolicitados(), 300);
+        });
+    }
+
+    // 📋 RENDERIZA LISTA DE AGENDAMENTOS
+    function renderizarAgendamentos() {
+        const el = document.getElementById('listaAgendamentos');
+        const filtrados = filtroAtual === 'todos' ? agendamentos : agendamentos.filter(a => a.lida === (filtroAtual==='lida'));
+        
+        if(!filtrados.length){
+            el.innerHTML = '<p class="sem-dados">Nenhum agendamento encontrado.</p>';
+            return;
+        }
+        
+        el.innerHTML = filtrados.map(a => `
+            <div class="agendamento-card ${a.lida ? 'lida' : ''}">
+                <div class="agendamento-titulo">
+                    ${a.trabalho || 'Atendimento'}
+                    <span class="badge ${a.lida ? 'badge-lida' : 'badge-pendente'}">${a.lida ? '✅ Lida' : '🔴 Pendente'}</span>
+                </div>
+                <div class="agendamento-dados">
+                    <span>Nome:</span> ${a.nome} ${a.nomePreferido !== '(não informado)' ? `«${a.nomePreferido}»` : ''}<br>
+                    <span>Telefone:</span> ${a.telefone}<br>
+                    <span>Data:</span> ${a.dataTexto} às ${a.horario}<br>
+                    <span>Atendimento:</span> ${a.tipo==='presencial'?'🏠 Presencial':'📱 WhatsApp'}<br>
+                    <span>Descrição:</span> ${a.descricao}<br>
+                    <span>Recebido em:</span> ${a.dataEnvio ? new Date(a.dataEnvio).toLocaleString('pt-BR') : '—'}
+                </div>
+                <div class="linha-botoes" style="justify-content:flex-start;margin-top:12px;">
+                    ${a.lida 
+                        ? `<button class="pequeno" onclick="marcarComoNaoLida('${a.id}')">🔄 Marcar como pendente</button>`
+                        : `<button class="sucesso pequeno" onclick="marcarComoLida('${a.id}')">✅ Marcar como lida</button>`
+                    }
+                    <button class="pequeno" onclick="contatarWhatsapp('${a.telefone}', \`${a.nome}\`, \`${a.trabalho}\`, \`${a.dataTexto} às ${a.horario}\`)">💱 WhatsApp</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function filtrarAgendamentos(modo) {
+        filtroAtual = modo;
+        document.querySelectorAll('.filtros button').forEach(b=>b.classList.remove('ativa'));
+        event.target.classList.add('ativa');
+        renderizarAgendamentos();
+    }
+
+    async function marcarComoLida(id) {
+        await db.ref('agendamentos/'+id).update({lida: true});
+    }
+    async function marcarComoNaoLida(id) {
+        await db.ref('agendamentos/'+id).update({lida: false});
+    }
+
+    function contatarWhatsapp(tel, nome, trab, data) {
+        const numero = tel.replace(/\D/g,'');
+        const mensagem = encodeURIComponent(`Olá ${nome}! Recebemos seu agendamento${trab ? ` para ${trab}` : ''} em ${data}. Vamos confirmar?`);
+        window.open(`https://wa.me/55${numero}?text=${mensagem}`, '_blank');
+    }
+
+    // 📊 GRÁFICO 1 — TRABALHOS MAIS SOLICITADOS (do Firebase)
+    function desenharGraficoTrabalhosSolicitados() {
+        const contagem = {};
+        agendamentos.forEach(a => {
+            const nome = a.trabalho || 'Atendimento Geral';
+            contagem[nome] = (contagem[nome] || 0) + 1;
+        });
+        
+        const labels = Object.keys(contagem);
+        const valores = Object.values(contagem);
+        const cores = ['#ff4444','#ff8822','#ffcc22','#88cc22','#22cc88','#22aadd','#8866dd','#cc44dd'];
+
+        if(graficoTrabalhosObj) graficoTrabalhosObj.destroy();
+        const ctx = document.getElementById('graficoTrabalhos').getContext('2d');
+        graficoTrabalhosObj = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Quantidade de Agendamentos',
+                    data: valores,
+                    backgroundColor: cores.slice(0, labels.length),
+                    borderWidth: 0,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { ticks: { color: '#b09090' }, grid: { color: 'rgba(150,30,30,.1)' }, beginAtZero: true, ticks:{stepSize:1} },
+                    x: { ticks: { color: '#b09090', font:{size:10} }, grid: { display:false } }
+                }
+            }
+        });
+    }
+
+    // 📈 GRÁFICO 2 — PRODUTOS CADASTRADOS (do JSON/GitHub)
+    function desenharGraficoProdutos() {
+        const nomes = produtos.map(p => p.titulo.substring(0,20));
+        const valores = produtos.map(() => 1); // cada produto = 1 unidade cadastrada
+        const cores = ['#50ff90','#40dd70','#30bb60','#209950','#107740','#22aadd','#8866dd','#cc44dd'];
+
+        if(graficoProdutosObj) graficoProdutosObj.destroy();
+        const ctx = document.getElementById('graficoProdutos').getContext('2d');
+        graficoProdutosObj = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: nomes.length ? nomes : ['Sem produtos'],
+                datasets: [{
+                    label: 'Produtos Cadastrados',
+                    data: nomes.length ? valores : [1],
+                    backgroundColor: nomes.length ? cores.slice(0, nomes.length) : ['#443333'],
+                    borderWidth: 2,
+                    borderColor: '#0c0404'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#b09090', font:{size:10}, boxWidth:12, padding:12 } }
+                }
+            }
+        });
+    }
+
+    // === RESTO DO CÓDIGO — CONTINUA EXATAMENTE IGUAL ===
     function abrirMenu() { document.getElementById('menuFundo').classList.add('aberto'); document.getElementById('menuLateral').classList.add('aberto'); }
     function fecharMenu() { document.getElementById('menuFundo').classList.remove('aberto'); document.getElementById('menuLateral').classList.remove('aberto'); }
-    function irParaPagina(nome) { fecharMenu(); document.querySelectorAll('.menu-item').forEach(i=>i.classList.remove('ativa')); document.querySelector(`.menu-item[data-pagina="${nome}"]`)?.classList.add('ativa'); document.querySelectorAll('.conteudo-pagina').forEach(p=>p.classList.remove('visivel')); document.getElementById(`pagina-${nome}`).classList.add('visivel'); }
+    function irParaPagina(nome) {
+        fecharMenu();
+        document.querySelectorAll('.menu-item').forEach(i=>i.classList.remove('ativa'));
+        document.querySelector(`.menu-item[data-pagina="${nome}"]`)?.classList.add('ativa');
+        document.querySelectorAll('.conteudo-pagina').forEach(p=>p.classList.remove('visivel'));
+        document.getElementById(`pagina-${nome}`).classList.add('visivel');
+        
+        // Ao abrir Estatísticas → redesenha gráficos
+        if(nome==='estatisticas') {
+            setTimeout(()=>{desenharGraficoTrabalhosSolicitados(); desenharGraficoProdutos();},100);
+        }
+    }
     function abrirModalSenha() { fecharMenu(); document.getElementById('modalSenha').classList.add('aberto'); document.getElementById('inputSenha').value=''; document.getElementById('erroSenha').style.display='none'; document.getElementById('areaConfig').classList.remove('visivel'); }
     function fecharModalSenha() { document.getElementById('modalSenha').classList.remove('aberto'); }
     function verificarSenha() { if (document.getElementById('inputSenha').value === SENHA_CONFIG) { document.getElementById('areaConfig').classList.add('visivel'); } else { document.getElementById('erroSenha').style.display='block'; } }
@@ -203,26 +433,23 @@
     function carregarConfig() { const s=localStorage.getItem('gitConfig'); if(!s)return; const c=JSON.parse(s); document.getElementById('gitUsuario').value=c.usuario; document.getElementById('gitRepo').value=c.repo; document.getElementById('gitToken').value=c.token; document.getElementById('gitBranch').value=c.branch||'main'; }
     function getConfig() { const s=localStorage.getItem('gitConfig'); return s?JSON.parse(s):null; }
     function mostrarStatus(t,tipo='aviso') { const el=document.getElementById('statusMsg'); el.textContent=t; el.className='status '+tipo; el.style.display='block'; clearTimeout(window.temporizadorStatus); window.temporizadorStatus=setTimeout(()=>{el.style.display='none';},12000); }
-
     function adicionarTrabalho() { const arqImg=document.getElementById('trabalhoArquivoImg').arquivo; const titulo=document.getElementById('trabalhoTitulo').value.trim(); const desc=document.getElementById('trabalhoDesc').value.trim(); if(!arqImg||!titulo||!desc) return mostrarStatus('Imagem + título + descrição!','aviso'); const caminho='./imagens/'+arqImg.name; trabalhos.push({id:Date.now(),foto:caminho,titulo,descricao:desc}); arquivosImagens.push({caminho:'imagens/'+arqImg.name,arquivo:arqImg}); renderizarTrabalhos(); limparCamposTrab(); salvarLocal(); mostrarStatus('✅ Card criado! Publique!','sucesso'); }
     function limparCamposTrab() { document.getElementById('trabalhoArquivoImg').value=''; document.getElementById('trabalhoTitulo').value=''; document.getElementById('trabalhoDesc').value=''; document.getElementById('previewTrabalho').classList.remove('visivel'); }
     function renderizarTrabalhos() { const el=document.getElementById('listaTrabalhos'); if(!trabalhos.length){el.innerHTML='<p class="vazio">Nenhum cadastrado.</p>';return;} el.innerHTML=''; trabalhos.forEach(t=>el.innerHTML+=`<div class="item-card"><img src="${t.foto}" class="item-imagem" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 150%22><rect fill=%22%232a1010%22 width=%22200%22 height=%22150%22/><text x=%22100%22 y=%2275%22 text-anchor=%22middle%22 fill=%22%23886666%22>Imagem</text></svg>'"><div class="item-corpo"><h4 class="item-titulo">${t.titulo}</h4><p class="item-desc">${t.descricao}</p><div class="item-acoes"><button class="btn-excluir" onclick="excluirTrab(${t.id})">🗑️</button></div></div></div>`); }
     function excluirTrab(id) { if(!confirm('Tem certeza que deseja excluir?'))return; trabalhos=trabalhos.filter(t=>t.id!==id); renderizarTrabalhos(); salvarLocal(); mostrarStatus('✅ Excluído! Publique!','sucesso'); }
-
     function adicionarProduto() { const arqImg=document.getElementById('produtoArquivoImg').arquivo; const titulo=document.getElementById('produtoTitulo').value.trim(); const desc=document.getElementById('produtoDesc').value.trim(); const preco=parseFloat(document.getElementById('produtoPreco').value); if(!arqImg||!titulo||!desc||isNaN(preco)) return mostrarStatus('Preencha tudo!','aviso'); const caminho='./imagens/'+arqImg.name; produtos.push({id:Date.now(),foto:caminho,titulo,descricao:desc,preco}); arquivosImagens.push({caminho:'imagens/'+arqImg.name,arquivo:arqImg}); renderizarProdutos(); limparCamposProd(); salvarLocal(); mostrarStatus('✅ Card criado! Publique!','sucesso'); }
     function limparCamposProd() { document.getElementById('produtoArquivoImg').value=''; document.getElementById('produtoTitulo').value=''; document.getElementById('produtoDesc').value=''; document.getElementById('produtoPreco').value=''; document.getElementById('previewProduto').classList.remove('visivel'); }
     function renderizarProdutos() { const el=document.getElementById('listaProdutos'); if(!produtos.length){el.innerHTML='<p class="vazio">Nenhum cadastrado.</p>';return;} el.innerHTML=''; produtos.forEach(p=>el.innerHTML+=`<div class="item-card"><img src="${p.foto}" class="item-imagem" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 150%22><rect fill=%22%232a1010%22 width=%22200%22 height=%22150%22/><text x=%22100%22 y=%2275%22 text-anchor=%22middle%22 fill=%22%23886666%22>Imagem</text></svg>'"><div class="item-corpo"><h4 class="item-titulo">${p.titulo}</h4><p class="item-desc">${p.descricao}</p><p class="item-preco">R$ ${p.preco.toFixed(2)}</p><div class="item-acoes"><button class="btn-excluir" onclick="excluirProd(${p.id})">🗑️</button></div></div></div>`); }
     function excluirProd(id) { if(!confirm('Tem certeza que deseja excluir?'))return; produtos=produtos.filter(p=>p.id!==id); renderizarProdutos(); salvarLocal(); mostrarStatus('✅ Excluído! Publique!','sucesso'); }
-
     async function enviarArquivoGitHub(caminho, conteudoB64, msg) { const cfg=getConfig(); if(!cfg)throw new Error('Configure o GitHub!'); let sha=null; try{const r=await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/${caminho}`,{headers:{Authorization:`token ${cfg.token}`}}); if(r.ok)sha=(await r.json()).sha;}catch(e){} const res=await fetch(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/${caminho}`,{method:'PUT',headers:{Authorization:`token ${cfg.token}`,'Content-Type':'application/json'},body:JSON.stringify({message:msg,content:conteudoB64,sha,branch:cfg.branch})}); if(!res.ok)throw new Error(await res.text()); }
     function arquivoParaBase64(arq) { return new Promise((res,rej)=>{const leitor=new FileReader(); leitor.onload=e=>res(e.target.result.split(',')[1]); leitor.onerror=rej; leitor.readAsDataURL(arq);}); }
-
-    // 🚀 PUBLICA — JUNTA ANTIGOS + NOVOS, NÃO APAGA NADA!
     async function publicarTudo() { try { mostrarStatus('📤 Enviando imagens...','aviso'); for(const img of arquivosImagens){await enviarArquivoGitHub(img.caminho,await arquivoParaBase64(img.arquivo),`Imagem: ${img.arquivo.name}`);} mostrarStatus('📤 Atualizando dados...','aviso'); const cfg=getConfig(); let trabalhosFinais=[...trabalhos]; let produtosFinais=[...produtos]; try{const rT=await fetch(urlAntiCache(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/trabalhos.json?ref=${cfg.branch}`),{cache:'no-store'}); if(rT.ok){const dT=await rT.json(); trabalhosFinais=[...JSON.parse(atob(dT.content)),...trabalhos];} const rP=await fetch(urlAntiCache(`https://api.github.com/repos/${cfg.usuario}/${cfg.repo}/contents/dados/produtos.json?ref=${cfg.branch}`),{cache:'no-store'}); if(rP.ok){const dP=await rP.json(); produtosFinais=[...JSON.parse(atob(dP.content)),...produtos];}}catch(e){} const jsonT=JSON.stringify(trabalhosFinais.map(t=>({foto:t.foto,titulo:t.titulo,descricao:t.descricao})),null,2); await enviarArquivoGitHub('dados/trabalhos.json',btoa(unescape(encodeURIComponent(jsonT))),'Atualização Trabalhos'); const jsonP=JSON.stringify(produtosFinais.map(p=>({foto:p.foto,titulo:p.titulo,descricao:p.descricao,preco:p.preco})),null,2); await enviarArquivoGitHub('dados/produtos.json',btoa(unescape(encodeURIComponent(jsonP))),'Atualização Produtos'); mostrarStatus('✅ PUBLICADO COM SUCESSO! Atualizando em 2s...','sucesso'); arquivosImagens=[]; trabalhos=[]; produtos=[]; salvarLocal(); setTimeout(()=>carregarDadosDoGitHub(),2000); }catch(e){mostrarStatus('❌ ERRO: '+e.message.substring(0,120),'erro');}}
-
     function salvarLocal() { localStorage.setItem('painel_trabalhos',JSON.stringify(trabalhos)); localStorage.setItem('painel_produtos',JSON.stringify(produtos)); }
     function carregarLocal() { const t=localStorage.getItem('painel_trabalhos'); const p=localStorage.getItem('painel_produtos'); if(t)trabalhos=JSON.parse(t); if(p)produtos=JSON.parse(p); renderizarTrabalhos(); renderizarProdutos(); }
-    carregarConfig(); carregarLocal(); setTimeout(()=>{if(getConfig())carregarDadosDoGitHub();},1500);
+
+    // ✅ INICIALIZA TUDO
+    carregarConfig(); carregarLocal(); carregarAgendamentos();
+    setTimeout(()=>{if(getConfig())carregarDadosDoGitHub();},1500);
 </script>
 </body>
 </html>
