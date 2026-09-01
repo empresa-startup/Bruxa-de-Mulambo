@@ -63,7 +63,7 @@
             background: linear-gradient(to top, rgba(80,10,10,0.15), transparent 100%);
             z-index: -5; pointer-events: none; filter: blur(10px);
         }
-        .conteudo { max-width: 1280px; margin: 0 auto; padding: 0 18px; position: relative; z-index: 1; }
+        .conteudo { max-width: 1200px; margin: 0 auto; padding: 0 18px; position: relative; z-index: 1; }
         .menu-cabecalho {
             position: fixed; top: 0; left: 0; width: 100%;
             background: linear-gradient(to bottom, rgba(5,0,1,.95), rgba(8,1,3,.9));
@@ -210,25 +210,29 @@
             max-width: 500px; margin: 0 auto; line-height: 1.8;
             text-shadow: 0 0 6px rgba(200,60,60,0.2);
         }
-        .grade-produtos {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
-            gap: 28px; padding-bottom: 60px;
-        }
 
         /* ✅ ================================================= */
-        /* ✅ CARD DE PRODUTO — COM MOLDURA RITUALÍSTICA */
+        /* ✅ CARDS IGUAIS AO SITE PRINCIPAL — MESMO TAMANHO */
         /* ✅ ================================================= */
+        .grade-produtos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            padding-bottom: 60px;
+        }
         .produto-card {
+            width: 31%;
+            min-width: 100px;
             background: linear-gradient(180deg, rgba(25, 8, 8, 0.95), rgba(10, 2, 2, 0.98));
             border: none;
             border-radius: 8px;
-            padding: 0;
             position: relative;
             display: flex;
             flex-direction: column;
-            height: 400px;
+            transform: scale(1);
             transition: all .35s ease;
-            
+
             box-shadow:
                 inset 0 0 18px rgba(0, 0, 0, 0.9),
                 0 0 8px rgba(0, 0, 0, 0.9),
@@ -236,7 +240,7 @@
                 0 0 30px rgba(30, 20, 10, 0.1);
         }
 
-        /* ✅ Moldura externa ornamentada — madeira escura envelhecida */
+        /* ✅ Moldura externa ornamentada — IGUAL AO SITE PRINCIPAL */
         .produto-card::before {
             content: '';
             position: absolute;
@@ -260,7 +264,7 @@
                 0 0 8px rgba(40, 30, 15, 0.2);
         }
 
-        /* ✅ Moldura interna — ESCURA, SEM LINHA VERMELHA */
+        /* ✅ Moldura interna — IGUAL AO SITE PRINCIPAL */
         .produto-card::after {
             content: '';
             position: absolute;
@@ -275,7 +279,7 @@
             box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
         }
 
-        /* ✅ Cantos ornamentados — detalhes dourado-escuros */
+        /* ✅ Cantos ornamentados — IGUAIS */
         .produto-card .canto {
             position: absolute;
             width: 26px;
@@ -301,7 +305,7 @@
             border-left: none; border-top: none;
         }
 
-        /* ✅ AO PASSAR O MOUSE — moldura brilha com tom dourado-escuro */
+        /* ✅ Efeito hover — IGUAL */
         .produto-card:hover {
             transform: translateY(-6px) scale(1.02);
             box-shadow:
@@ -317,74 +321,111 @@
             border-color: rgba(110, 85, 40, 0.9);
         }
 
+        /* ✅ FOTO — IGUAL TAMANHO E AJUSTE */
         .produto-foto {
-            width: calc(100% - 24px);
-            margin: 18px 12px 12px;
-            height: 200px;
-            object-fit: cover;
+            width: 100%;
+            height: 190px;
+            object-fit: contain;
             object-position: center;
-            border-radius: 4px 4px 0 0;
-            transition: transform .5s ease;
-            filter: brightness(.9);
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            transition: opacity .25s ease;
+            background: rgba(10, 2, 2, 0.8);
             position: relative;
             z-index: 3;
+            margin-top: 12px;
         }
-        .produto-card:hover .produto-foto { 
-            transform: scale(1.02); 
-            filter: brightness(1); 
-        }
-        .produto-corpo { 
-            padding: 0 16px 12px; 
-            flex-grow: 1; 
-            display: flex; 
+        .produto-foto:hover { opacity: 0.9; }
+
+        /* ✅ CONTEÚDO — IGUAL ESPAÇAMENTO */
+        .produto-corpo {
+            padding: 10px;
+            position: relative;
+            z-index: 3;
+            display: flex;
             flex-direction: column;
-            position: relative;
-            z-index: 3;
+            gap: 6px;
+            flex-grow: 1;
         }
-        .produto-nome { 
-            font-family: 'Cinzel Decorative', serif; 
-            font-size: 1rem; 
-            color: #ff4444; 
-            margin-bottom: 8px; 
-            letter-spacing: 1px;
-            text-shadow: 0 0 5px rgba(255,68,68,0.3);
+        .produto-nome {
+            font-family: 'Cinzel Decorative', serif;
+            color: #ff5050;
+            font-size: 1rem;
+            margin-bottom: 2px;
+            text-shadow: 0 0 8px rgba(255, 40, 40, 0.3);
         }
-        .produto-desc { 
-            color: #996666; 
-            font-size: .84rem; 
-            line-height: 1.5; 
-            margin-bottom: 12px; 
-            flex-grow: 1; 
+        .produto-desc {
+            font-size: 0.8rem;
+            color: #907070;
+            line-height: 1.4;
+            margin-bottom: 4px;
+            flex-grow: 1;
         }
-        .produto-preco { 
-            font-size: 1.25rem; 
-            font-weight: 600; 
-            color: #ff8844; 
-            margin-bottom: 12px; 
-            letter-spacing: 1px;
-            text-shadow: 0 0 6px rgba(255,136,68,0.3);
+        .produto-preco {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ff8844;
+            text-shadow: 0 0 6px rgba(255,136,68,0.25);
+            margin-bottom: 6px;
         }
         .botao-adicionar {
-            width: 100%; padding: 10px;
-            background: linear-gradient(135deg, #7a1528, #a81f30);
-            color: #ffdddd; border: 1px solid rgba(180,35,55,.25);
-            font-family: 'Cinzel', serif; font-size: .88rem; letter-spacing: 1px;
-            text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all .3s ease;
+            display: block;
+            width: 100%;
+            padding: 8px;
+            background: linear-gradient(135deg, #7a1528, #b81818);
+            color: #fff;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 80, 80, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
             position: relative;
             z-index: 3;
         }
-        .botao-adicionar:hover { 
-            background: linear-gradient(135deg, #991a2e, #cc283a); 
+        .botao-adicionar:hover {
+            background: linear-gradient(135deg, #991a2e, #cc283a);
             box-shadow: 0 0 10px #ff2b2b, 0 0 20px rgba(255,43,43,0.3);
             color: #ffffff;
         }
+
         .vazio { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #663333; font-style: italic; }
         .vazio .simbolo-grande { font-size: 2.5rem; color: #ff2b2b; margin-bottom: 15px;
             text-shadow: 0 0 10px #ff2b2b, 0 0 25px rgba(255,43,43,0.3);
         }
         .carregando { text-align: center; padding: 40px; color: #996666; font-style: italic; }
-        @media(min-width:768px) { .grade-produtos{grid-template-columns:repeat(3,1fr);gap:30px} }
-        @media(min-width:1024px) { .grade-produtos{grid-template-columns:repeat(4,1fr);gap:32px} }
+
+        /* ✅ CELULAR — IGUAL AO SITE PRINCIPAL */
+        @media (max-width: 768px) {
+            .grade-produtos { gap: 6px; }
+            .produto-card {
+                width: 31%;
+                min-width: 85px;
+                transform: scale(1);
+            }
+            .produto-foto { 
+                height: 110px;
+                object-fit: contain;
+            }
+            .produto-corpo { padding: 6px; gap: 4px; }
+            .produto-nome { font-size: 0.85rem; }
+            .produto-desc { font-size: 0.7rem; line-height: 1.3; }
+            .produto-preco { font-size: 0.85rem; }
+            .botao-adicionar { padding: 6px; font-size: 0.7rem; }
+        }
+
+        /* ✅ PC — IGUAL AO SITE PRINCIPAL */
+        @media (min-width: 1024px) {
+            .grade-produtos { gap: 20px; }
+            .produto-card {
+                width: 320px;
+                transform: scale(1);
+            }
+            .produto-card:hover { transform: translateY(-8px); }
+            .produto-foto { height: 190px; }
+        }
     </style>
 </head>
 <body>
