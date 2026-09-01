@@ -173,6 +173,21 @@
             color: #ff2b2b; margin-bottom: 20px; text-align: center;
             text-shadow: 0 0 10px #ff2b2b, 0 0 20px rgba(255,43,43,0.4);
         }
+        .aviso-frete {
+            background: rgba(60, 40, 20, 0.12);
+            border: 1px solid rgba(120, 80, 40, 0.25);
+            border-radius: 4px;
+            padding: 10px 12px;
+            margin: 15px 0;
+            font-size: 0.8rem;
+            color: #d4b080;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .aviso-frete strong {
+            color: #ffcc66;
+            text-shadow: 0 0 4px rgba(255,204,102,0.15);
+        }
         .duvidas-texto {
             color: #d0b0b0; font-size: .9rem; line-height: 1.8;
         }
@@ -200,12 +215,12 @@
         }
         .remover-item:hover { color: #ff4444; }
         .carrinho-total {
-            margin-top: 20px; padding: 15px 0; border-top: 1px solid rgba(100,20,35,.25);
+            margin-top: 10px; padding: 15px 0 5px; border-top: 1px solid rgba(100,20,35,.25);
             text-align: right; font-size: 1.15rem; color: #ff8844;
         }
         .carrinho-vazio { text-align: center; padding: 40px 20px; color: #663333; font-style: italic; font-size: .9rem; }
         .botao-finalizar {
-            width: 100%; margin-top: 20px; padding: 13px;
+            width: 100%; margin-top: 8px; padding: 13px;
             background: linear-gradient(135deg, #7a1528, #b02233);
             color: #ffdddd; border: none; font-family: 'Cinzel', serif; font-size: .9rem; letter-spacing: 1px;
             text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all .3s ease;
@@ -469,7 +484,11 @@
             <h3 class="carrinho-titulo">🛒 Meu Carrinho</h3>
             <div id="listaCarrinho"></div>
             <div class="carrinho-total" id="areaTotal" style="display:none;">
-                Total: <span id="valorTotal">R$ 0,00</span>
+                Total dos produtos: <span id="valorTotal">R$ 0,00</span>
+            </div>
+            <!-- ⚠️ AVISO DE FRETE -->
+            <div class="aviso-frete" id="avisoFrete" style="display:none;">
+                ⚠️ <strong>Atenção:</strong> Valor dos produtos não inclui taxa de entrega. O valor final poderá ser ajustado de acordo com o frete e a região de entrega.
             </div>
             <button class="botao-finalizar" id="botaoFinalizar" disabled>📦 Enviar Pedido</button>
         </div>
@@ -483,10 +502,10 @@
                 Escolha os produtos clicando em "Adicionar". Quando terminar, abra o carrinho e clique em "Enviar Pedido".</p>
 
                 <p><strong>📱 E para onde vai o pedido?</strong><br>
-                Ele abre o WhatsApp <strong>JÁ PRONTO</strong> com todos os produtos, quantidades e valor total. É só enviar!</p>
+                Ele abre o WhatsApp <strong>JÁ PRONTO</strong> com todos os produtos, quantidades e valor total dos produtos. É só enviar!</p>
 
                 <p><strong>💰 E o pagamento e entrega?</strong><br>
-                Combinamos tudo direto pelo WhatsApp — valor, forma de pagamento e prazo de entrega.</p>
+                Combinamos tudo direto pelo WhatsApp — valor do frete, forma de pagamento e prazo de entrega.</p>
 
                 <p><strong>📦 Entregas para todo o Brasil</strong><br>
                 Enviamos para qualquer lugar do país! ✨</p>
@@ -654,10 +673,12 @@
         function atualizarCarrinho(){
             const carrinho = pegarCarrinho();
             const lista = document.getElementById('listaCarrinho');
+            const avisoFrete = document.getElementById('avisoFrete');
             atualizarContador();
             if(!carrinho.length){
                 lista.innerHTML = '<p class="carrinho-vazio">Aguardando seus tesouros...</p>';
                 document.getElementById('areaTotal').style.display = 'none';
+                avisoFrete.style.display = 'none';
                 document.getElementById('botaoFinalizar').disabled = true;
                 return;
             }
@@ -671,6 +692,7 @@
             });
             document.getElementById('valorTotal').textContent = 'R$ ' + calcularTotal().toFixed(2).replace('.', ',');
             document.getElementById('areaTotal').style.display = 'block';
+            avisoFrete.style.display = 'block';
             document.getElementById('botaoFinalizar').disabled = false;
         }
         function abrirCarrinho(){ document.getElementById('modalCarrinho').classList.add('aberto'); }
@@ -695,7 +717,8 @@
             });
             
             mensagem += '═══════════════════%0A';
-            mensagem += `💰 TOTAL: R$ ${calcularTotal().toFixed(2).replace('.', ',')}%0A%0A`;
+            mensagem += `💰 TOTAL DOS PRODUTOS: R$ ${calcularTotal().toFixed(2).replace('.', ',')}%0A`;
+            mensagem += '⚠️ Valor não inclui taxa de entrega — frete a combinar.%0A%0A';
             mensagem += 'Olá! Gostaria de confirmar este pedido. Aguardo retorno! ✨';
             
             // ✅ Mostra mensagem de confirmação pro cliente
